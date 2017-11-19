@@ -8,6 +8,18 @@ require 'capybara'
 require 'capybara/cucumber'
 require 'rspec'
 
+Before do
+  @real_home = ENV['HOME']
+  fake_home = File.expand_path(File.join('tmp/', 'fake_home'))
+  ENV['HOME'] = fake_home
+  FileUtils.mkpath(fake_home)
+end
+
+After do
+  ENV['RUBYLIB'] = @original_rubylib
+  ENV['HOME'] = @real_home
+end
+
 Capybara.app = TodoWeb::App
 
 class TodoWebWorld
