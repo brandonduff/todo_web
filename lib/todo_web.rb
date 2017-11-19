@@ -5,7 +5,7 @@ require 'todo'
 module TodoWeb
   class App < Sinatra::Base
     get '/' do
-      Todo::UseCases::ListTodos.new({}).perform
+      erb :index, locals: { todos: Todo::UseCases::ListTodos.new({}).perform }
     end
   end
 end
