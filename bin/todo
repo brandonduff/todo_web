@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require 'todo_web'
+
+TodoWeb::App.run!
