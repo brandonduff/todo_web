@@ -7,5 +7,10 @@ module TodoWeb
     get '/' do
       erb :index, locals: { todos: Todo::UseCases::ListTodos.new({}).perform }
     end
+
+    post '/' do
+      Todo::UseCases::CreateTodo.new(params["todo"]).perform
+      erb :index, locals: { todos: Todo::UseCases::ListTodos.new({}).perform }
+    end
   end
 end
