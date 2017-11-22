@@ -5,7 +5,7 @@ Feature: Web Todos App
     Then I should see "existing todo"
 
   Scenario: I can add a new todo
-    Given I go to the home page
+    Given I am on the home page
     When I fill in "New Todo" with "foo"
     And I press "Create"
     Then I should see "foo"
