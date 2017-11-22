@@ -9,3 +9,9 @@ Feature: Web Todos App
     When I fill in "New Todo" with "foo"
     And I press "Create"
     Then I should see "foo"
+
+  Scenario: I can delete an existing todo
+    Given My todo list contains "existing todo"
+    And I am on the home page
+    When I delete "existing todo"
+    Then I should not see "existing todo"

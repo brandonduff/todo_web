@@ -217,3 +217,8 @@ end
 Then /^show me the page$/ do
   save_and_open_page
 end
+
+When /^I delete "([^"]*)"$/ do |todo_name|
+  step %(I press "Delete #{todo_name}")
+end
+
