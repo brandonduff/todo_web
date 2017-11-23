@@ -7,12 +7,15 @@ require File.join(File.dirname(__FILE__), '..', '..', 'lib/todo_web.rb')
 require 'capybara'
 require 'capybara/cucumber'
 require 'rspec'
+require 'todo'
 
 Before do
   @real_home = ENV['HOME']
   fake_home = File.expand_path(File.join('tmp/', 'fake_home'))
+  FileUtils.rm_rf(fake_home) if Dir.exist?(fake_home)
   ENV['HOME'] = fake_home
   FileUtils.mkpath(fake_home)
+  Todo::UseCases::SetCurrentDay.new(new_day: 'today').perform
 end
 
 After do

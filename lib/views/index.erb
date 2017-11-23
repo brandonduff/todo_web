@@ -1,7 +1,2 @@
-<% todos.each do |todo| %>
-    <p>
-      <%= todo %>
-    </p>
-<% end %>
-
+<%= erb :todo_list, locals: { todos: todos } %>
 <%= erb :new_todo_form %>
