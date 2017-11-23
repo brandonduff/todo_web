@@ -219,6 +219,6 @@ Then /^show me the page$/ do
 end
 
 When /^I delete "([^"]*)"$/ do |todo_name|
-  step %(I press "Delete #{todo_name}")
+  step %(I press "Delete '#{todo_name}'")
 end
 
