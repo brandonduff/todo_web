@@ -13,5 +13,5 @@ Feature: Web Todos App
   Scenario: I can delete an existing todo
     Given My todo list contains "existing todo"
     And I am on the home page
-    When I delete "existing todo"
-    Then I should not see "existing todo"
+    When I press "Done"
+    Then I should see the done todo "existing todo"

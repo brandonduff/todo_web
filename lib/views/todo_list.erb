@@ -1,6 +1,9 @@
 <% todos.each do |todo| %>
     <p>
-        <%= todo %>
-        <button title="Delete '<%=todo%>'">x</button>
+      <%= todo %>
     </p>
 <% end %>
+<form action="/done" method="post">
+  <input type="submit" value="Done">
+</form>
+

@@ -12,5 +12,9 @@ module TodoWeb
       Todo::UseCases::CreateTodo.new(params["todo"]).perform
       erb :index, locals: { todos: Todo::UseCases::ListTodos.new({}).perform }
     end
+
+    post '/done' do
+
+    end
   end
 end
