@@ -3,9 +3,9 @@ module TodoWeb
     def present(todos)
       todos.map do |todo|
         if todo.done
-          "<del>#{todo.value}</del>"
+          "<del>#{todo.description}</del>"
         else
-          todo.value
+          todo.description
         end
       end
     end

@@ -2,8 +2,8 @@ require 'rspec'
 require 'todo_presenter'
 
 describe TodoWeb::TodoPresenter do
-  let(:todo) { double(value: 'foo', done: false) }
-  let(:todo_two) { double(value: 'bar', done: false) }
+  let(:todo) { double(description: 'foo', done: false) }
+  let(:todo_two) { double(description: 'bar', done: false) }
   let(:todos) { [todo, todo_two] }
 
   it 'should present undone todos as strings' do
@@ -11,7 +11,7 @@ describe TodoWeb::TodoPresenter do
   end
 
   context 'with done todos' do
-    let(:todo) { double(value: 'bar', done: true) }
+    let(:todo) { double(description: 'bar', done: true) }
     let(:todos) { [todo] }
 
     it 'should present them wrapped in del' do
