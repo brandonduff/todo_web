@@ -16,7 +16,7 @@ module TodoWeb
 
     post '/done' do
       Todo::UseCases::Done.new.perform
-      list_todos
+      redirect('/')
     end
 
     private
