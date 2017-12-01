@@ -6,23 +6,23 @@ require 'todo_presenter'
 module TodoWeb
   class App < Sinatra::Base
     get '/' do
-      list_todos
+      erb :index, locals: {todos: Todo::UseCases::ListTodos.new(presenter: TodoPresenter.new, all: true).perform}
     end
 
     post '/' do
       Todo::UseCases::CreateTodo.new(params["todo"]).perform
-      list_todos
+      redirect(root)
     end
 
     post '/done' do
       Todo::UseCases::Done.new.perform
-      redirect('/')
+      redirect(root)
     end
 
     private
 
-    def list_todos
-      erb :index, locals: { todos: Todo::UseCases::ListTodos.new(presenter: TodoPresenter.new, all: true).perform }
+    def root
+      '/'
     end
   end
 end
