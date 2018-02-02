@@ -12,6 +12,14 @@ describe TodoWeb::TodoPresenter do
   end
 
   context 'with done todos' do
+    let(:todo) { double(description: '✓ done', done?: true) }
+
+    it 'should strip out checkmarks' do
+      expect(subject.present(todos)).to include('<del>done</del>')
+    end
+  end
+
+  context 'with done todos' do
     let(:todo) { double(description: 'bar', done?: true) }
     let(:todos) { [todo] }
 
