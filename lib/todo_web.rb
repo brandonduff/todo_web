@@ -19,6 +19,11 @@ module TodoWeb
       redirect(root)
     end
 
+    post '/clear' do
+      Todo::UseCases::Clear.new.perform
+      redirect(root)
+    end
+
     private
 
     def root
