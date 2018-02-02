@@ -1,12 +1,15 @@
-<% todos.each do |todo| %>
-  <p>
-    <%= todo %>
-  </p>
-<% end %>
-<form style="display: inline" action="/done" method="post">
-  <input type="submit" value="Done">
-</form>
-<form style="display: inline;" action="/clear" method="post">
-  <input style="margin-bottom: 20px;" type="submit" value="Clear">
-</form>
-
+<ul>
+  <% todos.each do |todo| %>
+    <li>
+      <%= todo %>
+    </li>
+  <% end %>
+</ul>
+<div class="actions">
+  <form action="/done" method="post">
+    <input type="submit" value="Done">
+  </form>
+  <form action="/clear" method="post">
+    <input type="submit" value="Clear">
+  </form>
+</div>
