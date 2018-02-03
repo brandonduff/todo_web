@@ -2,12 +2,13 @@ require "todo_web/version"
 require 'sinatra/base'
 require 'todo'
 require 'todo_presenter'
+require 'escaped_collection'
 
 module TodoWeb
   class App < Sinatra::Base
     get '/' do
       erb :index, locals: {
-        todos: Todo::UseCases::ListTodos.new(presenter: TodoPresenter.new, all: true).perform,
+        todos: EscapedCollection.from(Todo::UseCases::ListTodos.new(presenter: TodoPresenter.new, all: true).perform),
         current_day: Date.parse(Todo::UseCases::SetCurrentDay.new({}).perform),
       }
     end
