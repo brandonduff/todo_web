@@ -28,3 +28,17 @@ Feature: Web Todos App
     Given the current day is "1/1/2000"
     When I am on the home page
     Then the "Current Day" field should contain "2000-01-01"
+
+  Scenario: I can set the current day
+    Given the current day is "1/1/2000"
+    And I am on the home page
+    When I fill in "Current Day" with "1993-10-03"
+    And press "Change Date"
+    And I go to the home page
+    Then the "Current Day" field should contain "1993-10-03"
+
+  Scenario: I can set the current day to today
+    Given the current day is "1/1/2000"
+    And I am on the home page
+    When I press "Today"
+    Then the "Current Day" field should show today

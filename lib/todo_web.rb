@@ -27,6 +27,11 @@ module TodoWeb
       redirect(root)
     end
 
+    post '/current_day' do
+      Todo::UseCases::SetCurrentDay.new(new_day: params["current_day"] || "today").perform
+      redirect(root)
+    end
+
     private
 
     def root
