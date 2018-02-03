@@ -23,3 +23,8 @@ Feature: Web Todos App
     When I press "Clear"
     Then I should see "in progress todo"
     And I should not see "done todo"
+
+  Scenario: I can see the current day
+    Given the current day is "1/1/2000"
+    When I am on the home page
+    Then the "Current Day" field should contain "2000-01-01"
