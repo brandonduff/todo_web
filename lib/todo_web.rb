@@ -8,7 +8,7 @@ module TodoWeb
   class App < Sinatra::Base
     get '/' do
       erb :index, locals: {
-        todos: EscapedCollection.from(Todo::UseCases::ListTodos.new(presenter: TodoPresenter.new, all: true).perform),
+        todos: Todo::UseCases::ListTodos.new(presenter: TodoPresenter.new, all: true).perform,
         current_day: Date.parse(Todo::UseCases::SetCurrentDay.new({}).perform),
       }
     end

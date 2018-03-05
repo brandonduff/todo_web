@@ -1,11 +1,11 @@
 module TodoWeb
   class TodoPresenter
     def present(todos)
-      todos.map do |todo|
+      EscapedCollection.from(todos).map do |todo|
         if todo.done?
-          "<del>#{stripped_todo(todo.description)}</del>"
+          "<del>#{stripped_todo(todo)}</del>"
         else
-          todo.description
+          todo.to_s
         end
       end
     end
@@ -13,7 +13,7 @@ module TodoWeb
     private
 
     def stripped_todo(todo)
-      todo.delete('✓ ')
+      todo.to_s.delete('✓ ')
     end
   end
 end

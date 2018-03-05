@@ -8,10 +8,12 @@ class EscapedCollection
   end
 
   def make_safe
-    @objects.each do |object|
-      def object.to_s
-        CGI.escape_html(super)
-      end
+    @objects.map { |object| EscapedObject.new(object) }
+  end
+
+  class EscapedObject < SimpleDelegator
+    def to_s
+      CGI.escape_html(super)
     end
   end
 end

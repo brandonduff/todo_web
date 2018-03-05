@@ -7,8 +7,8 @@ describe EscapedCollection do
     let(:objects) { [bad_stuff] }
 
     it 'defines to_s on each to escape' do
-      subject.make_safe
-      expect(objects[0].to_s).to eq(CGI.escape_html(bad_stuff))
+      escaped_objects = subject.make_safe
+      expect(escaped_objects[0].to_s).to eq(CGI.escape_html(bad_stuff))
     end
   end
 end
