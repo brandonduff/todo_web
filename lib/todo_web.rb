@@ -33,6 +33,11 @@ module TodoWeb
       redirect(root)
     end
 
+    post '/undo' do
+      Todo::UseCases::Undo.new.perform
+      redirect(root)
+    end
+
     private
 
     def root

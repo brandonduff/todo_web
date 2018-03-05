@@ -42,3 +42,9 @@ Feature: Web Todos App
     And I am on the home page
     When I press "Today"
     Then the "Current Day" field should show today
+
+  Scenario: I can undo a done todo
+    Given My todo list contains the done todo "done todo"
+    And I am on the home page
+    When I press "Undo"
+    Then I should see the undone todo "done todo"

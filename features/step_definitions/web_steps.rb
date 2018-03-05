@@ -226,6 +226,10 @@ Then(/^I should see the done todo "([^"]*)"$/) do |todo|
   expect(page).to have_css('del', text: todo.delete('✓ '))
 end
 
+Then(/^I should see the undone todo "([^"]*)"$/) do |todo|
+  expect(page).to have_css('li', text: todo)
+end
+
 Then(/^the "Current Day" field should show today$/) do
   step %(the "Current Day" field should contain "#{Date.today}")
 end
