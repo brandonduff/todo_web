@@ -1,19 +1,19 @@
+require 'rack/utils'
+
 module TodoWeb
   class TodoPresenter
     def present(todos)
-      EscapedCollection.from(todos).map do |todo|
+      todos.map do |todo|
         if todo.done?
-          "<del>#{stripped_todo(todo)}</del>"
+          "<del>#{escape(todo.description)}</del>"
         else
-          todo.to_s
+          escape(todo.description)
         end
       end
     end
 
-    private
-
-    def stripped_todo(todo)
-      todo.to_s.delete('✓ ')
+    def escape(text)
+      Rack::Utils.escape_html(text)
     end
   end
 end

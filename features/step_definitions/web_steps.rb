@@ -223,7 +223,7 @@ When /^I delete "([^"]*)"$/ do |todo_name|
 end
 
 Then(/^I should see the done todo "([^"]*)"$/) do |todo|
-  expect(page).to have_css('del', text: todo.delete('✓ '))
+  expect(page).to have_css('del', text: todo)
 end
 
 Then(/^I should see the undone todo "([^"]*)"$/) do |todo|

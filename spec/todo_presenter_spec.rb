@@ -9,10 +9,6 @@ describe TodoWeb::TodoPresenter do
   let(:todo_two) { Todo::Task.new('bar', false) }
   let(:todos) { [todo, todo_two] }
 
-  before do
-    expect(EscapedCollection).to receive(:from).with(todos).and_return(todos)
-  end
-
   it 'should present undone todos as strings' do
     expect(subject.present(todos)).to eq(%w(foo bar))
   end
