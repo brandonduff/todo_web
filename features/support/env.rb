@@ -6,7 +6,6 @@ require File.join(File.dirname(__FILE__), '..', '..', 'lib/todo_web.rb')
 
 require 'capybara'
 require 'capybara/cucumber'
-require 'rspec'
 require 'todo'
 
 Before do
@@ -27,8 +26,6 @@ Capybara.app = TodoWeb::App
 
 class TodoWebWorld
   include Capybara::DSL
-  include RSpec::Expectations
-  include RSpec::Matchers
 end
 
 World do

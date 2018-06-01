@@ -1,6 +1,12 @@
 require "bundler/gem_tasks"
 require 'cucumber'
 require 'cucumber/rake/task'
+require 'rake/testtask'
+
+desc "Run tests"
+Rake::TestTask.new do |t|
+  t.pattern = "test/*_test.rb"
+end
 
 desc 'Run features'
 Cucumber::Rake::Task.new(:features) do |t|
@@ -10,4 +16,4 @@ Cucumber::Rake::Task.new(:features) do |t|
   t.fork = false
 end
 
-task :default => [:features]
+task :default => [:test, :features]
