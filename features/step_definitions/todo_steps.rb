@@ -19,5 +19,6 @@ When('I move up {string}') do |todo|
 end
 
 Then('the first todo is {string}') do |todo|
+  pending
   assert_includes page.find('li', match: :first).text, todo
 end
