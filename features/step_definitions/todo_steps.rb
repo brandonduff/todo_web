@@ -13,3 +13,11 @@ end
 Given(/^the current day is "([^"]*)"$/) do |day|
   Todo::UseCases::SetCurrentDay.new(new_day: day).perform
 end
+
+When('I move up {string}') do |todo|
+  click_button("Move up #{todo}")
+end
+
+Then('the first todo is {string}') do |todo|
+  assert_includes page.find('li', match: :first).text, todo
+end

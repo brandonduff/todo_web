@@ -48,3 +48,10 @@ Feature: Web Todos App
     And I am on the home page
     When I press "Undo"
     Then I should see the undone todo "done todo"
+
+  Scenario: I can rearrange the order of todos
+    Given My todo list contains "first todo"
+    And My todo list contains "second todo"
+    When I am on the home page
+    And I move up "second todo"
+    Then the first todo is "second todo"

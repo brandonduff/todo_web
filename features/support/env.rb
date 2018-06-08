@@ -7,6 +7,7 @@ require File.join(File.dirname(__FILE__), '..', '..', 'lib/todo_web.rb')
 require 'capybara'
 require 'capybara/cucumber'
 require 'todo'
+require 'minitest/autorun'
 
 Before do
   @real_home = ENV['HOME']
@@ -26,8 +27,10 @@ Capybara.app = TodoWeb::App
 
 class TodoWebWorld
   include Capybara::DSL
+
 end
 
 World do
+  extend(MiniTest::Assertions)
   TodoWebWorld.new
 end
