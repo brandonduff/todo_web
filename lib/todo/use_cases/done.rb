@@ -2,9 +2,17 @@ module Todo
   module UseCases
     class Done
 
+      def initialize(task=nil)
+        @task_to_finish = task
+      end
+
       def perform
         task_list = todays_task_list
-        done_task = task_list.done
+        done_task = if @task_to_finish
+          task_list.done(@task_to_finish)
+        else
+          task_list.done
+        end
         persistence.write_todays_tasks(task_list)
         present(done_task)
       end

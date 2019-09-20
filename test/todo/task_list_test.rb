@@ -116,4 +116,24 @@ class TaskListTest < Minitest::Test
 
     assert_equal(done_task_list, @task_list.unfinished_tasks)
   end
+
+  def test_done_with_provided_task
+    other_task = Todo::Task.new('wash the car')
+    original_task = Todo::Task.new('do the dishes')
+    @task_list.add_task(other_task)
+    @task_list.add_task(original_task)
+    done_task = @task_list.done(original_task)
+    assert(done_task.done?)
+    assert_equal(original_task.description, done_task.description)
+  end
+
+  def test_undo_with_provided_task
+    other_task = Todo::Task.new('wash the car')
+    original_task = Todo::Task.new('do the dishes').done
+    @task_list.add_task(other_task)
+    @task_list.add_task(original_task)
+    unfinished_task = @task_list.undo(original_task)
+    refute(unfinished_task.done?)
+    assert_equal(original_task.description, unfinished_task.description)
+  end
 end

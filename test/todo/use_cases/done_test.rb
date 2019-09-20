@@ -6,8 +6,8 @@ module Todo
       def setup
         super
         build_todo_file(todo_file_for('10-03-1993'))
-        task_list = TaskListBuilder.new([{ description: 'hello' }, { description: 'goodbye' }]).build
-        save_todo_file(task_list)
+        @task_list = TaskListBuilder.new([{ description: 'hello' }, { description: 'goodbye' }]).build
+        save_todo_file(@task_list)
       end
 
       def test_done_returns_done_todo
@@ -22,6 +22,12 @@ module Todo
       def test_does_nothing_when_there_are_no_todos
         set_current_day('10-04-1993')
         assert_equal('', Done.new.perform)
+      end
+
+      def test_done_can_operate_on_a_specific_todo
+        task = @task_list.to_a.last
+        done_task = Done.new(task).perform
+        assert_equal('✓ goodbye', done_task)
       end
     end
   end

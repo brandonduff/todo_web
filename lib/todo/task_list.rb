@@ -1,6 +1,6 @@
 module Todo
   class TaskList
-    def initialize(buffer=StringIO.new)
+    def initialize(buffer = StringIO.new)
       @tasks = buffer.string.split("\n").map { |description| TaskBuilder.new(description).build }
     end
 
@@ -8,16 +8,14 @@ module Todo
       @tasks << task
     end
 
-    def done
-      if (first_unfinished_todo_position = @tasks.find_index(&:in_progress?))
-        @tasks[first_unfinished_todo_position] = @tasks[first_unfinished_todo_position].done
-      end
+    def done(task_to_finish = @tasks.find(&:in_progress?))
+      return unless task_to_finish
+      update_task_in_list(task_to_finish, task_to_finish.done)
     end
 
-    def undo
-      if (first_done_position = @tasks.find_index(&:done?))
-        @tasks[first_done_position] = @tasks[first_done_position].undo
-      end
+    def undo(task_to_unfinish = @tasks.find(&:done?))
+      return unless task_to_unfinish
+      update_task_in_list(task_to_unfinish, task_to_unfinish.undo)
     end
 
     def clear
@@ -69,5 +67,18 @@ module Todo
 
     attr_reader :tasks
 
+    private
+
+    def update_task_in_list(from, to)
+      @tasks = @tasks.map do |t|
+        if t == from
+          to
+        else
+          t
+        end
+      end
+
+      to
+    end
   end
 end
