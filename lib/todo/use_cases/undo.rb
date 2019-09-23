@@ -4,7 +4,10 @@ module Todo
 
       def perform
         task_list = todays_task_list
-        undone_task = task_list.undo
+        task_to_unfinish = task_list.finished_tasks.first
+        return "" unless task_to_unfinish
+
+        undone_task = task_list.undo(task_to_unfinish)
         persistence.write_todays_tasks(task_list)
         present(undone_task)
       end

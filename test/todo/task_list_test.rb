@@ -93,9 +93,9 @@ class TaskListTest < Minitest::Test
     done_task_list = Todo::TaskList.new
     done_task_list.add_task(task)
     @task_list.add_task(task)
-    @task_list.done(task)
+    task = @task_list.done(task)
 
-    @task_list.undo
+    @task_list.undo(task)
 
     assert_equal(done_task_list, @task_list.unfinished_tasks)
   end
@@ -106,7 +106,7 @@ class TaskListTest < Minitest::Test
     done_task_list.add_task(task)
     @task_list.add_task(task)
 
-    @task_list.undo
+    @task_list.undo(task)
 
     assert_equal(done_task_list, @task_list.unfinished_tasks)
   end
