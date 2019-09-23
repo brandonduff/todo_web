@@ -1,5 +1,7 @@
 module Todo
   class TaskList
+    include Enumerable
+
     def initialize(buffer = StringIO.new)
       @tasks = buffer.string.split("\n").map { |description| TaskBuilder.new(description).build }
     end
@@ -8,8 +10,7 @@ module Todo
       @tasks << task
     end
 
-    def done(task_to_finish = @tasks.find(&:in_progress?))
-      return unless task_to_finish
+    def done(task_to_finish)
       update_task_in_list(task_to_finish, task_to_finish.done)
     end
 
@@ -26,8 +27,8 @@ module Todo
       @tasks.map(&:to_s).join("\n")
     end
 
-    def to_a
-      @tasks
+    def each(*args, &block)
+      @tasks.each(*args, &block)
     end
 
     def concat(other_list)

@@ -43,22 +43,15 @@ class TaskListTest < Minitest::Test
   end
 
   def test_done_on_empty_list_does_nothing
-    @task_list.done
+    @task_list.done(Todo::Task.new('hi'))
     assert_equal(@task_list.to_s, '')
   end
 
   def test_done_on_one_task_marks_todo_as_done
-    @task_list.add_task(Todo::Task.new('hi'))
-    @task_list.done
+    task = Todo::Task.new('hi')
+    @task_list.add_task(task)
+    @task_list.done(task)
     assert_equal('✓ hi', @task_list.to_s)
-  end
-
-  def test_done_on_list_with_done_tasks_marks_first_unfinished_task_as_done
-    @task_list.add_task(Todo::Task.new('i am already done'))
-    @task_list.done
-    @task_list.add_task(Todo::Task.new('i am now done'))
-    @task_list.done
-    assert_equal("✓ i am already done\n✓ i am now done", @task_list.to_s)
   end
 
   def test_clear_on_empty_list_does_nothing
@@ -88,8 +81,9 @@ class TaskListTest < Minitest::Test
   end
 
   def test_in_progress_tasks_returns_unfinished_tasks
-    @task_list.add_task(Todo::Task.new('done'))
-    @task_list.done
+    done_task = Todo::Task.new('done')
+    @task_list.add_task(done_task)
+    @task_list.done(done_task)
     @task_list.add_task(Todo::Task.new('not done'))
     assert_equal('not done', @task_list.unfinished_tasks.to_s)
   end
@@ -99,7 +93,7 @@ class TaskListTest < Minitest::Test
     done_task_list = Todo::TaskList.new
     done_task_list.add_task(task)
     @task_list.add_task(task)
-    @task_list.done
+    @task_list.done(task)
 
     @task_list.undo
 
