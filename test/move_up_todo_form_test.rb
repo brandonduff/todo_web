@@ -10,16 +10,21 @@ class TestMoveUpTodoForm < Minitest::Test
 
   def test_button_value
     button = output.find('button')
-    assert_equal '1', button['value']
+    assert_equal todo, button['value']
+  end
+
+  def test_hidden_input
+    input = output.find('input[name="todo"]', visible: false)
+    assert_equal todo, input['value']
   end
 
   private
 
   def output
-    Capybara.string(MoveUpTodoForm.render(index))
+    Capybara.string(MoveUpTodoForm.render(todo))
   end
 
-  def index
-    1
+  def todo
+    "some todo"
   end
 end
