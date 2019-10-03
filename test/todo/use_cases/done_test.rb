@@ -2,7 +2,7 @@ require_relative 'base'
 
 module Todo
   module UseCases
-    class DoneTest
+    class DoneTest < Minitest::Test
       def setup
         @task_list = TaskListBuilder.new([{ description: 'hello' }, { description: 'goodbye' }]).build
         @persistence = InMemoryPersistence.new

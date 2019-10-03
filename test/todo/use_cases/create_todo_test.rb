@@ -2,7 +2,7 @@ require_relative 'base'
 
 module Todo
   module UseCases
-    class CreateTodoTest
+    class CreateTodoTest < Minitest::Test
 
       def setup
         @persistence = InMemoryPersistence.new

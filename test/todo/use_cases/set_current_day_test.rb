@@ -2,7 +2,7 @@ require_relative 'base'
 
 module Todo
   module UseCases
-    class SetCurrentDayTest
+    class SetCurrentDayTest < Minitest::Test
       def setup
         @persistence = InMemoryPersistence.new
         @today = '10-03-1993'
