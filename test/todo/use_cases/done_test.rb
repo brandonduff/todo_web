@@ -2,9 +2,8 @@ require_relative 'base'
 
 module Todo
   module UseCases
-    class DoneTest < Base
+    class DoneTest
       def setup
-        super
         @task_list = TaskListBuilder.new([{ description: 'hello' }, { description: 'goodbye' }]).build
         @persistence = InMemoryPersistence.new
         @persistence.write_current_day('10-03-1993')
