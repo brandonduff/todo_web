@@ -4,27 +4,33 @@ class HTMLRenderer
   end
 
   def form(action:, &block)
-    @buffer << %(<form action="#{action}" method="post">)
+    append %(<form action="#{action}" method="post">)
     instance_eval(&block)
     @buffer << %(</form>)
   end
 
   def submit_button(value:, title:, &block)
-    @buffer << %(<button type="submit" value="#{value}" title="#{title}">)
+    append %(<button type="submit" value="#{value}" title="#{title}">)
     instance_eval(&block)
-    @buffer << %(</button>)
+    append %(</button>)
   end
 
   def text(text)
-    @buffer << text
+    append text
   end
 
   def hidden_input(value:, name:)
-    @buffer << %(<input type="text" name="#{name}" value="#{value}" hidden />)
+    append %(<input type="text" name="#{name}" value="#{value}" hidden />)
   end
 
   def to_s
     @buffer
+  end
+
+  private
+
+  def append(string)
+    @buffer << string
   end
 end
 
