@@ -1,8 +1,9 @@
 module Todo
   module UseCases
     class SetCurrentDay
-      def initialize(options)
-        @new_day = options[:new_day]
+      def initialize(new_day: nil, persistence: Persistence.new)
+        @new_day = new_day
+        @persistence = persistence
       end
 
       def perform
@@ -12,13 +13,11 @@ module Todo
 
       private
 
-      def persistence
-        Persistence.new
-      end
-
       def formatted_new_day
         DayFormatter.new(@new_day).format
       end
+
+      attr_reader :persistence
     end
   end
 end
