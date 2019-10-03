@@ -15,5 +15,6 @@ require 'todo/use_cases/set_current_day'
 require 'todo/env_helper'
 require 'todo/reader'
 require 'todo/persistence'
+require 'todo/in_memory_persistence'
 # Add requires for other files you add to your project here, so
 # you just need to require this one file in your bin file

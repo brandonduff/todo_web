@@ -2,8 +2,9 @@ module Todo
   module UseCases
     class Done
 
-      def initialize(task=nil)
+      def initialize(task=nil, persistence: Persistence.new)
         @task_to_finish = task
+        @persistence = persistence
       end
 
       def perform
@@ -29,9 +30,7 @@ module Todo
         todo.to_s
       end
 
-      def persistence
-        Persistence.new
-      end
+      attr_reader :persistence
     end
   end
 end
