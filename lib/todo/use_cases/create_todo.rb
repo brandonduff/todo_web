@@ -1,8 +1,9 @@
 module Todo
   module UseCases
     class CreateTodo
-      def initialize(todo_text)
+      def initialize(todo_text, persistence: Persistence.new)
         @todo_text = todo_text
+        @persistence = persistence
       end
 
       def perform
@@ -11,9 +12,7 @@ module Todo
         persistence.write_todays_tasks(task_list)
       end
 
-      def persistence
-        Persistence.new
-      end
+      attr_reader :persistence
     end
   end
 end
