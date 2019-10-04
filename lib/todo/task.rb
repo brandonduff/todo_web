@@ -23,7 +23,7 @@ module Todo
     end
 
     def done?
-      @done
+      !!@done
     end
 
     def to_s

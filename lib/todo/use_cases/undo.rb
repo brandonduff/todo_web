@@ -1,6 +1,9 @@
 module Todo
   module UseCases
     class Undo
+      def initialize(persistence: Persistence.new)
+        @persistence = persistence
+      end
 
       def perform
         task_list = todays_task_list
@@ -18,13 +21,11 @@ module Todo
         TaskListFetcher.new(persistence).tasks_for_day(persistence.read_current_day)
       end
 
-      def persistence
-        Persistence.new
-      end
-
       def present(task)
         task.to_s
       end
+
+      attr_reader :persistence
     end
   end
 end

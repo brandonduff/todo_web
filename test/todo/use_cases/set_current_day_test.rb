@@ -1,5 +1,3 @@
-require_relative 'base'
-
 module Todo
   module UseCases
     class SetCurrentDayTest < Minitest::Test
