@@ -4,6 +4,7 @@ module Todo
       def initialize(request)
         @request = request
         @presenter = request[:presenter] || ConsolePresenter.new
+        @persistence = request[:persistence] || Persistence.new
       end
 
       def perform
@@ -23,10 +24,6 @@ module Todo
         presenter.present(tasks.to_a)
       end
 
-      def persistence
-        Persistence.new
-      end
-
       def task_fetcher
         fetcher = TaskListFetcher.new(persistence)
         if @request[:month]
@@ -38,7 +35,7 @@ module Todo
         end
       end
 
-      attr_reader :presenter
+      attr_reader :presenter, :persistence
 
       class ConsolePresenter
         def present(tasks)
