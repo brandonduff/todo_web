@@ -2,6 +2,9 @@
   <% todos.each do |todo| %>
     <li>
       <%= todo.description %>
+      <form action="<%= todo.done_action %>" method="post">
+        <input type="submit" value="Done">
+      </form>
       <%= MoveUpTodoForm.render(todo.description) %>
     </li>
   <% end %>

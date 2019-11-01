@@ -1,9 +1,14 @@
 module Todo
   class Task
 
-    def initialize(description, done = false)
-      @description = description
-      @done = done
+    def initialize(task_or_description, done = false)
+      if task_or_description.is_a?(self.class)
+        @description = task_or_description.description
+        @done = task_or_description.done
+      else
+        @description = task_or_description
+        @done = done
+      end
     end
 
     def formatted_description

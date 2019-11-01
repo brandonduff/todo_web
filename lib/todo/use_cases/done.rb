@@ -19,7 +19,11 @@ module Todo
       private
 
       def task_to_finish
-        @task_to_finish || todays_task_list.unfinished_tasks.first
+        if @task_to_finish
+          Todo::Task.new(@task_to_finish)
+        else
+          todays_task_list.unfinished_tasks.first
+        end
       end
 
       def todays_task_list

@@ -18,8 +18,8 @@ module TodoWeb
       redirect(root)
     end
 
-    post '/done' do
-      Todo::UseCases::Done.new.perform
+    post '/done/:task' do
+      Todo::UseCases::Done.new(params[:task]).perform
       redirect(root)
     end
 
