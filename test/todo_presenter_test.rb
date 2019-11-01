@@ -17,11 +17,11 @@ class TestTodoPresenter < Minitest::Test
   end
 
   def test_presents_undone_todos_as_strings
-    assert_equal presented_todos, %w(foo bar)
+    assert_equal presented_todos.map(&:description), %w(foo bar)
   end
 
   def test_it_strips_checkmarks_from_done_todos
     @todo = Todo::Task.new('done', true)
-    assert_includes presented_todos, '<del>done</del>'
+    assert_includes presented_todos.map(&:description), '<del>done</del>'
   end
 end

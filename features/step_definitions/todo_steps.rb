@@ -15,10 +15,10 @@ Given(/^the current day is "([^"]*)"$/) do |day|
 end
 
 When('I move up {string}') do |todo|
+  pending
   click_button("Move up #{todo}")
 end
 
 Then('the first todo is {string}') do |todo|
-  pending
   assert_includes page.find('li', match: :first).text, todo
 end
