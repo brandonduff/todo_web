@@ -15,8 +15,11 @@ module Todo
     end
 
     def add_task(task)
+      return if include?(task)
       @tasks << task
     end
+
+    alias_method :<<, :add_task
 
     def done(task_to_finish)
       update_task_in_list(task_to_finish, task_to_finish.done)

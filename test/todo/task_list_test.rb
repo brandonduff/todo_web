@@ -130,4 +130,10 @@ class TaskListTest < Minitest::Test
     refute(unfinished_task.done?)
     assert_equal(original_task.description, unfinished_task.description)
   end
+
+  def test_ignores_duplicates
+    @task_list << Todo::Task.new('do the dishes')
+    @task_list << Todo::Task.new('do the dishes')
+    assert_equal(1, @task_list.count)
+  end
 end
