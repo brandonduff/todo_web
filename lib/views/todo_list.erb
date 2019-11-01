@@ -2,7 +2,7 @@
   <% todos.each do |todo| %>
     <li>
       <%= todo.description %>
-      <%= MoveUpTodoForm.render(todo) %>
+      <%= MoveUpTodoForm.render(todo.description) %>
     </li>
   <% end %>
 </ul>

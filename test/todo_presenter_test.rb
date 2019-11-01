@@ -24,4 +24,9 @@ class TestTodoPresenter < Minitest::Test
     @todo = Todo::Task.new('done', true)
     assert_includes presented_todos.map(&:description), '<del>done</del>'
   end
+
+  def test_done_action
+    todo = Todo::Task.new('finish me')
+    assert_equal "/done/#{URI::escape(todo.description)}", TodoWeb::TodoPresenter.new.present([todo]).first.done_action
+  end
 end

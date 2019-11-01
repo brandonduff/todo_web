@@ -4,7 +4,8 @@ module TodoWeb
   class TodoPresenter
     def present(todos)
       todos.map do |todo|
-        TodoViewModel.new(description: description(todo))
+        description = description(todo)
+        TodoViewModel.new(description: description, done_action: "/done/#{URI::escape(description)}")
       end
     end
 
@@ -12,7 +13,8 @@ module TodoWeb
       Rack::Utils.escape_html(text)
     end
 
-    TodoViewModel = Struct.new(:description, keyword_init: true)
+    TodoViewModel = Struct.new(:description, :done_action, keyword_init: true)
+
     private
 
     def description(todo)
