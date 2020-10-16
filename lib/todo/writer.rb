@@ -4,8 +4,12 @@ module Todo
       new(writable)
     end
 
-    def initialize(writable)
+    def initialize(writable="")
       @writable = writable
+    end
+
+    def write(output, to:)
+      self.class.new(output).write_to(to)
     end
 
     def write_to(file_path)
