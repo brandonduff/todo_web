@@ -1,16 +1,12 @@
 module Todo
   class Persistence
-    def initialize
-      @writer = Writer.new
-    end
-
     def write_todays_tasks(tasks)
       ensure_todo_dir_exists
-      @writer.write(tasks, to: todo_file_for_day(current_day))
+      write(tasks, to: todo_file_for_day(current_day))
     end
 
     def write_current_day(day)
-      @writer.write(day, to: current_day_path)
+      write(day, to: current_day_path)
     end
 
     def read_tasks_for_day(day)
@@ -27,6 +23,13 @@ module Todo
     end
 
     private
+
+    def write(output, to:)
+      File.open(to, 'a') do |file|
+        file.truncate(0)
+        file.puts(output)
+      end
+    end
     
     def current_day_path
       File.join(ENV['HOME'], '.current_day.txt')

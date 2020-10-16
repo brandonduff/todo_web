@@ -1,7 +1,6 @@
 require 'todo/version.rb'
 require 'todo/task'
 require 'todo/task_list'
-require 'todo/writer'
 require 'todo/task_builder'
 require 'todo/task_list_fetcher'
 require 'todo/multi_task_list_fetcher'
