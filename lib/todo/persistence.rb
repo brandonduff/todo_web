@@ -1,11 +1,16 @@
 module Todo
   class Persistence
-    def self.create_null
-      new(NullIO.new)
+    def self.create_null(log: nil, current_day: nil)
+      new(NullIO.new(current_day_path => current_day), log)
     end
 
-    def initialize(io = FileIO.new)
+    def self.current_day_path
+      File.join(ENV['HOME'], '.current_day.txt')
+    end
+
+    def initialize(io = FileIO.new, log = nil)
       @io = io
+      @log = log
     end
 
     def write_todays_tasks(tasks)
@@ -33,11 +38,12 @@ module Todo
     private
 
     def write(output, to:)
+      log[current_day] = output
       @io.write(output, to: to)
     end
 
     def current_day_path
-      File.join(ENV['HOME'], '.current_day.txt')
+      self.class.current_day_path
     end
 
     def todo_path
@@ -60,7 +66,15 @@ module Todo
       @io.ensure_dir(todo_path)
     end
 
+    def log
+      @log || {}
+    end
+
     class NullIO
+      def initialize(config = {})
+        @config = config
+      end
+
       def write(output, to:)
 
       end
@@ -70,8 +84,12 @@ module Todo
       end
 
       def read(file)
-        yield
+        config[file] or yield
       end
+
+      private
+
+      attr_reader :config
     end
 
     class FileIO

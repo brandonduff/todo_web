@@ -34,21 +34,34 @@ module Todo
     end
 
     class NullabilityTest < PersistenceTest
-      def setup
-        super
-        @null_persistence = Persistence.create_null
-      end
-
       def test_nullability_when_writing
         FileUtils.rm_r("/tmp/todos")
-        @null_persistence.write_todays_tasks("do the dishes")
+
+        null_persistence = Persistence.create_null
+        null_persistence.write_todays_tasks("do the dishes")
+
         refute Dir.exist?("/tmp/todos")
         assert_equal(@today, @persistence.read_current_day)
       end
 
       def test_nullability_when_reading
+        null_persistence = Persistence.create_null
         @persistence.write_todays_tasks("do the dishes")
-        assert_empty(@null_persistence.read_tasks_for_day(@today))
+        assert_empty(null_persistence.read_tasks_for_day(@today))
+      end
+
+      def test_can_configure_current_day
+        null_persistence = Persistence.create_null(current_day: "foo bar")
+        assert_equal("foo bar", null_persistence.read_current_day)
+      end
+
+      def test_tracking_written_tasks
+        log = {}
+        null_persistence = Persistence.create_null(current_day: @today, log: log)
+
+        null_persistence.write_todays_tasks("wash the car")
+
+        assert_equal("wash the car", log[@today])
       end
     end
   end
