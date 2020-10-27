@@ -55,6 +55,11 @@ module Todo
         assert_equal("foo bar", null_persistence.read_current_day)
       end
 
+      def test_can_configure_tasks_for_day
+        null_persistence = Persistence.create_null(current_day: "1-1-1000", tasks: { "1-1-1000" => "plow the field" })
+        assert_equal("plow the field", null_persistence.read_tasks_for_day("1-1-1000").first.to_s)
+      end
+
       def test_tracking_written_tasks
         log = {}
         null_persistence = Persistence.create_null(current_day: @today, log: log)
