@@ -1,5 +1,13 @@
 module Todo
   class Persistence
+    def self.create_null
+      new(NullIO.new)
+    end
+
+    def initialize(io = FileIO.new)
+      @io = io
+    end
+
     def write_todays_tasks(tasks)
       ensure_todo_dir_exists
       write(tasks, to: todo_file_for_day(current_day))
@@ -25,12 +33,9 @@ module Todo
     private
 
     def write(output, to:)
-      File.open(to, 'a') do |file|
-        file.truncate(0)
-        file.puts(output)
-      end
+      @io.write(output, to: to)
     end
-    
+
     def current_day_path
       File.join(ENV['HOME'], '.current_day.txt')
     end
@@ -42,17 +47,52 @@ module Todo
     def todo_file_for_day(day)
       File.join(todo_path, "#{day}.txt")
     end
-    
+
     def task_data_for_day(day)
-      File.exist?(todo_file_for_day(day)) ? File.read(todo_file_for_day(day)).split("\n") : []
+      @io.read(todo_file_for_day(day)) { "" }.split("\n")
     end
 
     def current_day
-      File.exist?(current_day_path) ? File.read(current_day_path).strip : DayFormatter.today
+      @io.read(current_day_path) { DayFormatter.today }.strip
     end
 
     def ensure_todo_dir_exists
-      Dir.mkdir(todo_path) unless Dir.exist?(todo_path)
+      @io.ensure_dir(todo_path)
+    end
+
+    class NullIO
+      def write(output, to:)
+
+      end
+
+      def ensure_dir(_path)
+
+      end
+
+      def read(file)
+        yield
+      end
+    end
+
+    class FileIO
+      def ensure_dir(path)
+        Dir.mkdir(path) unless Dir.exist?(path)
+      end
+
+      def write(output, to:)
+        File.open(to, 'a') do |file|
+          file.truncate(0)
+          file.puts(output)
+        end
+      end
+
+      def read(file)
+        if File.exist?(file)
+          File.read(file)
+        else
+          yield
+        end
+      end
     end
   end
 end

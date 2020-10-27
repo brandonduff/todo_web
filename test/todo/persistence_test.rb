@@ -13,7 +13,7 @@ module Todo
       ENV["HOME"] = nil
       FileUtils.rm("/tmp/.current_day.txt")
     end
-    
+
     def test_read_current_day
       assert_equal(@today, @persistence.read_current_day)
     end
@@ -31,6 +31,25 @@ module Todo
     def test_read_todays_tasks
       @persistence.write_todays_tasks("do the dishes")
       assert_equal("do the dishes", @persistence.read_tasks_for_day(@today).first.to_s)
+    end
+
+    class NullabilityTest < PersistenceTest
+      def setup
+        super
+        @null_persistence = Persistence.create_null
+      end
+
+      def test_nullability_when_writing
+        FileUtils.rm_r("/tmp/todos")
+        @null_persistence.write_todays_tasks("do the dishes")
+        refute Dir.exist?("/tmp/todos")
+        assert_equal(@today, @persistence.read_current_day)
+      end
+
+      def test_nullability_when_reading
+        @persistence.write_todays_tasks("do the dishes")
+        assert_empty(@null_persistence.read_tasks_for_day(@today))
+      end
     end
   end
 end

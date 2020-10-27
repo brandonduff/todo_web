@@ -60,6 +60,10 @@ module Todo
       from_array(@tasks.select(&:done?))
     end
 
+    def empty?
+      tasks.empty?
+    end
+
     protected
 
     attr_reader :tasks
