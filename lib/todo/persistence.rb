@@ -8,6 +8,14 @@ module Todo
       File.join(ENV['HOME'], '.current_day.txt')
     end
 
+    def self.todo_path
+      File.join(ENV['HOME'], 'todos/')
+    end
+
+    def self.todo_file_for_day(day)
+      File.join(todo_path, "#{day}.txt")
+    end
+
     def initialize(io = FileIO.new, log = nil)
       @io = io
       @log = log
@@ -47,11 +55,11 @@ module Todo
     end
 
     def todo_path
-      File.join(ENV['HOME'], 'todos/')
+      self.class.todo_path
     end
 
     def todo_file_for_day(day)
-      File.join(todo_path, "#{day}.txt")
+      self.class.todo_file_for_day(day)
     end
 
     def task_data_for_day(day)
