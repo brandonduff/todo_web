@@ -1,7 +1,7 @@
 module Todo
   class Persistence
-    def self.create_null(log: nil, current_day: nil, tasks: {})
-      new(NullIO.new({ 'current_day_path' => current_day }.merge(tasks)), log)
+    def self.create_null(log: nil, **null_config)
+      new(NullIO.new(**null_config), log)
     end
 
     def initialize(io = FileIO.new, log = nil)
@@ -67,8 +67,8 @@ module Todo
     end
 
     class NullIO
-      def initialize(config = {})
-        @config = config
+      def initialize(current_day: nil, tasks: {})
+        @config = { current_day_path => current_day }.merge(tasks)
       end
 
       def todo_file_for_day(day)
