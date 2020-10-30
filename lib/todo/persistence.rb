@@ -1,20 +1,7 @@
 module Todo
   class Persistence
     def self.create_null(log: nil, current_day: nil, tasks: {})
-      tasks = tasks.transform_keys(&method(:todo_file_for_day))
-      new(NullIO.new({ current_day_path => current_day }.merge(tasks)), log)
-    end
-
-    def self.current_day_path
-      File.join(ENV['HOME'], '.current_day.txt')
-    end
-
-    def self.todo_path
-      File.join(ENV['HOME'], 'todos/')
-    end
-
-    def self.todo_file_for_day(day)
-      File.join(todo_path, "#{day}.txt")
+      new(NullIO.new({ 'current_day_path' => current_day }.merge(tasks)), log)
     end
 
     def initialize(io = FileIO.new, log = nil)
@@ -52,15 +39,15 @@ module Todo
     end
 
     def current_day_path
-      self.class.current_day_path
+      @io.current_day_path
     end
 
     def todo_path
-      self.class.todo_path
+      @io.todo_path
     end
 
     def todo_file_for_day(day)
-      self.class.todo_file_for_day(day)
+      @io.todo_file_for_day(day)
     end
 
     def task_data_for_day(day)
@@ -72,7 +59,7 @@ module Todo
     end
 
     def ensure_todo_dir_exists
-      @io.ensure_dir(todo_path)
+      @io.ensure_dir(@io.todo_path)
     end
 
     def log
@@ -82,6 +69,18 @@ module Todo
     class NullIO
       def initialize(config = {})
         @config = config
+      end
+
+      def todo_file_for_day(day)
+        day
+      end
+
+      def todo_path
+        'todos/'
+      end
+
+      def current_day_path
+        'current_day_path'
       end
 
       def write(output, to:)
@@ -102,6 +101,18 @@ module Todo
     end
 
     class FileIO
+      def todo_file_for_day(day)
+        File.join(todo_path, "#{day}.txt")
+      end
+
+      def todo_path
+        File.join(ENV['HOME'], 'todos/')
+      end
+
+      def current_day_path
+        File.join(ENV['HOME'], '.current_day.txt')
+      end
+
       def ensure_dir(path)
         Dir.mkdir(path) unless Dir.exist?(path)
       end
