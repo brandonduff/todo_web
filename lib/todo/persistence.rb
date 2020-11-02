@@ -68,7 +68,7 @@ module Todo
 
     class NullIO
       def initialize(current_day: nil, tasks: {})
-        @config = { current_day_path => current_day }.merge(tasks)
+        @config = { current_day_path => current_day }.merge(tasks.transform_values(&:to_s))
       end
 
       def todo_file_for_day(day)
