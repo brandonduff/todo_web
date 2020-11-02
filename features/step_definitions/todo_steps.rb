@@ -15,7 +15,6 @@ Given(/^the current day is "([^"]*)"$/) do |day|
 end
 
 When('I move up {string}') do |todo|
-  pending
   click_button("Move up #{todo}")
 end
 

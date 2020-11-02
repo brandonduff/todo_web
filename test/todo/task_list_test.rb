@@ -136,4 +136,29 @@ class TaskListTest < Minitest::Test
     @task_list << Todo::Task.new('do the dishes')
     assert_equal(1, @task_list.count)
   end
+
+  def test_promotion
+    @task_list << Todo::Task.new('first task')
+    last_task = Todo::Task.new('second task')
+    @task_list << last_task
+
+    @task_list.promote(last_task)
+
+    assert_equal last_task, @task_list.first
+  end
+
+  def test_promotion_when_task_isnt_in_list
+    @task_list.promote(Todo::Task.new('not in list'))
+  end
+
+  def test_promotion_of_first_place_rolls_over
+    first_task = Todo::Task.new('first task')
+    second_task = Todo::Task.new('second task')
+    @task_list << first_task
+    @task_list << second_task
+
+    @task_list.promote(first_task)
+
+    assert_equal second_task, @task_list.first
+  end
 end

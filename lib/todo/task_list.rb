@@ -33,6 +33,13 @@ module Todo
       @tasks = @tasks.reject(&:done?)
     end
 
+    def promote(task)
+      return unless include?(task)
+
+      task_index = @tasks.find_index(task)
+      @tasks[task_index], @tasks[task_index - 1] = @tasks[task_index - 1], @tasks[task_index]
+    end
+
     def to_s
       @tasks.map(&:to_s).join("\n")
     end

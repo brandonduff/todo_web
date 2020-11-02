@@ -39,6 +39,7 @@ module TodoWeb
     end
 
     post '/move_up' do
+      Todo::UseCases::Promote.perform(params['todo'])
       redirect(root)
     end
 
