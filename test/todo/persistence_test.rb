@@ -35,7 +35,7 @@ module Todo
 
     class NullabilityTest < PersistenceTest
       def test_nullability_when_writing
-        FileUtils.rm_r("/tmp/todos")
+        FileUtils.rm_r("/tmp/todos") if Dir.exist?("/tmp/todos")
 
         null_persistence = Persistence.create_null
         null_persistence.write_todays_tasks("do the dishes")
