@@ -24,7 +24,7 @@ module TodoWeb
     end
 
     post '/clear' do
-      Todo::UseCases::Clear.new.perform
+      Todo::UseCases::Clear.perform
       redirect(root)
     end
 
@@ -34,7 +34,7 @@ module TodoWeb
     end
 
     post '/undo' do
-      Todo::UseCases::Undo.new.perform
+      Todo::UseCases::Undo.perform
       redirect(root)
     end
 

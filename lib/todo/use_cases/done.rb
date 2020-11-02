@@ -1,7 +1,6 @@
 module Todo
   module UseCases
     class Done
-
       def initialize(task=nil, persistence: Persistence.new)
         @task_to_finish = task
         @persistence = persistence

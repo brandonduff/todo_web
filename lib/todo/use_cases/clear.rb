@@ -1,10 +1,6 @@
 module Todo
   module UseCases
-    class Clear
-      def initialize(persistence: Persistence.new)
-        @persistence = persistence
-      end
-
+    class Clear < UseCase
       def perform
         task_list = TaskListFetcher.new(persistence).tasks_for_day(persistence.read_current_day)
         task_list.clear

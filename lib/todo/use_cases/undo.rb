@@ -1,10 +1,6 @@
 module Todo
   module UseCases
-    class Undo
-      def initialize(persistence: Persistence.new)
-        @persistence = persistence
-      end
-
+    class Undo < UseCase
       def perform
         task_list = todays_task_list
         task_to_unfinish = task_list.finished_tasks.first
