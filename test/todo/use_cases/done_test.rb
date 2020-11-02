@@ -3,9 +3,9 @@ module Todo
     class DoneTest < Minitest::Test
       def setup
         @task_list = TaskListBuilder.new([{ description: 'hello' }, { description: 'goodbye' }]).build
-        @persistence = InMemoryPersistence.new
-        @persistence.write_current_day('10-03-1993')
-        @persistence.write_todays_tasks(@task_list)
+        @log = Hash.new
+        @today = '10-03-1993'
+        @persistence = Persistence.create_null(log: @log, current_day: @today, tasks: { @today => @task_list })
       end
 
       def test_done_returns_done_todo
@@ -15,12 +15,12 @@ module Todo
       def test_done_saves_state_of_todos
         Done.new(persistence: @persistence).perform
         expected_task_list = TaskListBuilder.new([{ description: 'hello', done: true}, { description: 'goodbye'}]).build
-        assert_equal(expected_task_list, @persistence.read_tasks_for_day('10-03-1993'))
+        assert_equal(expected_task_list, @log[@today])
       end
 
       def test_does_nothing_when_there_are_no_todos
-        @persistence.write_current_day('10-04-1993')
-        assert_equal('', Done.new(persistence: @persistence).perform)
+        persistence = Persistence.create_null
+        assert_equal('', Done.new(persistence: persistence).perform)
       end
 
       def test_done_can_operate_on_a_specific_todo
