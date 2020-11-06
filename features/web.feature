@@ -55,3 +55,5 @@ Feature: Web Todos App
     When I am on the home page
     And I move up "second todo"
     Then the first todo is "second todo"
+    And I move down "second todo"
+    Then the first todo is "first todo"

@@ -33,11 +33,15 @@ module Todo
       @tasks = @tasks.reject(&:done?)
     end
 
-    def promote(task)
+    def move(task, direction)
       return unless include?(task)
 
       task_index = @tasks.find_index(task)
-      @tasks[task_index], @tasks[task_index - 1] = @tasks[task_index - 1], @tasks[task_index]
+      if direction == :up
+        @tasks[task_index], @tasks[task_index - 1] = @tasks[task_index - 1], @tasks[task_index]
+      else
+        @tasks[task_index + 1], @tasks[task_index] = @tasks[task_index], @tasks[task_index + 1]
+      end
     end
 
     def to_s

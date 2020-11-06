@@ -142,13 +142,24 @@ class TaskListTest < Minitest::Test
     last_task = Todo::Task.new('second task')
     @task_list << last_task
 
-    @task_list.promote(last_task)
+    @task_list.move(last_task, :up)
 
     assert_equal last_task, @task_list.first
   end
 
+  def test_demotion
+    first_task = Todo::Task.new('first task')
+    @task_list << first_task
+    @task_list << Todo::Task.new('second task')
+    @task_list << Todo::Task.new('third task')
+
+    @task_list.move(first_task, :down)
+
+    assert_equal Todo::Task.new('second task'), @task_list.first
+  end
+
   def test_promotion_when_task_isnt_in_list
-    @task_list.promote(Todo::Task.new('not in list'))
+    @task_list.move(Todo::Task.new('not in list'), :up)
   end
 
   def test_promotion_of_first_place_rolls_over
@@ -157,7 +168,7 @@ class TaskListTest < Minitest::Test
     @task_list << first_task
     @task_list << second_task
 
-    @task_list.promote(first_task)
+    @task_list.move(first_task, :up)
 
     assert_equal second_task, @task_list.first
   end
