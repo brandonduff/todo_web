@@ -43,6 +43,11 @@ module TodoWeb
       redirect(root)
     end
 
+    post '/move_down' do
+      Todo::UseCases::Move.perform(params['todo'], :down)
+      redirect(root)
+    end
+
     private
 
     def root

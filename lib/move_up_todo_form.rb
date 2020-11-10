@@ -45,15 +45,37 @@ class MoveUpTodoForm < HTMLRenderer
   end
 
   def render
-    form(action: "move_up") do
+    form(action: action) do
       hidden_input(value: todo, name: "todo")
-      submit_button(value: todo, title: "Move up #{todo}") do
-        text("^")
+      submit_button(value: todo, title: title) do
+        text(button_text)
       end
     end
   end
 
   private
 
+  def action
+    "move_#{direction}"
+  end
+
+  def direction
+    :up
+  end
+
+  def title
+    "Move #{direction} #{todo}"
+  end
+
+  def button_text
+    direction == :up ? "^" : "v"
+  end
+
   attr_reader :todo
+end
+
+class MoveDownTodoForm < MoveUpTodoForm
+  def direction
+    :down
+  end
 end

@@ -38,9 +38,9 @@ module Todo
 
       task_index = @tasks.find_index(task)
       if direction == :up
-        @tasks[task_index], @tasks[task_index - 1] = @tasks[task_index - 1], @tasks[task_index]
+        swap(task_index, task_index - 1)
       else
-        @tasks[task_index + 1], @tasks[task_index] = @tasks[task_index], @tasks[task_index + 1]
+        swap(task_index, task_index + 1)
       end
     end
 
@@ -80,6 +80,18 @@ module Todo
     attr_reader :tasks
 
     private
+
+    def swap(first_index, second_index)
+      self[first_index], self[second_index] = self[second_index], self[first_index]
+    end
+
+    def []=(index, value)
+      @tasks[index % @tasks.length] = value
+    end
+
+    def [](index)
+      @tasks[index % @tasks.length]
+    end
 
     def from_array(array)
       self.class.from_array(array)

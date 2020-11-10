@@ -158,6 +158,18 @@ class TaskListTest < Minitest::Test
     assert_equal Todo::Task.new('second task'), @task_list.first
   end
 
+  def test_demotion_of_last_task
+    first_task = Todo::Task.new('first task')
+    @task_list << first_task
+    @task_list << Todo::Task.new('second task')
+    third_task = Todo::Task.new('third task')
+    @task_list << third_task
+
+    @task_list.move(third_task, :down)
+
+    assert_equal third_task, @task_list.first
+  end
+
   def test_promotion_when_task_isnt_in_list
     @task_list.move(Todo::Task.new('not in list'), :up)
   end
