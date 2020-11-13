@@ -7,7 +7,7 @@ module Todo
 
     def tasks_for_day(day)
       TaskList.new.tap do |task_list|
-        Range.new(Date.parse(day) - @days_ago, Date.parse(day)).each do |date|
+        (Date.parse(day) - @days_ago..Date.parse(day)).each do |date|
           task_list.concat(TaskListFetcher.new(@notepad).tasks_for_day(date.strftime("%d-%m-%Y")))
         end
       end
