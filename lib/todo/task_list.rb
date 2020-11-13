@@ -53,7 +53,7 @@ module Todo
     end
 
     def concat(other_list)
-      from_array(to_a.concat(other_list.to_a))
+      @tasks.concat(other_list.to_a)
     end
 
     def ==(other_list)
