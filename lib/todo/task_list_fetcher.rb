@@ -26,7 +26,8 @@ module Todo
     private
 
     def date_range(day)
-      (Date.parse(day) - @days_ago)..Date.parse(day)
+      date = Date.parse(day)
+      (date - @days_ago)..date
     end
   end
 end
