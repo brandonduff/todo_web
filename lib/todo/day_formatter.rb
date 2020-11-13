@@ -1,5 +1,11 @@
 require 'date'
 
+class Date
+  def dmy_string
+    strftime("%d-%m-%Y")
+  end
+end
+
 module Todo
   class DayFormatter
     def self.format(date_string)
@@ -7,41 +13,23 @@ module Todo
     end
 
     def self.today
-      Date.today.strftime("%d-%m-%Y")
+      Date.today.dmy_string
     end
 
     def initialize(date_string)
-      @date_string = date_string
+      @date_string = date_string.to_s
     end
 
     attr_reader :date_string
 
     def format
       if date_string =~ /\d+-\d+/
-        parse_current_year_date
+        Date.parse(date_string + "-#{Date.today.strftime("%Y")}")
       elsif date_string == "today" || date_string == ""
-        today
-      elsif date_string =~ /\d+-\d+-\d+/
-        parse_full_date_string
+        Date.today
       else
-        parse_relative_day
-      end
-    end
-
-    def parse_current_year_date
-      Date.parse(date_string + "-#{Date.today.strftime("%Y")}").strftime("%d-%m-%Y")
-    end
-
-    def today
-      self.class.today
-    end
-
-    def parse_full_date_string
-      Date.parse(date_string).strftime("%d-%m-%Y")
-    end
-
-    def parse_relative_day
-      Date.parse(date_string).strftime("%d-%m-%Y")
+        Date.parse(date_string)
+      end.dmy_string
     end
   end
 end

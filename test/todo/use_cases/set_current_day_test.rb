@@ -20,7 +20,7 @@ module Todo
       def test_setting_new_day_formats_it
         new_day = 'today'
         SetCurrentDay.new(new_day: new_day, notepad: @null_notepad).perform
-        assert_equal(DayFormatter.new(new_day).today, @log[@today])
+        assert_equal(DayFormatter.today, @log[@today])
       end
     end
   end
