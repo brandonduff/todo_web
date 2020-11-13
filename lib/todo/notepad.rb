@@ -19,7 +19,7 @@ module Todo
     end
 
     def read_tasks_for_day(day)
-      task_data = task_data_for_day(day)
+      task_data = task_data_for_day(DayFormatter.format(day))
       TaskList.new.tap do |task_list|
         task_data.each do |task|
           task_list.add_task(TaskBuilder.new(task).build)

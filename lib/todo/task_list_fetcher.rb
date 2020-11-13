@@ -8,7 +8,7 @@ module Todo
     def tasks_for_day(day)
       TaskList.new.tap do |task_list|
         date_range(day).each do |date|
-          task_list.concat(@notepad.read_tasks_for_day(date.strftime("%d-%m-%Y")))
+          task_list.concat(@notepad.read_tasks_for_day(date))
         end
       end
     end

@@ -56,8 +56,8 @@ module Todo
       end
 
       def test_can_configure_tasks_for_day
-        null_notepad = Notepad.create_null(tasks: { "1-1-1000" => "plow the field" })
-        assert_equal("plow the field", null_notepad.read_tasks_for_day("1-1-1000").first.to_s)
+        null_notepad = Notepad.create_null(tasks: { "01-01-1000" => "plow the field" })
+        assert_equal("plow the field", null_notepad.read_tasks_for_day("01-01-1000").first.to_s)
       end
 
       def test_tracking_written_tasks
