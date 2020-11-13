@@ -1,9 +1,9 @@
 module Todo
   module UseCases
     class Done
-      def initialize(task=nil, persistence: Persistence.new)
+      def initialize(task=nil, notepad: Notepad.new)
         @task_to_finish = task
-        @persistence = persistence
+        @notepad = notepad
       end
 
       def perform
@@ -11,7 +11,7 @@ module Todo
 
         task_list = todays_task_list
         done_task = task_list.done(task_to_finish)
-        persistence.write_todays_tasks(task_list)
+        notepad.write_todays_tasks(task_list)
         present(done_task)
       end
 
@@ -26,14 +26,14 @@ module Todo
       end
 
       def todays_task_list
-        TaskListFetcher.new(persistence).tasks_for_day(persistence.read_current_day)
+        TaskListFetcher.new(notepad).tasks_for_day(notepad.read_current_day)
       end
 
       def present(todo)
         todo.to_s
       end
 
-      attr_reader :persistence
+      attr_reader :notepad
     end
   end
 end

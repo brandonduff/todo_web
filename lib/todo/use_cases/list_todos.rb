@@ -4,11 +4,11 @@ module Todo
       def initialize(request)
         @request = request
         @presenter = request[:presenter] || ConsolePresenter.new
-        @persistence = request[:persistence] || Persistence.new
+        @notepad = request[:notepad] || Notepad.new
       end
 
       def perform
-        current_day = DayFormatter.format(persistence.read_current_day)
+        current_day = DayFormatter.format(notepad.read_current_day)
         tasks = task_fetcher.tasks_for_day(current_day)
 
         if @request[:all]
@@ -25,7 +25,7 @@ module Todo
       end
 
       def task_fetcher
-        fetcher = TaskListFetcher.new(persistence)
+        fetcher = TaskListFetcher.new(notepad)
         if @request[:month]
           fetcher.for_month
         elsif @request[:week]
@@ -35,7 +35,7 @@ module Todo
         end
       end
 
-      attr_reader :presenter, :persistence
+      attr_reader :presenter, :notepad
 
       class ConsolePresenter
         def present(tasks)

@@ -1,11 +1,11 @@
 module Todo
   class TaskListFetcher
-    def initialize(persistence)
-      @persistence = persistence
+    def initialize(notepad)
+      @notepad = notepad
     end
 
     def tasks_for_day(day)
-      @persistence.read_tasks_for_day(day)
+      @notepad.read_tasks_for_day(day)
     end
 
     def for_week
@@ -19,7 +19,7 @@ module Todo
     private
 
     def multi_list_fetcher_for_days_ago(days_ago)
-      MultiTaskListFetcher.new(@persistence, days_ago)
+      MultiTaskListFetcher.new(@notepad, days_ago)
     end
   end
 end

@@ -1,5 +1,5 @@
 module Todo
-  class Persistence
+  class Notepad
     def self.create_null(log: nil, **null_config)
       new(NullIO.new(**null_config), log)
     end

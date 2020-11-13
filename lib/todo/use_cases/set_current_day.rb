@@ -1,14 +1,14 @@
 module Todo
   module UseCases
     class SetCurrentDay
-      def initialize(new_day: nil, persistence: Persistence.new)
+      def initialize(new_day: nil, notepad: Notepad.new)
         @new_day = new_day
-        @persistence = persistence
+        @notepad = notepad
       end
 
       def perform
-        persistence.write_current_day(formatted_new_day) if @new_day
-        persistence.read_current_day
+        notepad.write_current_day(formatted_new_day) if @new_day
+        notepad.read_current_day
       end
 
       private
@@ -17,7 +17,7 @@ module Todo
         DayFormatter.new(@new_day).format
       end
 
-      attr_reader :persistence
+      attr_reader :notepad
     end
   end
 end

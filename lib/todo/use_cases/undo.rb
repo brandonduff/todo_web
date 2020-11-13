@@ -7,21 +7,21 @@ module Todo
         return "" unless task_to_unfinish
 
         undone_task = task_list.undo(task_to_unfinish)
-        persistence.write_todays_tasks(task_list)
+        notepad.write_todays_tasks(task_list)
         present(undone_task)
       end
 
       private
 
       def todays_task_list
-        TaskListFetcher.new(persistence).tasks_for_day(persistence.read_current_day)
+        TaskListFetcher.new(notepad).tasks_for_day(notepad.read_current_day)
       end
 
       def present(task)
         task.to_s
       end
 
-      attr_reader :persistence
+      attr_reader :notepad
     end
   end
 end
