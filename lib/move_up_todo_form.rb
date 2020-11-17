@@ -1,4 +1,4 @@
-class HTMLRenderer
+class HTMLBrush
   def initialize(*args)
     @buffer = ""
   end
@@ -34,7 +34,7 @@ class HTMLRenderer
   end
 end
 
-class MoveUpTodoForm < HTMLRenderer
+class MoveUpTodoForm < HTMLBrush
   def self.render(todo)
     new(todo).render
   end
