@@ -13,33 +13,40 @@ class Canvas
 end
 
 class HTMLCanvas < Canvas
-  def paragraph(value=nil)
-    append("<p>")
-
-    if block_given?
-      yield(self)
-    else
-      append(value)
+  def self.define_tag(method_name, tag = method_name, **default_attributes)
+    define_method method_name do |inner_value="", **provided_attributes, &block|
+      open_tag(tag, inner: inner_value, **default_attributes, **provided_attributes, &block)
     end
-
-    append("</p>")
   end
 
-  def submit_button(value:, title:)
-    append(%(<button type="submit" value="#{value}" title="#{title}">))
-    yield(self)
-    append('</button>')
-  end
-
-  def hidden_input(name:, value:)
-    append(%(<input type="text" name="#{name}" value="#{value}" hidden />))
-  end
+  define_tag :form, method: :post
+  define_tag :submit_button, :button, type: :submit
+  define_tag :hidden_input, :input, type: :text, hidden: true
+  define_tag :paragraph, :p
 
   def text(value)
     append(value)
   end
 
   private
+
+  def open_tag(tag_name, inner: "", **attributes)
+    append("<#{tag_name}")
+
+    attributes.each do |key, val|
+      append(%( #{key}="#{val}"))
+    end
+
+    append(">")
+
+    if block_given?
+      yield(self)
+    else
+      append(inner)
+    end
+
+    append("</#{tag_name}>")
+  end
 
   def append(value)
     @buffer << value.render

@@ -83,6 +83,17 @@ class HTMLCanvasTest < Minitest::Test
     assert_equal 'my_value', input['value']
     assert input['hidden']
   end
+
+  def test_form
+    view = HTMLCanvas.new
+    view.form(action: '/my_action') { |html| html.text 'hi' }
+
+    result = Capybara.string(view.to_s)
+    form = result.find('form')
+    assert_equal '/my_action', form['action']
+    assert_equal 'post', form['method']
+    assert_equal 'hi', form.text
+  end
 end
 
 class ComponentTest < Minitest::Test
