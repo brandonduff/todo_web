@@ -61,7 +61,6 @@ class HTMLCanvasTest < Minitest::Test
   end
 
   def test_rendering_submit_button
-
     view = HTMLCanvas.new
     view.submit_button(value: 'foo', title: 'title') { |html| html.text('hi') }
 
@@ -71,6 +70,18 @@ class HTMLCanvasTest < Minitest::Test
     assert_equal 'foo', button['value']
     assert_equal 'title', button['title']
     assert_equal 'hi', button.text
+  end
+
+  def test_hidden_input
+    view = HTMLCanvas.new
+    view.hidden_input(name: 'my_name', value: 'my_value')
+
+    result = Capybara.string(view.to_s)
+    input = result.find('input[type="text"]', visible: :hidden)
+
+    assert_equal 'my_name', input['name']
+    assert_equal 'my_value', input['value']
+    assert input['hidden']
   end
 end
 

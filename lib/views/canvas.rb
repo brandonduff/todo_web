@@ -31,6 +31,10 @@ class HTMLCanvas < Canvas
     append('</button>')
   end
 
+  def hidden_input(name:, value:)
+    append(%(<input type="text" name="#{name}" value="#{value}" hidden />))
+  end
+
   def text(value)
     append(value)
   end
