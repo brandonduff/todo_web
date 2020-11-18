@@ -1,54 +1,17 @@
-class HTMLBrush
-  def initialize(*args)
-    @buffer = ""
-  end
-
-  def form(action:, &block)
-    append %(<form action="#{action}" method="post">)
-    instance_eval(&block)
-    @buffer << %(</form>)
-  end
-
-  def submit_button(value:, title:, &block)
-    append %(<button type="submit" value="#{value}" title="#{title}">)
-    instance_eval(&block)
-    append %(</button>)
-  end
-
-  def text(text)
-    append text
-  end
-
-  def hidden_input(value:, name:)
-    append %(<input type="text" name="#{name}" value="#{value}" hidden />)
-  end
-
-  def to_s
-    @buffer
-  end
-
-  private
-
-  def append(string)
-    @buffer << string
-  end
-end
-
-class MoveUpTodoForm < HTMLBrush
+class MoveUpTodoForm < HTMLComponent
   def self.render(todo)
     new(todo).render
   end
 
   def initialize(todo)
-    super
     @todo = todo
   end
 
-  def render
-    form(action: action) do
-      hidden_input(value: todo, name: "todo")
-      submit_button(value: todo, title: title) do
-        text(button_text)
+  def render_content_on(html)
+    html.form(action: action) do
+      html.hidden_input(value: todo, name: "todo")
+      html.submit_button(value: todo, title: title) do
+        html.text(button_text)
       end
     end
   end

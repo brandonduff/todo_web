@@ -1,18 +1,14 @@
-class Canvas
+class HTMLComponent
+  def render
+    render_content_on(HTMLCanvas.new)
+  end
+end
+
+class HTMLCanvas
   def initialize
     @buffer = ""
   end
 
-  def render(renderable)
-    renderable.render_content_on(self)
-  end
-
-  def to_s
-    @buffer
-  end
-end
-
-class HTMLCanvas < Canvas
   def self.define_tag(method_name, tag = method_name, **default_attributes)
     define_method method_name do |inner_value="", **provided_attributes, &block|
       open_tag(tag, inner: inner_value, **default_attributes, **provided_attributes, &block)
@@ -26,6 +22,14 @@ class HTMLCanvas < Canvas
 
   def text(value)
     append(value)
+  end
+
+  def to_s
+    @buffer
+  end
+
+  def render(renderable)
+    renderable.render_content_on(self)
   end
 
   private

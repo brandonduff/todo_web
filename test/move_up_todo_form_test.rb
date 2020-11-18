@@ -1,6 +1,4 @@
-require 'minitest/autorun'
-require 'move_up_todo_form'
-require 'capybara'
+require 'test_helper'
 
 class TestMoveUpTodoForm < Minitest::Test
   def test_form_action

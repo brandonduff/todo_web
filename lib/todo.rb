@@ -13,5 +13,7 @@ require 'todo/use_cases/clear'
 require 'todo/use_cases/set_current_day'
 require 'todo/use_cases/move'
 require 'todo/notepad'
+require 'views/component'
+require 'move_up_todo_form'
 # Add requires for other files you add to your project here, so
 # you just need to require this one file in your bin file

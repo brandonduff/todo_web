@@ -1,25 +1,24 @@
 require 'minitest/autorun'
 require 'capybara'
-require 'views/canvas'
+require 'views/component'
 
-class CanvasTest < Minitest::Test
-  class StringView < Canvas
-    def print(string)
-      @buffer << "hi"
+class HTMLComponentTest < Minitest::Test
+  class RootComponent < HTMLComponent
+    def render_content_on(html)
+      html.paragraph do
+        html.render ChildComponent.new
+      end
     end
   end
 
-  def test_basic_rendering_double_dispatch
-    view = StringView.new
-    renderable = Object.new
-
-    def renderable.render_content_on(canvas)
-      canvas.print("hi")
+  class ChildComponent < HTMLComponent
+    def render_content_on(html)
+      html.text 'child'
     end
+  end
 
-    view.render renderable
-
-    assert_equal view.to_s, "hi"
+  def test_rendering_components
+    assert_equal '<p>child</p>', RootComponent.new.render
   end
 end
 
@@ -93,27 +92,5 @@ class HTMLCanvasTest < Minitest::Test
     assert_equal '/my_action', form['action']
     assert_equal 'post', form['method']
     assert_equal 'hi', form.text
-  end
-end
-
-class ComponentTest < Minitest::Test
-  class RootComponent
-    def render_content_on(html)
-      html.paragraph do
-        html.render ChildComponent.new
-      end
-    end
-  end
-
-  class ChildComponent
-    def render_content_on(html)
-      html.text 'child'
-    end
-  end
-
-  def test_rendering_components
-    canvas = HTMLCanvas.new
-    canvas.render(RootComponent.new)
-    assert_equal '<p>child</p>', canvas.to_s
   end
 end
