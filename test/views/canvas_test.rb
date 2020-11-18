@@ -1,4 +1,5 @@
 require 'minitest/autorun'
+require 'capybara'
 require 'views/canvas'
 
 class CanvasTest < Minitest::Test
@@ -57,6 +58,19 @@ class HTMLCanvasTest < Minitest::Test
     view.render(renderable)
 
     assert_equal '<p><p>hi</p></p>', view.to_s
+  end
+
+  def test_rendering_submit_button
+
+    view = HTMLCanvas.new
+    view.submit_button(value: 'foo', title: 'title') { |html| html.text('hi') }
+
+    result = Capybara.string(view.to_s)
+
+    button = result.find('button[type="submit"]')
+    assert_equal 'foo', button['value']
+    assert_equal 'title', button['title']
+    assert_equal 'hi', button.text
   end
 end
 
