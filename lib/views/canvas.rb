@@ -53,8 +53,8 @@ class HTMLCanvas < Canvas
   end
 end
 
-class String
+class Object
   def render
-    self
+    to_s
   end
 end
