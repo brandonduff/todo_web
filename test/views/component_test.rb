@@ -63,9 +63,7 @@ class HTMLCanvasTest < Minitest::Test
     view = HTMLCanvas.new
     view.submit_button(value: 'foo', title: 'title') { |html| html.text('hi') }
 
-    result = Capybara.string(view.to_s)
-
-    button = result.find('button[type="submit"]')
+    button = find_in_view(view, 'button[type="submit"]')
     assert_equal 'foo', button['value']
     assert_equal 'title', button['title']
     assert_equal 'hi', button.text
@@ -75,8 +73,7 @@ class HTMLCanvasTest < Minitest::Test
     view = HTMLCanvas.new
     view.hidden_input(name: 'my_name', value: 'my_value')
 
-    result = Capybara.string(view.to_s)
-    input = result.find('input[type="text"]', visible: :hidden)
+    input = find_in_view(view, 'input[type="text"]', visible: :hidden)
 
     assert_equal 'my_name', input['name']
     assert_equal 'my_value', input['value']
@@ -87,10 +84,24 @@ class HTMLCanvasTest < Minitest::Test
     view = HTMLCanvas.new
     view.form(action: '/my_action') { |html| html.text 'hi' }
 
-    result = Capybara.string(view.to_s)
-    form = result.find('form')
+    form = find_in_view(view, 'form')
     assert_equal '/my_action', form['action']
     assert_equal 'post', form['method']
     assert_equal 'hi', form.text
+  end
+
+  def test_label
+    view = HTMLCanvas.new
+    view.label 'my label', for: 'my_input'
+
+    label = find_in_view(view, 'label')
+
+    assert_equal 'my label', label.text
+    assert_equal 'my_input', label['for']
+  end
+
+  def find_in_view(view, *args, **kwargs)
+    result = Capybara.string(view.to_s)
+    result.find(*args, **kwargs)
   end
 end

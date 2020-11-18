@@ -1,0 +1,3 @@
+class CurrentDayForm < HTMLComponent
+
+end

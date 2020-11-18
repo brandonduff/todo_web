@@ -19,6 +19,7 @@ class HTMLCanvas
   define_tag :submit_button, :button, type: :submit
   define_tag :hidden_input, :input, type: :text, hidden: true
   define_tag :paragraph, :p
+  define_tag :label
 
   def text(value)
     append(value)
