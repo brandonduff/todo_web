@@ -2,7 +2,6 @@ require "todo_web/version"
 require 'sinatra/base'
 require 'todo'
 require 'todo_presenter'
-require 'move_up_todo_form'
 
 module TodoWeb
   class App < Sinatra::Base
