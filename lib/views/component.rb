@@ -21,6 +21,7 @@ class HTMLCanvas
   define_tag :paragraph, :p
   define_tag :label
   define_tag :date_input, :input, type: :date
+  define_tag :text_input, :input, type: :text
 
   def text(value)
     append(value)

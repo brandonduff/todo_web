@@ -4,5 +4,5 @@
 <body>
   <%= CurrentDayForm.new(current_day).render %>
   <%= erb :todo_list, locals: { todos: todos } %>
-  <%= erb :new_todo_form %>
+  <%= NewTodoForm.new.render %>
 </body>
