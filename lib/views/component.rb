@@ -20,6 +20,7 @@ class HTMLCanvas
   define_tag :hidden_input, :input, type: :text, hidden: true
   define_tag :paragraph, :p
   define_tag :label
+  define_tag :date_input, :input, type: :date
 
   def text(value)
     append(value)

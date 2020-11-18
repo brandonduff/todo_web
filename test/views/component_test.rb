@@ -100,6 +100,15 @@ class HTMLCanvasTest < Minitest::Test
     assert_equal 'my_input', label['for']
   end
 
+  def test_date_input
+    view = HTMLCanvas.new
+    view.date_input name: 'my_date_input'
+
+    input = find_in_view(view, 'input[type="date"]')
+
+    assert_equal 'my_date_input', input['name']
+  end
+
   def find_in_view(view, *args, **kwargs)
     result = Capybara.string(view.to_s)
     result.find(*args, **kwargs)
