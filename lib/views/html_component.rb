@@ -27,6 +27,9 @@ class HtmlCanvas
   define_tag :list_item, :li
   define_tag :unordered_list, :ul
   define_tag :div
+  define_tag :stylesheet_link, :link, rel: :stylesheet, type: 'text/css'
+  define_tag :head
+  define_tag :body
 
   def text(value)
     append(value)

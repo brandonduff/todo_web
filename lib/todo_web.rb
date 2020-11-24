@@ -5,10 +5,8 @@ require 'todo'
 module TodoWeb
   class App < Sinatra::Base
     get '/' do
-      erb :index, locals: {
-        todos: Todo::UseCases::ListTodos.new(presenter: TodoPresenter.new, all: true).perform,
-        current_day: Date.parse(Todo::UseCases::SetCurrentDay.new({}).perform),
-      }
+      MainView.new(todos: Todo::UseCases::ListTodos.new(presenter: TodoPresenter.new, all: true).perform,
+                   current_day: Date.parse(Todo::UseCases::SetCurrentDay.new({}).perform)).render
     end
 
     post '/' do
