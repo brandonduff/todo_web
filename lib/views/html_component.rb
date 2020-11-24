@@ -1,10 +1,10 @@
-class HTMLComponent
+class HtmlComponent
   def render
-    render_content_on(HTMLCanvas.new)
+    render_content_on(HtmlCanvas.new)
   end
 end
 
-class HTMLCanvas
+class HtmlCanvas
   def initialize
     @buffer = ""
   end

@@ -1,6 +1,3 @@
-require 'todo/task_list'
-require 'todo/task'
-
 module Todo
   class TaskListBuilder
     def initialize(task_args)

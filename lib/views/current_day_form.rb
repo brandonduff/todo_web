@@ -1,4 +1,4 @@
-class CurrentDayForm < HTMLComponent
+class CurrentDayForm < HtmlComponent
   attr_reader :current_day
 
   def initialize(current_day)

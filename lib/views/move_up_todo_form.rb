@@ -1,4 +1,4 @@
-class MoveUpTodoForm < HTMLComponent
+class MoveUpTodoForm < HtmlComponent
   def self.render(todo)
     new(todo).render
   end
@@ -37,8 +37,3 @@ class MoveUpTodoForm < HTMLComponent
   attr_reader :todo
 end
 
-class MoveDownTodoForm < MoveUpTodoForm
-  def direction
-    :down
-  end
-end

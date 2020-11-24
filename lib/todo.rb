@@ -1,21 +1,10 @@
-require 'todo/version.rb'
-require 'todo/task'
-require 'todo/task_list'
-require 'todo/task_builder'
-require 'todo/task_list_fetcher'
-require 'todo/day_formatter'
-require 'todo/use_cases/use_case'
-require 'todo/use_cases/list_todos'
-require 'todo/use_cases/create_todo'
-require 'todo/use_cases/done'
-require 'todo/use_cases/undo'
-require 'todo/use_cases/clear'
-require 'todo/use_cases/set_current_day'
-require 'todo/use_cases/move'
-require 'todo/notepad'
-require 'views/component'
-require 'views/move_up_todo_form'
-require 'views/current_day_form'
-require 'views/new_todo_form'
-# Add requires for other files you add to your project here, so
-# you just need to require this one file in your bin file
+require "zeitwerk"
+
+loader = Zeitwerk::Loader.for_gem
+loader.push_dir('lib/views')
+loader.setup # ready!
+
+module Todo
+
+end
+

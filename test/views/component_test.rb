@@ -1,9 +1,8 @@
-require 'minitest/autorun'
 require 'capybara'
-require 'views/component'
+require 'views/html_component'
 
 class HTMLComponentTest < Minitest::Test
-  class RootComponent < HTMLComponent
+  class RootComponent < HtmlComponent
     def render_content_on(html)
       html.paragraph do
         html.render ChildComponent.new
@@ -11,7 +10,7 @@ class HTMLComponentTest < Minitest::Test
     end
   end
 
-  class ChildComponent < HTMLComponent
+  class ChildComponent < HtmlComponent
     def render_content_on(html)
       html.text 'child'
     end
@@ -29,7 +28,7 @@ class HTMLCanvasTest < Minitest::Test
       canvas.paragraph 'hi'
     end
 
-    view = HTMLCanvas.new
+    view = HtmlCanvas.new
     view.render(renderable)
 
     assert_equal '<p>hi</p>', view.to_s
@@ -41,7 +40,7 @@ class HTMLCanvasTest < Minitest::Test
       canvas.paragraph { canvas.text 'hi' }
     end
 
-    view = HTMLCanvas.new
+    view = HtmlCanvas.new
     view.render(renderable)
 
     assert_equal '<p>hi</p>', view.to_s
@@ -53,14 +52,14 @@ class HTMLCanvasTest < Minitest::Test
       canvas.paragraph { canvas.paragraph 'hi' }
     end
 
-    view = HTMLCanvas.new
+    view = HtmlCanvas.new
     view.render(renderable)
 
     assert_equal '<p><p>hi</p></p>', view.to_s
   end
 
   def test_rendering_submit_button
-    view = HTMLCanvas.new
+    view = HtmlCanvas.new
     view.submit_button(value: 'foo', title: 'title') { |html| html.text('hi') }
 
     button = find_in_view(view, 'button[type="submit"]')
@@ -70,7 +69,7 @@ class HTMLCanvasTest < Minitest::Test
   end
 
   def test_hidden_input
-    view = HTMLCanvas.new
+    view = HtmlCanvas.new
     view.hidden_input(name: 'my_name', value: 'my_value')
 
     input = find_in_view(view, 'input[type="text"]', visible: :hidden)
@@ -81,7 +80,7 @@ class HTMLCanvasTest < Minitest::Test
   end
 
   def test_form
-    view = HTMLCanvas.new
+    view = HtmlCanvas.new
     view.form(action: '/my_action') { |html| html.text 'hi' }
 
     form = find_in_view(view, 'form')
@@ -91,7 +90,7 @@ class HTMLCanvasTest < Minitest::Test
   end
 
   def test_label
-    view = HTMLCanvas.new
+    view = HtmlCanvas.new
     view.label 'my label', for: 'my_input'
 
     label = find_in_view(view, 'label')
@@ -101,7 +100,7 @@ class HTMLCanvasTest < Minitest::Test
   end
 
   def test_date_input
-    view = HTMLCanvas.new
+    view = HtmlCanvas.new
     view.date_input name: 'my_date_input'
 
     input = find_in_view(view, 'input[type="date"]')

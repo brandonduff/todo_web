@@ -1,4 +1,4 @@
-class NewTodoForm < HTMLComponent
+class NewTodoForm < HtmlComponent
   def render_content_on(html)
     html.form action: '/' do
       html.label 'New Todo', for: :create_todo

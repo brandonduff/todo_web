@@ -1,6 +1,4 @@
-require 'minitest/autorun'
-require 'todo_presenter'
-require 'todo/task'
+require 'test_helper'
 
 class TestTodoPresenter < Minitest::Test
   def setup
@@ -13,7 +11,7 @@ class TestTodoPresenter < Minitest::Test
   end
 
   def presented_todos
-    TodoWeb::TodoPresenter.new.present(todos)
+    TodoPresenter.new.present(todos)
   end
 
   def test_presents_undone_todos_as_strings
@@ -27,6 +25,6 @@ class TestTodoPresenter < Minitest::Test
 
   def test_done_action
     todo = Todo::Task.new('finish me')
-    assert_equal "/done/#{URI::escape(todo.description)}", TodoWeb::TodoPresenter.new.present([todo]).first.done_action
+    assert_equal "/done/#{URI::escape(todo.description)}", TodoPresenter.new.present([todo]).first.done_action
   end
 end
