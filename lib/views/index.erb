@@ -3,6 +3,6 @@
 </head>
 <body>
   <%= CurrentDayForm.new(current_day).render %>
-  <%= erb :todo_list, locals: { todos: todos } %>
+  <%= TodoListView.new(todos).render %>
   <%= NewTodoForm.new.render %>
 </body>

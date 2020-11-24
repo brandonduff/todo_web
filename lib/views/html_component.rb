@@ -1,6 +1,8 @@
 class HtmlComponent
   def render
-    render_content_on(HtmlCanvas.new)
+    canvas = HtmlCanvas.new
+    render_content_on(canvas)
+    canvas.to_s
   end
 end
 
@@ -22,6 +24,9 @@ class HtmlCanvas
   define_tag :label
   define_tag :date_input, :input, type: :date
   define_tag :text_input, :input, type: :text
+  define_tag :list_item, :li
+  define_tag :unordered_list, :ul
+  define_tag :div
 
   def text(value)
     append(value)
