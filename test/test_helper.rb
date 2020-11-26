@@ -4,5 +4,6 @@ require 'minitest/autorun'
 
 require 'rspec/mocks'
 require 'rspec/mocks/minitest_integration'
+require 'capybara'
 require 'todo'
 require 'task_list_builder'

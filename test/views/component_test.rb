@@ -1,6 +1,3 @@
-require 'capybara'
-require 'views/html_component'
-
 class HTMLComponentTest < Minitest::Test
   class RootComponent < HtmlComponent
     def render_content_on(html)
@@ -106,6 +103,19 @@ class HTMLCanvasTest < Minitest::Test
     input = find_in_view(view, 'input[type="date"]')
 
     assert_equal 'my_date_input', input['name']
+  end
+
+  def test_continuation_form_sets_up_action
+    continuation_dictionary = Hash.new
+    view = HtmlCanvas.new(continuation_dictionary: continuation_dictionary)
+    called = false
+    view.continuation_form(action: '/action', callback: -> { called = true }) do |form|
+      form.submit_button('Submit')
+    end
+    form = find_in_view(view, 'form')
+    assert_equal '/action', form['action']
+    continuation_dictionary['/action'].call
+    assert called
   end
 
   def find_in_view(view, *args, **kwargs)

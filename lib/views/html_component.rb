@@ -7,8 +7,9 @@ class HtmlComponent
 end
 
 class HtmlCanvas
-  def initialize
+  def initialize(continuation_dictionary: Hash.new)
     @buffer = ""
+    @continuation_dictionary = continuation_dictionary
   end
 
   def self.define_tag(method_name, tag = method_name, **default_attributes)
@@ -33,6 +34,11 @@ class HtmlCanvas
 
   def text(value)
     append(value)
+  end
+
+  def continuation_form(action:, callback:)
+    @continuation_dictionary[action] = callback
+    form action: action
   end
 
   def to_s
