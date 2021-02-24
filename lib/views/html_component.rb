@@ -1,6 +1,6 @@
 class HtmlComponent
-  def render
-    canvas = HtmlCanvas.new
+  def render(continuation_dictionary: Hash.new)
+    canvas = HtmlCanvas.new(continuation_dictionary: continuation_dictionary)
     render_content_on(canvas)
     canvas.to_s
   end
@@ -12,9 +12,10 @@ class HtmlCanvas
     @continuation_dictionary = continuation_dictionary
   end
 
-  def self.define_tag(method_name, tag = method_name, **default_attributes)
+  def self.define_tag(method_name, tag = method_name, **default_attributes, &definition_block)
     define_method method_name do |inner_value="", **provided_attributes, &block|
       open_tag(tag, inner: inner_value, **default_attributes, **provided_attributes, &block)
+      instance_exec(**provided_attributes, &definition_block) if block_given?
     end
   end
 
@@ -31,14 +32,12 @@ class HtmlCanvas
   define_tag :stylesheet_link, :link, rel: :stylesheet, type: 'text/css'
   define_tag :head
   define_tag :body
+  define_tag :continuation_form, :form, method: :post do |action:, callback:|
+    @continuation_dictionary[action] = callback
+  end
 
   def text(value)
     append(value)
-  end
-
-  def continuation_form(action:, callback:)
-    @continuation_dictionary[action] = callback
-    form action: action
   end
 
   def to_s

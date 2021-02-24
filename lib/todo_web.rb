@@ -6,7 +6,7 @@ module TodoWeb
   class App < Sinatra::Base
     get '/' do
       MainView.new(todos: Todo::UseCases::ListTodos.new(presenter: TodoPresenter.new, all: true).perform,
-                   current_day: Date.parse(Todo::UseCases::SetCurrentDay.new({}).perform)).render
+                   current_day: Date.parse(Todo::UseCases::SetCurrentDay.new({}).perform)).render(continuation_dictionary: continuation_dictionary)
     end
 
     post '/' do
@@ -44,7 +44,20 @@ module TodoWeb
       redirect(root)
     end
 
+    post '/:action' do
+      continuation_dictionary[params['action']].call
+      redirect(root)
+    end
+
     private
+
+    def self.continuation_dictionary
+      @continuation_dictionary ||= Hash.new
+    end
+
+    def continuation_dictionary
+      self.class.continuation_dictionary
+    end
 
     def root
       '/'
