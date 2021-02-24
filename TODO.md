@@ -11,3 +11,9 @@ Todo File
     - [ ] Associate notes with session state
     - [ ] Store notes associated with separate notepads for different users, based on session
     - [ ] Allow creation of users. Passwords w/ BCrypt could be fun to figure out (or just start with something insecure)
+
+
+test list 
+- Routing will look at continuation dictionary as fallback
+- Continuation dictionary can give an action name
+- Action gets removed from continuation dict when it's called, because we'll be rerendering

@@ -1,0 +1,9 @@
+{
+  "command": "ruby -r./custom_plan -eZeus.go",
+
+  "plan": {
+    "boot": {
+      "test": []
+    }
+  }
+}
