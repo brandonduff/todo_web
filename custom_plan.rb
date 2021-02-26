@@ -8,7 +8,7 @@ class CustomPlan < Zeus::Plan
   def boot
     $LOAD_PATH.push(File.expand_path('test'))
     $LOAD_PATH.push(File.expand_path('lib'))
-    Bundler.setup
+    Bundler.require
     require 'test_helper'
   end
 

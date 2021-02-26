@@ -1,5 +1,6 @@
 class HtmlComponent
-  def render(continuation_dictionary: Hash.new)
+  def render(continuation_dictionary: ContinuationDictionary.new)
+    continuation_dictionary.register(self)
     canvas = HtmlCanvas.new(continuation_dictionary: continuation_dictionary)
     render_content_on(canvas)
     canvas.to_s
@@ -7,7 +8,7 @@ class HtmlComponent
 end
 
 class HtmlCanvas
-  def initialize(continuation_dictionary: Hash.new)
+  def initialize(continuation_dictionary:)
     @buffer = ""
     @continuation_dictionary = continuation_dictionary
   end
@@ -32,8 +33,8 @@ class HtmlCanvas
   define_tag :stylesheet_link, :link, rel: :stylesheet, type: 'text/css'
   define_tag :head
   define_tag :body
-  define_tag :continuation_form, :form, method: :post do |action:, callback:|
-    @continuation_dictionary[action] = callback
+  define_tag :continuation_form, :form, method: :post, action: ->{ @continuation_dictionary.action } do |callback:|
+    @continuation_dictionary.add(callback)
   end
 
   def text(value)
@@ -54,7 +55,8 @@ class HtmlCanvas
     append("<#{tag_name}")
 
     attributes.each do |key, val|
-      append(%( #{key}="#{val}"))
+      attribute_value = val.respond_to?(:call) ? instance_exec(&val) : val
+      append(%( #{key}="#{attribute_value}"))
     end
 
     append(">")
