@@ -7,12 +7,8 @@ class ContinuationDictionary
     @component_actions[key.to_s]
   end
 
-  def []=(key, value)
-    @component_actions[key.to_s] = value
-  end
-
   def add(symbol)
-    self[@registered_component.object_id] = -> { @registered_component.send(symbol) }
+    @component_actions[@registered_component.object_id.to_s] = -> { @registered_component.send(symbol) }
   end
 
   def register(component)
