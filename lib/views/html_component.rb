@@ -46,6 +46,7 @@ class HtmlCanvas
   end
 
   def render(renderable)
+    @continuation_dictionary.register(renderable)
     renderable.render_content_on(self)
   end
 

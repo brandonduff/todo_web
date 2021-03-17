@@ -2,9 +2,13 @@ require 'test_helper'
 
 class HTMLComponentTest < Minitest::Test
   class RootComponent < HtmlComponent
+    def initialize(child_component)
+      @child_component = child_component
+    end
+
     def render_content_on(html)
       html.paragraph do
-        html.render ChildComponent.new
+        html.render @child_component
       end
     end
   end
@@ -16,7 +20,15 @@ class HTMLComponentTest < Minitest::Test
   end
 
   def test_rendering_components
-    assert_equal '<p>child</p>', RootComponent.new.render
+    assert_equal '<p>child</p>', RootComponent.new(ChildComponent.new).render
+  end
+
+  def test_continuation_dictionary_passed_between_components
+    continuation_dictionary = ContinuationDictionary.new
+    child_component = ChildComponent.new
+    component = RootComponent.new(child_component)
+    component.render(continuation_dictionary: continuation_dictionary)
+    assert_equal child_component, continuation_dictionary.registered_component
   end
 end
 
