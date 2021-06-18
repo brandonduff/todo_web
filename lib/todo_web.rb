@@ -44,11 +44,6 @@ module TodoWeb
       redirect(root)
     end
 
-    post '/:action' do
-      continuation_dictionary[params['action']].call
-      redirect(root)
-    end
-
     private
 
     def self.continuation_dictionary

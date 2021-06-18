@@ -25,6 +25,6 @@ class ContinuationDictionary
   private
 
   def href_for(symbol)
-    CGI.escape("/#{action}+#{symbol}")
+    "#{action}+#{symbol}"
   end
 end
