@@ -112,27 +112,6 @@ class HTMLCanvasTest < Minitest::Test
     assert_equal 'my_date_input', input['name']
   end
 
-  def test_continuation_form_calling_method_on_component
-    continuation_dictionary = ContinuationDictionary.new
-    component = Class.new(HtmlComponent) do
-      def call_me!
-        @called = true
-      end
-
-      def render_content_on(html)
-        html.continuation_form(callback: :call_me!) do |form|
-          form.submit_button('Submit')
-        end
-      end
-
-      attr_reader :called
-    end.new
-
-    action = find_in_view(component.render(continuation_dictionary: continuation_dictionary), 'form')['action']
-    continuation_dictionary[action].call
-    assert component.called
-  end
-
   def new_component
     Class.new(HtmlComponent) do
       define_method :render_content_on do |html|
@@ -146,11 +125,58 @@ class HTMLCanvasTest < Minitest::Test
     result.find(*args, **kwargs)
   end
 
-  def test_registering_component
+  class Counter < HtmlComponent
+    attr_reader :count
+
+    def initialize
+      @count = 0
+    end
+
+    def increment
+      @count += 1
+    end
+
+    def decrement
+      @count -= 1
+    end
+
+    def render_content_on(html)
+      html.paragraph(count)
+      html.anchor(:increment)
+      html.anchor(:decrement)
+    end
+  end
+
+  def test_component_with_single_callback
     dictionary = ContinuationDictionary.new
-    object = 42
-    dictionary.register(object)
-    dictionary.add(:to_s)
-    assert_equal '42', dictionary[object.object_id.to_s].call
+    component = Counter.new
+
+    result = Capybara.string(component.render(continuation_dictionary: dictionary))
+    assert_equal "0", result.find('p').text
+
+    click_link('increment', result, dictionary)
+
+    result = Capybara.string(component.render)
+    assert_equal "1", result.find('p').text
+  end
+
+  def test_component_with_multiple_callbacks
+    dictionary = ContinuationDictionary.new
+    component = Counter.new
+
+    component.increment
+
+    result = Capybara.string(component.render(continuation_dictionary: dictionary))
+    assert_equal "1", result.find('p').text
+
+    click_link('decrement', result, dictionary)
+
+    result = Capybara.string(component.render)
+    assert_equal "0", result.find('p').text
+  end
+
+  def click_link(text, html, continuations)
+    href = html.find('a', text: text)['href']
+    continuations[href].call
   end
 end

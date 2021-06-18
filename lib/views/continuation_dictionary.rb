@@ -8,7 +8,8 @@ class ContinuationDictionary
   end
 
   def add(symbol)
-    @component_actions[@registered_component.object_id.to_s] = -> { @registered_component.send(symbol) }
+    @component_actions[href_for(symbol)] = -> { @registered_component.send(symbol) }
+    href_for(symbol)
   end
 
   def register(component)
@@ -20,4 +21,10 @@ class ContinuationDictionary
   end
 
   attr_reader :registered_component
+
+  private
+
+  def href_for(symbol)
+    CGI.escape("/#{action}+#{symbol}")
+  end
 end

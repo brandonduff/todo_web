@@ -33,8 +33,10 @@ class HtmlCanvas
   define_tag :stylesheet_link, :link, rel: :stylesheet, type: 'text/css'
   define_tag :head
   define_tag :body
-  define_tag :continuation_form, :form, method: :post, action: ->{ @continuation_dictionary.action } do |callback:|
-    @continuation_dictionary.add(callback)
+
+  def anchor(symbol)
+    href = @continuation_dictionary.add(symbol)
+    open_tag('a', inner: symbol.to_s, href: href)
   end
 
   def text(value)
