@@ -52,7 +52,7 @@ module TodoWeb
     private
 
     def self.continuation_dictionary
-      @continuation_dictionary ||= Hash.new
+      @continuation_dictionary ||= ContinuationDictionary.new
     end
 
     def continuation_dictionary
