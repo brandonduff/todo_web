@@ -7,7 +7,7 @@ Todo File
     - [ ] Component is passed form data in some way from callback (or it gets set via fields by the time the callback is invoked, like Seaside!)
     - [ ] Form actions are auto-generated
 - [ ] Multi tenancy
-    - [ ] Marshal for persistence. We can just store the whole DB in a single flat file we rewrite on every change
+    - [ ] Marshal for persistence. PStore should help with this
     - [ ] Associate notes with session state
     - [ ] Store notes associated with separate notepads for different users, based on session
     - [ ] Allow creation of users. Passwords w/ BCrypt could be fun to figure out (or just start with something insecure)
