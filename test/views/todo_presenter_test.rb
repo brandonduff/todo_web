@@ -25,6 +25,6 @@ class TestTodoPresenter < Minitest::Test
 
   def test_done_action
     todo = Todo::Task.new('finish me')
-    assert_equal "/done/#{URI::escape(todo.description)}", TodoPresenter.new.present([todo]).first.done_action
+    assert_equal "/done/#{CGI.escape(todo.description)}", TodoPresenter.new.present([todo]).first.done_action
   end
 end

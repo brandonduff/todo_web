@@ -2,7 +2,7 @@ class TodoPresenter
   def present(todos)
     todos.map do |todo|
       description = description(todo)
-      TodoViewModel.new(description: description, done_action: "/done/#{URI::escape(description)}")
+      TodoViewModel.new(description: description, done_action: "/done/#{CGI.escape(description)}")
     end
   end
 
