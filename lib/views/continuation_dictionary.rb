@@ -22,8 +22,6 @@ class ContinuationDictionary
 
   attr_reader :registered_component
 
-  private
-
   def href_for(symbol)
     "#{action}+#{symbol}"
   end

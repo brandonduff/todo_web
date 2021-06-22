@@ -15,6 +15,6 @@ Todo File
 
 test list 
 - Hold onto stateful components for lifetime of app instead of recreating every request
-- Action gets removed from continuation dict when it's called, because we'll be rerendering
-  - Is this necessary, or will it just get overridden anyway?
-- 
+- Expose Application with Sinatra
+- Form
+
