@@ -1,5 +1,15 @@
+require 'sinatra/base'
+
 module Framework
   class Application
+    def self.run(component_class)
+      continuations = ContinuationDictionary.new
+      instance = new(continuations)
+      instance.register_root(component_class.new)
+      app = Sinatra.new { get('/') { instance.call } }
+      app.run!
+    end
+
     def initialize(continuations)
       @continuations = continuations
     end

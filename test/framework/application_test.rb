@@ -34,6 +34,22 @@ module Framework
       assert_includes result, 'invoked: true'
     end
 
+    def test_web_integration
+      Thread.new { Application.run(TestComponent) }
+      sleep 0.1 until server_up?
+      response = Net::HTTP.get(URI('http://localhost:4567/'))
+      assert_includes response, 'invoked: false'
+      # todo: post and see invoked change
+      # todo: kill server
+    end
+
+    def server_up?
+      Net::HTTP.get(URI('http://localhost:4567/'))
+      true
+    rescue Errno::ECONNREFUSED
+      false
+    end
+
     def invoke_action(action)
       @application.call(@continuations.href_for(action))
     end
