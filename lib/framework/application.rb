@@ -1,26 +1,44 @@
 require 'sinatra/base'
 
-module Framework
-  class Application
-    def self.run(component_class)
-      continuations = ContinuationDictionary.new
-      instance = new(continuations)
-      instance.register_root(component_class.new)
-      app = Sinatra.new { get('/') { instance.call } }
-      app.run!
-    end
+class Application
+  def self.run(component_class)
+    set_application(build(component_class))
+    start_server
+  end
 
-    def initialize(continuations)
-      @continuations = continuations
-    end
+  def self.build(component_class)
+    instance = new(ContinuationDictionary.new)
+    instance.register_root(component_class.new)
+    instance
+  end
 
-    def register_root(component)
-      @root = component
-    end
+  def self.set_application(application)
+    SinatraServer.set(:application, application)
+  end
 
-    def call(action = nil)
-      @continuations[action].call if action
-      @root.render(continuation_dictionary: @continuations)
-    end
+  def self.stop
+    SinatraServer.stop!
+  end
+
+  def self.start_server
+    SinatraServer.run!
+  end
+
+  class SinatraServer < Sinatra::Base
+    get('/:action') { settings.application.call(params[:action]) }
+    get('/') { settings.application.call }
+  end
+
+  def initialize(continuations)
+    @continuations = continuations
+  end
+
+  def register_root(component)
+    @root = component
+  end
+
+  def call(action = nil)
+    @continuations[action].call if action
+    @root.render(continuation_dictionary: @continuations)
   end
 end

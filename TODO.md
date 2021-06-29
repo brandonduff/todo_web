@@ -15,6 +15,5 @@ Todo File
 
 test list 
 - Hold onto stateful components for lifetime of app instead of recreating every request
-- Expose Application with Sinatra
 - Form
 
