@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'webrick'
 
 class ApplicationTest < Minitest::Test
   class TestComponent < HtmlComponent
@@ -21,6 +22,9 @@ class ApplicationTest < Minitest::Test
   end
 
   def setup
+    Application::SinatraServer.set :server_settings, Logger: WEBrick::Log.new(File.open(File::NULL, 'w')), AccessLog: []
+    Application::SinatraServer.set :quiet, true
+    Application::SinatraServer.set :logging, false
     @continuations = ContinuationDictionary.new
     @application = Application.new(@continuations)
     @test_component = TestComponent.new
