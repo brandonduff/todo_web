@@ -24,9 +24,8 @@ class Application
     SinatraServer.run!
   end
 
-  class SinatraServer < Sinatra::Base
-    get('/:action') { settings.application.call(params[:action]) }
-    get('/') { settings.application.call }
+  def self.call(*params, &block)
+    SinatraServer.call(*params, &block)
   end
 
   def initialize(continuations)
@@ -40,5 +39,10 @@ class Application
   def call(action = nil)
     @continuations[action].call if action
     @root.render(continuation_dictionary: @continuations)
+  end
+
+  class SinatraServer < Sinatra::Base
+    get('/:action') { settings.application.call(params[:action]) }
+    get('/') { settings.application.call }
   end
 end
