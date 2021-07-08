@@ -8,7 +8,14 @@ class ContinuationDictionary
   end
 
   def add(symbol)
-    @component_actions[href_for(symbol)] = -> { @registered_component.send(symbol) }
+    @component_actions[href_for(symbol)] = Proc.new do |params|
+      if params
+        @registered_component.send(symbol, params)
+      else
+        @registered_component.send(symbol)
+      end
+
+    end
     href_for(symbol)
   end
 

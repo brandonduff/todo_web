@@ -175,6 +175,29 @@ class HTMLCanvasTest < Minitest::Test
     assert_equal "0", result.find('p').text
   end
 
+  class TestFormComponent < HtmlComponent
+    attr_accessor :attr
+
+    def render_content_on(html)
+      html.new_form do |f|
+        f.text_input(:attr)
+      end
+    end
+  end
+
+  def test_form
+    dictionary = ContinuationDictionary.new
+    component = TestFormComponent.new
+    result = Capybara.string(component.render(continuation_dictionary: dictionary))
+    action = result.find('form')['action']
+    dictionary[action].call(attr: 'attr set')
+    assert_equal 'attr set', component.attr
+  end
+
+  def form_submission
+    @form_submitted = true
+  end
+
   def click_link(text, html, continuations)
     href = html.find('a', text: text)['href']
     continuations[href].call

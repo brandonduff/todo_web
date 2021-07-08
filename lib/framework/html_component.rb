@@ -5,6 +5,12 @@ class HtmlComponent
     render_content_on(canvas)
     canvas.to_s
   end
+
+  def form_submission(params)
+    params.each do |k, v|
+      send("#{k}=", v)
+    end
+  end
 end
 
 class HtmlCanvas
@@ -37,6 +43,11 @@ class HtmlCanvas
   def anchor(symbol)
     href = @continuation_dictionary.add(symbol)
     open_tag('a', inner: symbol.to_s, href: href)
+  end
+
+  def new_form
+    action = @continuation_dictionary.add('form_submission')
+    open_tag('form', action: action)
   end
 
   def text(value)
