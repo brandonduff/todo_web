@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require 'active_support/core_ext/hash/indifferent_access'
 
 class Application
   def self.run(component_class)
@@ -36,13 +37,17 @@ class Application
     @root = component
   end
 
-  def call(action = nil)
-    @continuations[action].call if action
+  def call(action = nil, *params)
+    @continuations[action].call(*params) if action
     @root.render(continuation_dictionary: @continuations)
   end
 
   class SinatraServer < Sinatra::Base
     get('/:action') { settings.application.call(params[:action]) }
     get('/') { settings.application.call }
+    post('/:action') do
+      transformed_params = ActiveSupport::HashWithIndifferentAccess.new(params)
+      settings.application.call(transformed_params[:action], transformed_params.except(:action))
+    end
   end
 end

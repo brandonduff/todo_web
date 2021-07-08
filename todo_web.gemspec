@@ -39,5 +39,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "irb"
   spec.add_development_dependency "zeitwerk"
   spec.add_development_dependency "rack-test"
+  spec.add_runtime_dependency "activesupport"
   spec.add_runtime_dependency "sinatra"
 end

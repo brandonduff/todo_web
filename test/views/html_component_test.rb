@@ -179,8 +179,9 @@ class HTMLCanvasTest < Minitest::Test
     attr_accessor :attr
 
     def render_content_on(html)
-      html.new_form do |f|
-        f.text_input(:attr)
+      html.new_form do
+        html.text_input(:attr)
+        html.submit_button
       end
     end
   end
