@@ -34,20 +34,17 @@ class ApplicationTest < Minitest::Test
     @test_component = TestComponent.new
     @application.register_root(@test_component)
     @application.call
+    Application.set_application(@application)
   end
 
 
   def test_web_integration
-    app = Application.build(TestComponent)
-    Application.set_application(app)
-
     get '/'
     assert_includes last_response.body, 'invoked: false'
   end
 
   def test_sinatra_server_sending_arguments
-    Application.set_application(@application)
-    get "http://localhost:4567/#{@continuations.href_for(:invoke)}"
+    get "/#{@continuations.href_for(:invoke)}"
     assert_includes last_response.body, 'invoked: true'
   end
 
