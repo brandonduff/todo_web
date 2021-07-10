@@ -48,6 +48,7 @@ class Application
     post('/:action') do
       transformed_params = ActiveSupport::HashWithIndifferentAccess.new(params)
       settings.application.call(transformed_params[:action], transformed_params.except(:action))
+      redirect('/')
     end
   end
 end

@@ -103,13 +103,20 @@ class HTMLCanvasTest < Minitest::Test
   end
 
   def test_date_input
-    view = new_component do |html|
-      html.date_input name: 'my_date_input'
-    end
+    view = Class.new(HtmlComponent) do
+      def render_content_on(html)
+        html.date_input :foo
+      end
+
+      def foo
+        'foobar'
+      end
+    end.new
 
     input = find_in_view(view, 'input[type="date"]')
 
-    assert_equal 'my_date_input', input['name']
+    assert_equal 'foo', input['name']
+    assert_equal 'foobar', input['value']
   end
 
   def new_component
@@ -192,7 +199,9 @@ class HTMLCanvasTest < Minitest::Test
     result = Capybara.string(component.render(continuation_dictionary: dictionary))
     action = result.find('form')['action']
     dictionary[action].call(attr: 'attr set')
-    assert_equal 'attr set', component.attr
+
+    result = Capybara.string(component.render(continuation_dictionary: dictionary))
+    assert_equal 'attr set', result.find('input')['value']
   end
 
   def form_submission

@@ -45,9 +45,21 @@ class HtmlCanvas
     open_tag('a', inner: symbol.to_s, href: href)
   end
 
-  def new_form
+  def new_form(&block)
     action = @continuation_dictionary.add('form_submission')
-    open_tag('form', action: action)
+    open_tag('form', action: action, method: 'post', &block)
+  end
+
+  def text_input(attribute)
+    input(attribute, 'text')
+  end
+
+  def date_input(attribute)
+    input(attribute, 'date')
+  end
+
+  def input(attribute, type)
+    open_tag('input', name: attribute.to_s, type: type, value: @continuation_dictionary.registered_component.send(attribute))
   end
 
   def text(value)

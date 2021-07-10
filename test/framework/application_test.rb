@@ -55,7 +55,9 @@ class ApplicationTest < Minitest::Test
 
   def test_posting_forms
     post "/#{@continuations.href_for("form_submission")}", { form_attr: 'my form input' }
+    follow_redirect!
     assert_includes last_response.body, 'my form input'
+    assert_equal 'http://example.org/', last_request.url
   end
 
   def invoke_action(action)
