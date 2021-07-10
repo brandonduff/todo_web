@@ -15,15 +15,27 @@ class TestCanvas < HtmlCanvas
   end
 
   def date_input(attribute)
-    rendered[:input] << attribute
+    rendered[:input] << [attribute, @continuation_dictionary.registered_component.send(attribute)]
+  end
+
+  def inputs(name)
+    rendered[:input].find { |k, v| k == name }[1]
   end
 
   def fill_in(input, value)
-    rendered[:input][input].value = value
+    params[input] = value
+  end
+
+  def submit
+    @continuation_dictionary.registered_component.form_submission(@params)
   end
 
   def rendered
     @rendered ||= Hash.new { |hash, key| hash[key] = [] }
+  end
+
+  def params
+    @params ||= {}
   end
 end
 
@@ -44,6 +56,6 @@ class CurrentDayTest < Minitest::Test
     canvas.render(subject)
     canvas.fill_in(:date, date + 1)
     canvas.submit
-    assert_equal date + 1, canvas.inputs[:date].value
+    assert_equal date + 1, canvas.inputs(:date)
   end
 end
