@@ -14,6 +14,7 @@ Todo File
 
 
 test list 
-- Hold onto stateful components for lifetime of app instead of recreating every request
-- Form
+- list todos
+- creating todos
+- finishing todos
 
