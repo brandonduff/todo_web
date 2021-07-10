@@ -15,7 +15,7 @@ class TestCanvas < HtmlCanvas
   end
 
   def date_input(attribute)
-    rendered[:input] << [attribute, @continuation_dictionary.registered_component.send(attribute)]
+    rendered[:input] << [attribute, component.send(attribute)]
   end
 
   def inputs(name)
@@ -27,11 +27,17 @@ class TestCanvas < HtmlCanvas
   end
 
   def submit
-    @continuation_dictionary.registered_component.form_submission(@params)
+    component.form_submission(@params)
   end
 
   def rendered
     @rendered ||= Hash.new { |hash, key| hash[key] = [] }
+  end
+
+  private
+
+  def component
+    @continuation_dictionary.registered_component
   end
 
   def params
