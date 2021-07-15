@@ -13,12 +13,7 @@ class HtmlComponent
   end
 end
 
-class HtmlCanvas
-  def initialize(continuation_dictionary:)
-    @buffer = ""
-    @continuation_dictionary = continuation_dictionary
-  end
-
+class Canvas
   def self.define_tag(method_name, tag = method_name, **default_attributes, &definition_block)
     define_method method_name do |inner_value="", **provided_attributes, &block|
       open_tag(tag, inner: inner_value, **default_attributes, **provided_attributes, &block)
@@ -26,23 +21,15 @@ class HtmlCanvas
     end
   end
 
-  define_tag :form, method: :post
   define_tag :submit_button, :button, type: :submit
-  define_tag :hidden_input, :input, type: :text, hidden: true
-  define_tag :paragraph, :p
-  define_tag :label
-  define_tag :date_input, :input, type: :date
-  define_tag :text_input, :input, type: :text
-  define_tag :list_item, :li
-  define_tag :unordered_list, :ul
-  define_tag :div
-  define_tag :stylesheet_link, :link, rel: :stylesheet, type: 'text/css'
-  define_tag :head
-  define_tag :body
 
-  def anchor(symbol)
-    href = @continuation_dictionary.add(symbol)
-    open_tag('a', inner: symbol.to_s, href: href)
+  def initialize(continuation_dictionary:)
+    @continuation_dictionary = continuation_dictionary
+  end
+
+  def render(renderable)
+    @continuation_dictionary.register(renderable)
+    renderable.render_content_on(self)
   end
 
   def new_form(&block)
@@ -57,6 +44,24 @@ class HtmlCanvas
   def date_input(attribute)
     input(attribute, 'date')
   end
+end
+
+class HtmlCanvas < Canvas
+  define_tag :form, method: :post
+  define_tag :hidden_input, :input, type: :text, hidden: true
+  define_tag :paragraph, :p
+  define_tag :label
+  define_tag :list_item, :li
+  define_tag :unordered_list, :ul
+  define_tag :div
+  define_tag :stylesheet_link, :link, rel: :stylesheet, type: 'text/css'
+  define_tag :head
+  define_tag :body
+
+  def anchor(symbol)
+    href = @continuation_dictionary.add(symbol)
+    open_tag('a', inner: symbol.to_s, href: href)
+  end
 
   def input(attribute, type)
     open_tag('input', name: attribute.to_s, type: type, value: @continuation_dictionary.registered_component.send(attribute))
@@ -67,12 +72,7 @@ class HtmlCanvas
   end
 
   def to_s
-    @buffer
-  end
-
-  def render(renderable)
-    @continuation_dictionary.register(renderable)
-    renderable.render_content_on(self)
+    buffer
   end
 
   private
@@ -97,7 +97,11 @@ class HtmlCanvas
   end
 
   def append(value)
-    @buffer << value.render
+    buffer << value.render
+  end
+
+  def buffer
+    @buffer ||= ''
   end
 end
 

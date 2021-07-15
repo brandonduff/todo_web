@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'framework/html_component'
 
-class TestCanvas < HtmlCanvas
+class TestCanvas < Canvas
   def self.build
     new(continuation_dictionary: ContinuationDictionary.new)
   end
@@ -14,7 +14,7 @@ class TestCanvas < HtmlCanvas
     rendered[:paragraph].include?(args[:paragraph])
   end
 
-  def date_input(attribute)
+  def input(attribute, _type)
     rendered[:input] << [attribute, component.send(attribute)]
   end
 
@@ -26,8 +26,12 @@ class TestCanvas < HtmlCanvas
     params[input] = value
   end
 
+  def open_tag(*_args)
+    yield(self) if block_given?
+  end
+
   def submit
-    component.form_submission(@params)
+    component.form_submission(params)
   end
 
   def rendered
