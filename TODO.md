@@ -13,8 +13,7 @@ Todo File
     - [ ] Allow creation of users. Passwords w/ BCrypt could be fun to figure out (or just start with something insecure)
 
 
-test list 
-- list todos
+test list
 - creating todos
 - finishing todos
 

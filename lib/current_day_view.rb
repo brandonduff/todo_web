@@ -1,4 +1,4 @@
-class CurrentDay < HtmlComponent
+class CurrentDayView < HtmlComponent
   attr_accessor :date
 
   def initialize(date)
