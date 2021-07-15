@@ -37,17 +37,27 @@ class Application
     @root = component
   end
 
-  def call(action = nil, *params)
-    @continuations[action].call(*params) if action
+  def render
     @root.render(continuation_dictionary: @continuations)
   end
 
+  def invoke_action(action, *params)
+    @continuations[action].call(*params) if action
+  end
+
   class SinatraServer < Sinatra::Base
-    get('/:action') { settings.application.call(params[:action]) }
-    get('/') { settings.application.call }
+    get('/:action') do
+      settings.application.invoke_action(params[:action])
+      redirect('/')
+    end
+
+    get('/') do
+      settings.application.render
+    end
+
     post('/:action') do
       transformed_params = ActiveSupport::HashWithIndifferentAccess.new(params)
-      settings.application.call(transformed_params[:action], transformed_params.except(:action))
+      settings.application.invoke_action(transformed_params[:action], transformed_params.except(:action))
       redirect('/')
     end
   end
