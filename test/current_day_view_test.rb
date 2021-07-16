@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'framework/html_component'
 
-class CurrentDayTest < Minitest::Test
+class CurrentDayViewTest < Minitest::Test
   def test_rendering_day
     canvas = TestCanvas.build
     date = Date.today
@@ -14,7 +14,6 @@ class CurrentDayTest < Minitest::Test
     canvas = TestCanvas.build
     date = Date.today
     subject = CurrentDayView.new(date)
-    subject.date = date + 1
     canvas.render(subject)
     canvas.fill_in(:date, date + 1)
     canvas.submit

@@ -7,20 +7,36 @@ class TestCanvas < Canvas
     rendered[:paragraph] << args.first
   end
 
+  def list_item(*args, &block)
+    rendered[:list_item] << args.first
+  end
+
   def rendered?(args)
-    rendered[:paragraph].include?(args[:paragraph])
+    if args.is_a?(Hash)
+      args.all? do |tag, content|
+        rendered[tag].include?(content)
+      end
+    else
+      rendered.values.flatten.include?(args)
+    end
   end
 
   def input(attribute, _type)
-    rendered[:input] << [attribute, component.send(attribute)]
+    value = component.value_for(attribute)
+    rendered[:input] << [attribute, value]
+  end
+
+  def submit_button(*args)
+    rendered[:submit_button] << args.first
   end
 
   def inputs(name)
-    rendered[:input].find { |k, v| k == name }[1]
+    rendered[:input].find(-> { raise 'no input with that name' }) { |k, v| k == name }[1]
   end
 
   def fill_in(input, value)
-    params[input] = value
+    raise 'no form defined' unless @continuation_dictionary.has_form?
+    inputs(input) and (params[input] = value)
   end
 
   def open_tag(*_args)
@@ -28,7 +44,10 @@ class TestCanvas < Canvas
   end
 
   def submit
+    raise 'no submit button' if rendered[:submit_button].empty?
     component.form_submission(params)
+    @rendered = Hash.new { |hash, key| hash[key] = [] }
+    render(component)
   end
 
   def rendered

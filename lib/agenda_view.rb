@@ -10,15 +10,3 @@ class AgendaView < HtmlComponent
 end
 
 Agenda = Struct.new(:current_day, :task_list)
-
-class TaskListView
-  def initialize(list)
-    @list = list
-  end
-
-  def render_content_on(html)
-    @list.each do |todo|
-      html.paragraph(todo)
-    end
-  end
-end

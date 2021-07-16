@@ -32,4 +32,8 @@ class ContinuationDictionary
   def href_for(symbol)
     "#{action}+#{symbol}"
   end
+
+  def has_form?
+    @component_actions[href_for('form_submission')]
+  end
 end

@@ -11,38 +11,13 @@ class HtmlComponent
       send("#{k}=", v)
     end
   end
-end
 
-class Canvas
-  def self.define_tag(method_name, tag = method_name, **default_attributes, &definition_block)
-    define_method method_name do |inner_value="", **provided_attributes, &block|
-      open_tag(tag, inner: inner_value, **default_attributes, **provided_attributes, &block)
-      instance_exec(**provided_attributes, &definition_block) if block_given?
+  def value_for(attribute)
+    if respond_to?(attribute)
+      send(attribute)
+    else
+      ''
     end
-  end
-
-  define_tag :submit_button, :button, type: :submit
-
-  def initialize(continuation_dictionary:)
-    @continuation_dictionary = continuation_dictionary
-  end
-
-  def render(renderable)
-    @continuation_dictionary.register(renderable)
-    renderable.render_content_on(self)
-  end
-
-  def new_form(&block)
-    action = @continuation_dictionary.add('form_submission')
-    open_tag('form', action: action, method: 'post', &block)
-  end
-
-  def text_input(attribute)
-    input(attribute, 'text')
-  end
-
-  def date_input(attribute)
-    input(attribute, 'date')
   end
 end
 
@@ -64,7 +39,8 @@ class HtmlCanvas < Canvas
   end
 
   def input(attribute, type)
-    open_tag('input', name: attribute.to_s, type: type, value: @continuation_dictionary.registered_component.send(attribute))
+    value = @continuation_dictionary.registered_component.value_for(attribute)
+    open_tag('input', name: attribute.to_s, type: type, value: value)
   end
 
   def text(value)
