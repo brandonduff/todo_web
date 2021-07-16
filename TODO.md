@@ -14,7 +14,6 @@ Todo File
 
 
 test list
-- creating todos
-  - 'form_submission' duplication
+- 'form_submission' duplication
 - finishing todos
 
