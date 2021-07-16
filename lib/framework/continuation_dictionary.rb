@@ -8,14 +8,17 @@ class ContinuationDictionary
   end
 
   def add(symbol)
-    @component_actions[href_for(symbol)] = Proc.new do |params|
+    # we need to bind to the registered component at this time, not when we end up invoking
+    # the proc. this is pretty weird and there must be a better way
+    current_component = @registered_component
+    @component_actions[href_for(symbol)] = proc do |params|
       if params
-        @registered_component.send(symbol, params)
+        current_component.send(symbol, params)
       else
-        @registered_component.send(symbol)
+        current_component.send(symbol)
       end
-
     end
+
     href_for(symbol)
   end
 
