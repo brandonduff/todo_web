@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TodoWebNewTest < Minitest::Test
+class AgendaViewTest < Minitest::Test
   def setup
     @canvas = TestCanvas.build
   end
