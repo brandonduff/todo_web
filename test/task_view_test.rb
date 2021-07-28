@@ -8,6 +8,6 @@ class TaskViewTest < Minitest::Test
 
     canvas.render(subject)
 
-    assert canvas.rendered?(list_item: { del: task })
+    assert canvas.rendered?(del: task)
   end
 end
