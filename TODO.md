@@ -16,4 +16,6 @@ Todo File
 test list
 - 'form_submission' duplication
 - finishing todos
+  - [x] rendering finished todos
+  - [ ] finishing todos
 
