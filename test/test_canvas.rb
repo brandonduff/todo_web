@@ -3,23 +3,25 @@ class TestCanvas < Canvas
     new(continuation_dictionary: ContinuationDictionary.new)
   end
 
-  def paragraph(*args, &block)
-    rendered[:paragraph] << args.first
-  end
-
-  def del(*args, &block)
-    rendered[:del] << args.first
-  end
-
-  def list_item(*args)
-    if block_given?
-      sub_canvas = TestCanvas.build
-      rendered[:list_item] << sub_canvas
-      yield(sub_canvas)
-    else
-      rendered[:list_item] << args.first
+  def self.define_tags(*tags)
+    tags.each do |tag|
+      define_tag(tag)
     end
   end
+
+  def self.define_tag(tag_name)
+    define_method tag_name do |*args, &block|
+      if block
+        sub_canvas = TestCanvas.build
+        rendered[tag_name] << sub_canvas
+        block.call(sub_canvas)
+      else
+        rendered[tag_name] << args.first
+      end
+    end
+  end
+
+  define_tags :list_item, :paragraph, :del, :submit_button, :text
 
   def include?(content)
     rendered?(content)
@@ -44,16 +46,8 @@ class TestCanvas < Canvas
     rendered[:input] << [attribute, value]
   end
 
-  def submit_button(*args)
-    rendered[:submit_button] << args.first
-  end
-
   def inputs(name)
     rendered[:input].find(-> { raise 'no input with that name' }) { |k, v| k == name }[1]
-  end
-
-  def text(value)
-    rendered[:text] << value
   end
 
   def fill_in(input, value)
