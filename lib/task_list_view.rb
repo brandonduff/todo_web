@@ -17,7 +17,7 @@ class TaskListView < HtmlComponent
   def render_tasks(html)
     html.unordered_list do
       @list.each do |task|
-        html.list_item(task)
+        html.render(TaskView.new(task))
       end
     end
   end
