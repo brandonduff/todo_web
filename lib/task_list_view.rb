@@ -4,7 +4,7 @@ class TaskListView < HtmlComponent
   end
 
   def new_task=(new_task)
-    @list << new_task
+    @list << Todo::Task.new(new_task)
   end
 
   def render_content_on(html)
@@ -17,6 +17,7 @@ class TaskListView < HtmlComponent
   def render_tasks(html)
     html.unordered_list do
       @list.each do |task|
+        p task
         html.render(TaskView.new(task))
       end
     end

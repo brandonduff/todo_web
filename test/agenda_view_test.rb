@@ -12,8 +12,9 @@ class AgendaViewTest < Minitest::Test
   end
 
   def test_todo_list_render
-    @canvas.render(subject(task_list: Todo::TaskList.from_array(['do the dishes'])))
-    assert @canvas.rendered?('do the dishes')
+    task = Todo::Task.new('do the dishes')
+    @canvas.render(subject(task_list: Todo::TaskList.from_array([task])))
+    assert @canvas.rendered?(task)
   end
 
   def subject(task_list: Todo::TaskList.new, current_day: Date.today)

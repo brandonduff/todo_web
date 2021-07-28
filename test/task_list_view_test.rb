@@ -10,6 +10,6 @@ class TaskListViewTest < Minitest::Test
     canvas.fill_in(:new_task, 'do the dishes')
     canvas.submit
 
-    assert canvas.rendered?(list_item: 'do the dishes')
+    assert canvas.rendered?(list_item: Todo::Task.new('do the dishes'))
   end
 end

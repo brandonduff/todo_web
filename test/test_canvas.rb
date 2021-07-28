@@ -7,8 +7,26 @@ class TestCanvas < Canvas
     rendered[:paragraph] << args.first
   end
 
-  def list_item(*args, &block)
-    rendered[:list_item] << args.first
+  def del(*args, &block)
+    rendered[:del] << args.first
+  end
+
+  def list_item(*args)
+    if block_given?
+      sub_canvas = TestCanvas.build
+      rendered[:list_item] << sub_canvas
+      yield(sub_canvas)
+    else
+      rendered[:list_item] << args.first
+    end
+  end
+
+  def include?(content)
+    rendered?(content)
+  end
+
+  def ==(other)
+    include?(other)
   end
 
   def rendered?(args)
@@ -32,6 +50,10 @@ class TestCanvas < Canvas
 
   def inputs(name)
     rendered[:input].find(-> { raise 'no input with that name' }) { |k, v| k == name }[1]
+  end
+
+  def text(value)
+    rendered[:text] << value
   end
 
   def fill_in(input, value)
