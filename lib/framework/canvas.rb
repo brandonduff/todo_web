@@ -15,8 +15,7 @@ class Canvas
   end
 
   def render(renderable)
-    @continuation_dictionary.register(renderable)
-    renderable.render_content_on(self)
+    @continuation_dictionary.register(renderable) { renderable.render_content_on(self) }
   end
 
   def new_form(&block)
