@@ -1,8 +1,7 @@
 class HtmlComponent
   def render(continuation_dictionary: ContinuationDictionary.new)
-    continuation_dictionary.register(self)
     canvas = HtmlCanvas.new(continuation_dictionary: continuation_dictionary)
-    render_content_on(canvas)
+    canvas.render(self)
     canvas.to_s
   end
 
