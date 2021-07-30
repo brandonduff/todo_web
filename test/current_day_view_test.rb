@@ -15,7 +15,7 @@ class CurrentDayViewTest < Minitest::Test
     date = Date.today
     subject = CurrentDayView.new(date)
     canvas.render(subject)
-    canvas.fill_in(:date, date + 1)
+    canvas.fill_in(:date, date + 1, subject)
     canvas.submit
     assert_equal date + 1, canvas.inputs(:date)
   end

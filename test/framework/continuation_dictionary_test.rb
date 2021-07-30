@@ -14,10 +14,10 @@ class ContinuationDictionaryTest < Minitest::Test
 
     first_key = nil
     subject.register(first_component) do
-      first_key = subject.add('form_submission')
+      first_key = subject.add('form_submission', first_component)
     end
     subject.register(second_component) do
-      subject.add('form_submission')
+      subject.add('form_submission', second_component)
     end
     subject[first_key].call(attr: 'first component attr')
 

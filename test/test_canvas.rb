@@ -12,9 +12,8 @@ class TestCanvas < Canvas
   def self.define_tag(tag_name)
     define_method tag_name do |*args, &block|
       if block
-        sub_canvas = TestCanvas.build
-        rendered[tag_name] << sub_canvas
-        block.call(sub_canvas)
+        rendered[tag_name] << self
+        block.call(self)
       else
         rendered[tag_name] << args.first
       end
@@ -25,10 +24,6 @@ class TestCanvas < Canvas
 
   def include?(content)
     rendered?(content)
-  end
-
-  def ==(other)
-    include?(other)
   end
 
   def rendered?(args)
@@ -50,8 +45,8 @@ class TestCanvas < Canvas
     rendered[:input].find(-> { raise 'no input with that name' }) { |k, v| k == name }[1]
   end
 
-  def fill_in(input, value)
-    raise 'no form defined' unless @continuation_dictionary.has_form?
+  def fill_in(input, value, component = @last_component)
+    raise 'no form defined' unless @continuation_dictionary.has_form?(component)
     inputs(input) and (params[input] = value)
   end
 
@@ -59,11 +54,11 @@ class TestCanvas < Canvas
     yield(self) if block_given?
   end
 
-  def submit
+  def submit(component = @last_component)
     raise 'no submit button' if rendered[:submit_button].empty?
-    last_component.form_submission(params)
-    @rendered = Hash.new { |hash, key| hash[key] = [] }
-    render(last_component)
+    component.form_submission(params)
+    # @rendered = Hash.new { |hash, key| hash[key] = [] }
+    render(component)
   end
 
   def rendered
@@ -73,11 +68,7 @@ class TestCanvas < Canvas
   private
 
   def component
-    @continuation_dictionary.registered_component
-  end
-
-  def last_component
-    @continuation_dictionary.last_component
+    @current_component
   end
 
   def params

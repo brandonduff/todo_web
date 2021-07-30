@@ -33,12 +33,12 @@ class HtmlCanvas < Canvas
   define_tag :body
 
   def anchor(symbol)
-    href = @continuation_dictionary.add(symbol)
+    href = @continuation_dictionary.add(symbol, @current_component)
     open_tag('a', inner: symbol.to_s, href: href)
   end
 
   def input(attribute, type)
-    value = @continuation_dictionary.registered_component.value_for(attribute)
+    value = @current_component.value_for(attribute)
     open_tag('input', name: attribute.to_s, type: type, value: value)
   end
 
