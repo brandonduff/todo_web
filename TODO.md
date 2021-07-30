@@ -15,7 +15,10 @@ Todo File
 
 test list
 - 'form_submission' duplication
+- most recent rendered component gets form submissions when it shouldn't
+    I thought we fixed this?
 - finishing todos
   - [x] rendering finished todos
   - [ ] finishing todos
+  
 
