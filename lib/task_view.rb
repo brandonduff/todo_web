@@ -13,6 +13,7 @@ class TaskView < HtmlComponent
     else
       html.text(@task.description)
     end
+    html.text(' | ')
     html.anchor(:finish)
   end
 end
