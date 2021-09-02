@@ -46,6 +46,11 @@ class TestCanvas < Canvas
     rendered[:input] << [attribute, value]
   end
 
+  def anchor(symbol)
+    super
+    rendered[:anchor] << symbol
+  end
+
   def inputs(name)
     rendered[:input].find(-> { raise 'no input with that name' }) { |k, v| k == name }[1]
   end
@@ -68,6 +73,17 @@ class TestCanvas < Canvas
 
   def rendered
     @rendered ||= Hash.new { |hash, key| hash[key] = [] }
+  end
+
+  def anchors(value)
+    rendered[:anchor].find(-> { raise 'no anchor with that value' }) { |k, v| k == value }[1]
+  end
+
+  def click(value)
+    raise "no anchor tag with value #{value}" if rendered[:anchor].empty?
+    @continuation_dictionary[@continuation_dictionary.href_for(value)].call
+    @rendered = Hash.new { |hash, key| hash[key] = [] }
+    render(component)
   end
 
   private

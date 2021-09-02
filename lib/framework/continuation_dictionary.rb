@@ -4,7 +4,7 @@ class ContinuationDictionary
   end
 
   def [](key)
-    @component_actions[key.to_s]
+    @component_actions.fetch(key.to_s)
   end
 
   def add(symbol)

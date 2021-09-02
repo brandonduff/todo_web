@@ -23,6 +23,11 @@ class Canvas
     open_tag('form', action: action, method: 'post', &block)
   end
 
+  def anchor(symbol)
+    href = @continuation_dictionary.add(symbol)
+    open_tag('a', inner: symbol.to_s, href: href)
+  end
+
   def text_input(attribute)
     input(attribute, 'text')
   end
