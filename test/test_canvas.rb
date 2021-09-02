@@ -61,9 +61,9 @@ class TestCanvas < Canvas
 
   def submit
     raise 'no submit button' if rendered[:submit_button].empty?
-    last_component.form_submission(params)
+    component.form_submission(params)
     @rendered = Hash.new { |hash, key| hash[key] = [] }
-    render(last_component)
+    render(component)
   end
 
   def rendered
@@ -74,10 +74,6 @@ class TestCanvas < Canvas
 
   def component
     @continuation_dictionary.registered_component
-  end
-
-  def last_component
-    @continuation_dictionary.last_component
   end
 
   def params

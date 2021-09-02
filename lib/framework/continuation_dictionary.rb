@@ -23,22 +23,20 @@ class ContinuationDictionary
   end
 
   def register(component)
-    @last_component = @registered_component
+    last_component = @registered_component
     @registered_component = component
     yield
-    @registered_component = @last_component
-    @last_component = component
+    @registered_component = last_component unless last_component.nil?
   end
 
   def action
-    if @registered_component
-      @registered_component.object_id
-    else
-      @last_component.object_id
-    end
+    registered_component.object_id
   end
 
-  attr_reader :registered_component, :last_component
+  def registered_component
+    raise 'hi' unless @registered_component
+    @registered_component
+  end
 
   def href_for(symbol)
     "#{action}+#{symbol}"

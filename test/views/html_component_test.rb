@@ -27,8 +27,8 @@ class HTMLComponentTest < Minitest::Test
     continuation_dictionary = ContinuationDictionary.new
     child_component = ChildComponent.new
     component = RootComponent.new(child_component)
-    component.render(continuation_dictionary: continuation_dictionary)
-    assert_equal child_component, continuation_dictionary.registered_component
+    result = component.render(continuation_dictionary: continuation_dictionary)
+    assert_includes result, 'child'
   end
 end
 

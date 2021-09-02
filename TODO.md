@@ -15,7 +15,6 @@ Todo File
 
 test list
 - 'form_submission' duplication
-- ContinuationDictionary is kinda a mess. It probably shouldn't keep track of the current component
 - finishing todos
   - [x] rendering finished todos
   - [ ] finishing todos
