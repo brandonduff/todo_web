@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 require 'todo'
 
-Application.run(NewMain)
+Application.run(MainView)
 
 
