@@ -93,7 +93,7 @@ class TaskListTest < Minitest::Test
     done_task_list = Todo::TaskList.new
     done_task_list.add_task(Todo::Task.new('done'))
     @task_list.add_task(task)
-    task = @task_list.done(task)
+    @task_list.done(task)
 
     @task_list.undo(task)
 
@@ -116,19 +116,18 @@ class TaskListTest < Minitest::Test
     original_task = Todo::Task.new('do the dishes')
     @task_list.add_task(other_task)
     @task_list.add_task(original_task)
-    done_task = @task_list.done(original_task)
-    assert(done_task.done?)
-    assert_equal(original_task.description, done_task.description)
+    @task_list.done(original_task)
+    assert(original_task.done?)
   end
 
   def test_undo_with_provided_task
     other_task = Todo::Task.new('wash the car')
-    original_task = Todo::Task.new('do the dishes').done
+    original_task = Todo::Task.new('do the dishes')
+    original_task.done
     @task_list.add_task(other_task)
     @task_list.add_task(original_task)
-    unfinished_task = @task_list.undo(original_task)
-    refute(unfinished_task.done?)
-    assert_equal(original_task.description, unfinished_task.description)
+    @task_list.undo(original_task)
+    refute(original_task.done?)
   end
 
   def test_ignores_duplicates

@@ -17,12 +17,10 @@ module Todo
 
     def done
       @done = true
-      self
     end
 
     def undo
       @done = false
-      self
     end
 
     def in_progress?

@@ -22,11 +22,11 @@ module Todo
     alias_method :<<, :add_task
 
     def done(task_to_finish)
-      find_task(task_to_finish)&.done
+      on_matching_task(task_to_finish, &:done)
     end
 
     def undo(task_to_unfinish)
-      find_task(task_to_unfinish)&.undo
+      on_matching_task(task_to_unfinish, &:undo)
     end
 
     def clear
@@ -81,8 +81,10 @@ module Todo
 
     private
 
-    def find_task(candidate)
-      @tasks.find { |task| task == candidate }
+    def on_matching_task(candidate)
+      task = @tasks.find { |task| task == candidate }
+      yield task if task
+      task
     end
 
     def swap(first_index, second_index)
