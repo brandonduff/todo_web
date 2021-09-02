@@ -17,5 +17,7 @@ test list
 - 'form_submission' duplication
 - get rid of need of to_s being formatted_description
 - changing current day reflects different lists
+- make this an application, not a gem
+  - basically, remove TodoWeb module and gemspec, replace with Gemfile
   
 
