@@ -9,5 +9,3 @@ class AgendaView < HtmlComponent
     html.render(@task_list)
   end
 end
-
-Agenda = Struct.new(:current_day, :task_list)
