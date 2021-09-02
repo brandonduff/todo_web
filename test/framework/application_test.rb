@@ -44,20 +44,20 @@ class ApplicationTest < Minitest::Test
 
   def test_web_integration
     assert_includes last_response.body, 'invoked: false'
-    get "/#{@continuations.href_for(:invoke, @test_component)}"
+    get "/#{@continuations.href_for(:invoke)}"
     follow_redirect!
     assert_includes last_response.body, 'invoked: true'
     assert_equal 'http://example.org/', last_request.url
   end
 
   def test_posting_forms
-    post "/#{@continuations.href_for("form_submission", @test_component)}", { form_attr: 'my form input' }
+    post "/#{@continuations.href_for("form_submission")}", { form_attr: 'my form input' }
     follow_redirect!
     assert_includes last_response.body, 'my form input'
     assert_equal 'http://example.org/', last_request.url
   end
 
   def invoke_action(action)
-    @application.call(@continuations.href_for(action, @test_component))
+    @application.call(@continuations.href_for(action))
   end
 end

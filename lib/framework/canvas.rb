@@ -15,15 +15,11 @@ class Canvas
   end
 
   def render(renderable)
-    old = @current_component
-    @current_component = renderable
-    @last_component = @current_component
-    renderable.render_content_on(self)
-    @current_component = old
+    @continuation_dictionary.register(renderable) { renderable.render_content_on(self) }
   end
 
   def new_form(&block)
-    action = @continuation_dictionary.add('form_submission', @current_component)
+    action = @continuation_dictionary.add('form_submission')
     open_tag('form', action: action, method: 'post', &block)
   end
 
