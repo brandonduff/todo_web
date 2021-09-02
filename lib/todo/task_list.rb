@@ -22,11 +22,11 @@ module Todo
     alias_method :<<, :add_task
 
     def done(task_to_finish)
-      update_task_in_list(task_to_finish, task_to_finish.done)
+      find_task(task_to_finish)&.done
     end
 
     def undo(task_to_unfinish)
-      update_task_in_list(task_to_unfinish, task_to_unfinish.undo)
+      find_task(task_to_unfinish)&.undo
     end
 
     def clear
@@ -81,6 +81,10 @@ module Todo
 
     private
 
+    def find_task(candidate)
+      @tasks.find { |task| task == candidate }
+    end
+
     def swap(first_index, second_index)
       self[first_index], self[second_index] = self[second_index], self[first_index]
     end
@@ -95,18 +99,6 @@ module Todo
 
     def from_array(array)
       self.class.from_array(array)
-    end
-
-    def update_task_in_list(from, to)
-      @tasks = @tasks.map do |t|
-        if t == from
-          to
-        else
-          t
-        end
-      end
-
-      to
     end
   end
 end

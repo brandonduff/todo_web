@@ -4,7 +4,7 @@ module Todo
     def initialize(task_or_description, done = false)
       if task_or_description.is_a?(self.class)
         @description = task_or_description.description
-        @done = task_or_description.done
+        @done = task_or_description.done?
       else
         @description = task_or_description
         @done = done
@@ -16,11 +16,13 @@ module Todo
     end
 
     def done
-      Task.new(@description, true)
+      @done = true
+      self
     end
 
     def undo
-      Task.new(@description, false)
+      @done = false
+      self
     end
 
     def in_progress?

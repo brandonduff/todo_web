@@ -9,6 +9,7 @@ class Canvas
   define_tag :submit_button, :button, type: :submit
   define_tag :list_item, :li
   define_tag :unordered_list, :ul
+  define_tag :del
 
   def initialize(continuation_dictionary:)
     @continuation_dictionary = continuation_dictionary

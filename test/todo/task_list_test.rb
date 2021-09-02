@@ -91,7 +91,7 @@ class TaskListTest < Minitest::Test
   def test_undo_with_one_task_undoes_it
     task = Todo::Task.new('done')
     done_task_list = Todo::TaskList.new
-    done_task_list.add_task(task)
+    done_task_list.add_task(Todo::Task.new('done'))
     @task_list.add_task(task)
     task = @task_list.done(task)
 

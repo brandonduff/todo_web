@@ -15,8 +15,7 @@ Todo File
 
 test list
 - 'form_submission' duplication
-- finishing todos
-  - [x] rendering finished todos
-  - [ ] finishing todos
+- get rid of need of to_s being formatted_description
+- changing current day reflects different lists
   
 

@@ -5,7 +5,7 @@ class TaskViewTest < Minitest::Test
     task = Todo::Task.new('do the dishes', true)
     canvas.render(TaskView.new(task))
 
-    assert canvas.rendered?(del: task)
+    assert canvas.rendered?(del: 'do the dishes')
   end
 
   def test_rendering_done
@@ -14,7 +14,7 @@ class TaskViewTest < Minitest::Test
 
     canvas.click(:finish)
 
-    assert canvas.rendered?(del: task.done)
+    assert canvas.rendered?(del: 'do the dishes')
   end
 
   def canvas

@@ -1,3 +1,5 @@
+require 'test_helper'
+
 module Todo
   module UseCases
     class DoneTest < Minitest::Test

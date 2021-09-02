@@ -3,16 +3,15 @@ class TaskView < HtmlComponent
     @task = task
   end
 
-  # TODO: need to update in list. this doesn't work in app. interesting design issue
   def finish
-    @task = @task.done
+    @task.done
   end
 
   def render_content_on(html)
     if @task.done?
-      html.del(@task)
+      html.del(@task.description)
     else
-      html.text(@task)
+      html.text(@task.description)
     end
     html.anchor(:finish)
   end

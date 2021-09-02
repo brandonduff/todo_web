@@ -9,7 +9,7 @@ class CurrentDayView < HtmlComponent
     html.paragraph(@date)
     html.new_form do |f|
       f.date_input(:date)
-      f.submit_button
+      f.submit_button('Set Current Day')
     end
   end
 end
