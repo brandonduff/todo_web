@@ -17,6 +17,8 @@ test list
 - 'form_submission' duplication
 - get rid of need of to_s being formatted_description
 - changing current day reflects different lists
+- AgendaView reflects changes in Agenda date
+    - interesting design problem here
 - make this an application, not a gem
   - basically, remove TodoWeb module and gemspec, replace with Gemfile
   
