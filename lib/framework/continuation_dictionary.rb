@@ -17,6 +17,7 @@ class ContinuationDictionary
       else
         current_component.send(symbol)
       end
+      notify_observers
     end
 
     href_for(symbol)
@@ -44,5 +45,15 @@ class ContinuationDictionary
 
   def has_form?
     @component_actions[href_for('form_submission')]
+  end
+
+  def add_observer(observer)
+    @observer = observer
+  end
+
+  private
+
+  def notify_observers
+    @observer.update if @observer
   end
 end

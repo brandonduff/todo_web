@@ -38,4 +38,22 @@ class ContinuationDictionaryTest < Minitest::Test
       assert_equal first_component, subject.registered_component
     end
   end
+
+  def test_observability
+    first_component = component_for_test
+    subject = ContinuationDictionary.new
+    first_key = nil
+    subject.register(first_component) do
+      first_key = subject.add('form_submission')
+    end
+    subject.add_observer(self)
+
+    subject[first_key].call({})
+
+    assert @updated
+  end
+
+  def update
+    @updated = true
+  end
 end
