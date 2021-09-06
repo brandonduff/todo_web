@@ -12,4 +12,13 @@ class AgendaTest < Minitest::Test
 
     assert_equal yesterdays_list, subject.task_list
   end
+
+  def test_new_days_have_empty_list
+    subject = Agenda.new(Date.today, Todo::TaskList.new)
+
+    subject.current_day = Date.today - 1
+    assert_equal Todo::TaskList.new, subject.task_list
+    subject.task_list << Todo::Task.new('do the dishes')
+    assert_equal 1, subject.task_list.entries.length
+  end
 end

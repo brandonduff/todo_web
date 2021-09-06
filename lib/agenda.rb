@@ -5,7 +5,8 @@ class Agenda
   def initialize(current_day, task_list)
     @current_day = current_day
     @task_list = task_list
-    @lists = { @current_day => @task_list }
+    @lists = Hash.new { |hash, key| hash[key] = Todo::TaskList.new }
+    @lists[@current_day] = @task_list
   end
 
   def add_list_on_day(list, day)
