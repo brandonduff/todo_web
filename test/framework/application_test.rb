@@ -35,7 +35,8 @@ class ApplicationTest < Minitest::Test
 
   def setup
     @continuations = ContinuationDictionary.new
-    @application = Application.new(@continuations)
+    @persistence = Persistence.create_null
+    @application = Application.new(@continuations, @persistence)
     @test_component = TestComponent.new
     @application.register_root(@test_component)
     Application.set_application(@application)
@@ -59,5 +60,10 @@ class ApplicationTest < Minitest::Test
 
   def invoke_action(action)
     @application.call(@continuations.href_for(action))
+  end
+
+  def test_persistence
+    get "/#{@continuations.href_for(:invoke)}"
+    assert @persistence.last_update.invoked?
   end
 end

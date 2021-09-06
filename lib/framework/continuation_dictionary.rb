@@ -35,7 +35,6 @@ class ContinuationDictionary
   end
 
   def registered_component
-    raise 'hi' unless @registered_component
     @registered_component
   end
 

@@ -8,8 +8,9 @@ class Application
   end
 
   def self.build(component_class)
-    instance = new(ContinuationDictionary.new)
-    instance.register_root(component_class.new)
+    persistence = Persistence.create
+    instance = new(ContinuationDictionary.new, persistence)
+    instance.register_root(persistence.component || component_class.new)
     instance
   end
 
@@ -29,12 +30,15 @@ class Application
     SinatraServer.call(*params, &block)
   end
 
-  def initialize(continuations)
+  def initialize(continuations, persistence)
     @continuations = continuations
+    @persistence = persistence
+    @continuations.add_observer(@persistence)
   end
 
   def register_root(component)
     @root = component
+    @persistence.register_component(@root)
   end
 
   def render
