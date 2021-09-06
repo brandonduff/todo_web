@@ -45,7 +45,7 @@ module Todo
     end
 
     def to_s
-      @tasks.map(&:to_s).join("\n")
+      @tasks.map(&:formatted_description).join("\n")
     end
 
     def each(*args, &block)

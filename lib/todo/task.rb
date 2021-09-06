@@ -32,7 +32,7 @@ module Todo
     end
 
     def to_s
-      formatted_description
+      description
     end
 
     def ==(other)

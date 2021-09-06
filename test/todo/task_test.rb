@@ -51,7 +51,7 @@ module Todo
 
     def test_to_s
       @task_item.done
-      assert_equal('✓ do this and that', @task_item.to_s)
+      assert_equal('do this and that', @task_item.to_s)
     end
   end
 end
