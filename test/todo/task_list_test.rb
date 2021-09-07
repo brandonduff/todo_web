@@ -3,7 +3,7 @@ require 'test_helper'
 class TaskListTest < Minitest::Test
 
   def setup
-    @task_list = Todo::TaskList.new(StringIO.new)
+    @task_list = Todo::TaskList.new
   end
 
   def test_adding_tasks
@@ -30,18 +30,6 @@ class TaskListTest < Minitest::Test
     assert_equal(@task_list.to_s, "hi\nguy")
   end
 
-  def test_initialize_from_existing_buffer
-    initial_buffer = StringIO.new
-    initial_buffer << "hi\ntry\nguy\n"
-    builder = instance_double("TaskBuilder")
-    expect(Todo::TaskBuilder).to receive(:new).with('hi').and_return(builder)
-    expect(Todo::TaskBuilder).to receive(:new).with('try').and_return(builder)
-    expect(Todo::TaskBuilder).to receive(:new).with('guy').and_return(builder)
-    expect(builder).to receive(:build).exactly(3).times
-
-    Todo::TaskList.new(initial_buffer)
-  end
-
   def test_done_on_empty_list_does_nothing
     @task_list.done(Todo::Task.new('hi'))
     assert_equal(@task_list.to_s, '')
@@ -56,7 +44,7 @@ class TaskListTest < Minitest::Test
 
   def test_clear_on_empty_list_does_nothing
     @task_list.clear
-    assert_equal(@task_list.to_s, '')
+    assert @task_list.empty?
   end
 
   def test_clear_with_no_done_tasks_does_nothing

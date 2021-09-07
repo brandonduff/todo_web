@@ -10,8 +10,8 @@ module Todo
       end
     end
 
-    def initialize(buffer = StringIO.new)
-      @tasks = buffer.string.split("\n").map { |description| TaskBuilder.new(description).build }
+    def initialize
+      @tasks = []
     end
 
     def add_task(task)
@@ -52,10 +52,6 @@ module Todo
       @tasks.each(*args, &block)
     end
 
-    def concat(other_list)
-      @tasks.concat(other_list.to_a)
-    end
-
     def ==(other_list)
       @tasks.each_with_index do |task, index|
         return false unless task == other_list.tasks[index]
@@ -65,10 +61,6 @@ module Todo
 
     def unfinished_tasks
       from_array(@tasks.select(&:in_progress?))
-    end
-
-    def finished_tasks
-      from_array(@tasks.select(&:done?))
     end
 
     def empty?

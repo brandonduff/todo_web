@@ -1,14 +1,8 @@
 module Todo
   class Task
-
     def initialize(task_or_description, done = false)
-      if task_or_description.is_a?(self.class)
-        @description = task_or_description.description
-        @done = task_or_description.done?
-      else
-        @description = task_or_description
-        @done = done
-      end
+      @description = task_or_description
+      @done = done
     end
 
     def formatted_description
@@ -29,10 +23,6 @@ module Todo
 
     def done?
       !!@done
-    end
-
-    def to_s
-      description
     end
 
     def ==(other)

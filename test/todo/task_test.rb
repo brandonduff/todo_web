@@ -48,10 +48,5 @@ module Todo
       other_task = Todo::Task.new('different description')
       assert(other_task != @task_item)
     end
-
-    def test_to_s
-      @task_item.done
-      assert_equal('do this and that', @task_item.to_s)
-    end
   end
 end
