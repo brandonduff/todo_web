@@ -15,14 +15,6 @@ class TaskListView < HtmlComponent
 
   private
 
-  def render_clear_link(html)
-    html.anchor(:clear)
-  end
-
-  def clear
-    @list.clear
-  end
-
   def render_tasks(html)
     html.unordered_list do |ul|
       @list.each do |task|
@@ -38,5 +30,13 @@ class TaskListView < HtmlComponent
       f.text_input(:new_task)
       f.submit_button('create new task')
     end
+  end
+
+  def render_clear_link(html)
+    html.anchor(:clear)
+  end
+
+  def clear
+    @list.clear
   end
 end
