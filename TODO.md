@@ -15,7 +15,6 @@ Todo File
 
 test list
 - 'form_submission' duplication
-- get rid of need of to_s being formatted_description
 - make this an application, not a gem
   - basically, remove TodoWeb module and gemspec, replace with Gemfile
 - clearing finished todos
