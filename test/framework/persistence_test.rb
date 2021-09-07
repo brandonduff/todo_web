@@ -13,7 +13,7 @@ class PersistenceTest < Minitest::Test
     subject = Persistence.create_null
     subject.register_component('should be null')
     subject.update
-    refute_equal 'should be null', Persistence.create.component
+    refute_equal 'should be null', Persistence.create('test_data.yml').component
   end
 
   def test_retrieving_last_updated_state
