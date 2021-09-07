@@ -3,15 +3,11 @@ require 'framework/html_component'
 
 class CurrentDayViewTest < ViewTest
   def test_rendering_day
-    agenda = Agenda.new(date, Todo::TaskList.new)
-    subject = CurrentDayView.new(agenda)
     canvas.render(subject)
     assert canvas.rendered?(paragraph: date)
   end
 
   def test_changing_date
-    agenda = Agenda.new(date, Todo::TaskList.new)
-    subject = CurrentDayView.new(agenda)
     canvas.render(subject)
     canvas.fill_in(:date, date + 1)
     canvas.submit
@@ -19,8 +15,6 @@ class CurrentDayViewTest < ViewTest
   end
 
   def test_changing_date_with_agenda
-    agenda = Agenda.new(date, Todo::TaskList.new)
-    subject = CurrentDayView.new(agenda)
     canvas.render(subject)
     canvas.fill_in(:date, date + 1)
     canvas.submit
@@ -30,5 +24,13 @@ class CurrentDayViewTest < ViewTest
 
   def date
     @date ||= Date.today
+  end
+
+  def agenda
+    @agenda ||= Agenda.new(date, Todo::TaskList.new)
+  end
+
+  def subject
+    @subject ||= CurrentDayView.new(agenda)
   end
 end
