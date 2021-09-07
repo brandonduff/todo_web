@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class AgendaViewTest < Minitest::Test
+class AgendaViewTest < ViewTest
   def setup
     @canvas = TestCanvas.build
   end

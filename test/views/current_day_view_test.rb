@@ -1,10 +1,8 @@
 require 'test_helper'
 require 'framework/html_component'
 
-class CurrentDayViewTest < Minitest::Test
+class CurrentDayViewTest < ViewTest
   def test_rendering_day
-    canvas = TestCanvas.build
-    date = Date.today
     agenda = Agenda.new(date, Todo::TaskList.new)
     subject = CurrentDayView.new(agenda)
     canvas.render(subject)
@@ -12,8 +10,6 @@ class CurrentDayViewTest < Minitest::Test
   end
 
   def test_changing_date
-    canvas = TestCanvas.build
-    date = Date.today
     agenda = Agenda.new(date, Todo::TaskList.new)
     subject = CurrentDayView.new(agenda)
     canvas.render(subject)
@@ -23,8 +19,6 @@ class CurrentDayViewTest < Minitest::Test
   end
 
   def test_changing_date_with_agenda
-    canvas = TestCanvas.build
-    date = Date.today
     agenda = Agenda.new(date, Todo::TaskList.new)
     subject = CurrentDayView.new(agenda)
     canvas.render(subject)
@@ -32,5 +26,9 @@ class CurrentDayViewTest < Minitest::Test
     canvas.submit
     assert_equal date + 1, canvas.inputs(:date)
     assert_equal date + 1, agenda.current_day
+  end
+
+  def date
+    @date ||= Date.today
   end
 end

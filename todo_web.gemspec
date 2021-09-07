@@ -34,7 +34,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "capybara"
   spec.add_development_dependency "pry"
   spec.add_development_dependency "pry-doc"
-  spec.add_development_dependency "rspec-mocks"
   spec.add_development_dependency "irb"
   spec.add_development_dependency "zeitwerk"
   spec.add_development_dependency "rack-test"

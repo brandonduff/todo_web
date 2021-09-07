@@ -1,9 +1,8 @@
 require 'test_helper'
 
-class TaskListViewTest < Minitest::Test
+class TaskListViewTest < ViewTest
   def test_creating_tasks
     task_list = Todo::TaskList.new
-    canvas = TestCanvas.build
     subject = TaskListView.new(task_list)
 
     canvas.render(subject)
@@ -15,7 +14,6 @@ class TaskListViewTest < Minitest::Test
 
   def test_clearing_finished
     task_list = Todo::TaskList.from_array([Todo::Task.new('do the dishes', true)])
-    canvas = TestCanvas.build
     subject = TaskListView.new(task_list)
 
     canvas.render(subject)

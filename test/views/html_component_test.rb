@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class HTMLComponentTest < Minitest::Test
+class HTMLComponentTest < ViewTest
   class RootComponent < HtmlComponent
     def initialize(child_component)
       @child_component = child_component

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TaskViewTest < Minitest::Test
+class TaskViewTest < ViewTest
   def test_rendering_finished_task
     task = Todo::Task.new('do the dishes', true)
     canvas.render(TaskView.new(task))
@@ -15,9 +15,5 @@ class TaskViewTest < Minitest::Test
     canvas.click(:finish)
 
     assert canvas.rendered?(del: 'do the dishes')
-  end
-
-  def canvas
-    @canvas ||= TestCanvas.build
   end
 end
