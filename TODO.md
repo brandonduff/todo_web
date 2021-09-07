@@ -17,6 +17,5 @@ test list
 - 'form_submission' duplication
 - make this an application, not a gem
   - basically, remove TodoWeb module and gemspec, replace with Gemfile
-- clearing finished todos
   
 

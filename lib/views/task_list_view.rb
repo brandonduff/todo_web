@@ -10,9 +10,18 @@ class TaskListView < HtmlComponent
   def render_content_on(html)
     render_tasks(html)
     render_new_task_form(html)
+    render_clear_link(html)
   end
 
   private
+
+  def render_clear_link(html)
+    html.anchor(:clear)
+  end
+
+  def clear
+    @list.clear
+  end
 
   def render_tasks(html)
     html.unordered_list do |ul|
