@@ -7,6 +7,10 @@ class TaskView < HtmlComponent
     @task.done
   end
 
+  def move_up
+    @task.move_up
+  end
+
   def render_content_on(html)
     if @task.done?
       html.del(@task.description)
@@ -15,5 +19,7 @@ class TaskView < HtmlComponent
     end
     html.text(' | ')
     html.anchor(:finish)
+    html.text(' | ')
+    html.anchor(:move_up)
   end
 end

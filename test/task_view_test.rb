@@ -16,4 +16,14 @@ class TaskViewTest < ViewTest
 
     assert canvas.rendered?(del: 'do the dishes')
   end
+
+  def test_moving
+    task = Todo::Task.new('do the dishes')
+    list = Todo::TaskList.from_array([Todo::Task.new('wash the car'), task])
+    canvas.render(TaskView.new(task))
+
+    canvas.click(:move_up)
+
+    assert_equal task, list.first
+  end
 end
