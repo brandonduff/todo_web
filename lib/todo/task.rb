@@ -23,6 +23,10 @@ module Todo
       @list.move(self, :up)
     end
 
+    def move_down
+      @list.move(self, :down)
+    end
+
     def in_progress?
       !done?
     end
