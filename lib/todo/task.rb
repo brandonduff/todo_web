@@ -1,5 +1,7 @@
 module Todo
   class Task
+    attr_writer :list
+
     def initialize(task_or_description, done = false)
       @description = task_or_description
       @done = done
@@ -15,6 +17,10 @@ module Todo
 
     def undo
       @done = false
+    end
+
+    def move_up
+      @list.move(self, :up)
     end
 
     def in_progress?

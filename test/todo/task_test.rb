@@ -48,5 +48,12 @@ module Todo
       other_task = Todo::Task.new('different description')
       assert(other_task != @task_item)
     end
+
+    def test_can_move_up
+      last_task = Todo::Task.new('wash the car')
+      list = Todo::TaskList.from_array([Todo::Task.new('do the dishes'), last_task])
+      last_task.move_up
+      assert_equal last_task, list.first
+    end
   end
 end

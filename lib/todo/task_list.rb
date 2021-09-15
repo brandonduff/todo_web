@@ -17,6 +17,7 @@ module Todo
     def add_task(task)
       return if include?(task)
       @tasks << task
+      task.list = self
     end
 
     alias_method :<<, :add_task
