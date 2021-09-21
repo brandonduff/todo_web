@@ -1,6 +1,9 @@
 module Todo
   class TaskList
     include Enumerable
+    extend Forwardable
+
+    def_delegators :@tasks, :each, :empty?
 
     def self.from_array(array)
       new.tap do |task_list|
@@ -49,10 +52,6 @@ module Todo
       @tasks.map(&:formatted_description).join("\n")
     end
 
-    def each(*args, &block)
-      @tasks.each(*args, &block)
-    end
-
     def ==(other_list)
       @tasks.each_with_index do |task, index|
         return false unless task == other_list.tasks[index]
@@ -62,10 +61,6 @@ module Todo
 
     def unfinished_tasks
       from_array(@tasks.select(&:in_progress?))
-    end
-
-    def empty?
-      tasks.empty?
     end
 
     protected
