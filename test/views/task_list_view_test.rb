@@ -2,7 +2,7 @@ require 'test_helper'
 
 class TaskListViewTest < ViewTest
   def test_creating_tasks
-    task_list = Todo::TaskList.new
+    task_list = TaskList.new
     subject = TaskListView.new(task_list)
 
     canvas.render(subject)
@@ -13,7 +13,7 @@ class TaskListViewTest < ViewTest
   end
 
   def test_clearing_finished
-    task_list = Todo::TaskList.from_array([Todo::Task.new('do the dishes', true)])
+    task_list = TaskList.from_array([Task.new('do the dishes', true)])
     subject = TaskListView.new(task_list)
 
     canvas.render(subject)

@@ -27,7 +27,7 @@ class CurrentDayViewTest < ViewTest
   end
 
   def agenda
-    @agenda ||= Agenda.new(date, Todo::TaskList.new)
+    @agenda ||= Agenda.new(date, TaskList.new)
   end
 
   def subject
