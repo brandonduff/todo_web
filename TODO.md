@@ -12,7 +12,6 @@ test list
 - 'form_submission' duplication
 - make this an application, not a gem
   - basically, remove TodoWeb module and gemspec, replace with Gemfile
-- reorder todos
 - allow setting different text on links than method name
 - see about replacing TestCanvas with an intermediate representation with an HtmlRenderer and TestRenderer (or TestDriver)
 - allow passing block instead of calling method for form submission/link clicking
