@@ -9,6 +9,7 @@ Todo File
 
 
 test list
+- clean url so symbols can be in method/button names
 - 'form_submission' duplication
 - make this an application, not a gem
   - basically, remove TodoWeb module and gemspec, replace with Gemfile
