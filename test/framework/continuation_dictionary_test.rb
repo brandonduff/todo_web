@@ -53,6 +53,19 @@ class ContinuationDictionaryTest < Minitest::Test
     assert @updated
   end
 
+  def test_adding_block
+    component = component_for_test
+    subject = ContinuationDictionary.new
+    key = nil
+    subject.register(component) do
+      key = subject.add('click me!') { |c, arg| c.attr = arg }
+    end
+
+    subject[key].call('clicked')
+
+    assert_equal 'clicked', component.attr
+  end
+
   def update
     @updated = true
   end

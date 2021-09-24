@@ -26,6 +26,6 @@ class TaskView < HtmlComponent
     html.text(' | ')
     html.anchor(:move_up)
     html.text(' | ')
-    html.anchor(:move_down)
+    html.anchor('v', &:move_down)
   end
 end

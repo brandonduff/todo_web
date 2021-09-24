@@ -7,15 +7,15 @@ class ContinuationDictionary
     @component_actions.fetch(key.to_s)
   end
 
-  def add(symbol)
+  def add(symbol, &block)
     # we need to bind to the registered component at this time, not when we end up invoking
     # the proc. this is pretty weird and there must be a better way
     current_component = @registered_component
-    @component_actions[href_for(symbol)] = proc do |params|
-      if params
-        current_component.send(symbol, params)
+    @component_actions[href_for(symbol)] = proc do |*params|
+      if block_given?
+        block.call(current_component, *params)
       else
-        current_component.send(symbol)
+        current_component.send(symbol, *params)
       end
       notify_observers
     end

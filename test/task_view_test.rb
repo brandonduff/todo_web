@@ -26,7 +26,7 @@ class TaskViewTest < ViewTest
 
     assert_equal task, list.first
 
-    canvas.click(:move_down)
+    canvas.click('v')
 
     refute_equal task, list.first
   end

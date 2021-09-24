@@ -24,8 +24,8 @@ class Canvas
     open_tag('form', action: action, method: 'post', &block)
   end
 
-  def anchor(symbol)
-    href = @continuation_dictionary.add(symbol)
+  def anchor(symbol, &block)
+    href = @continuation_dictionary.add(symbol, &block)
     open_tag('a', inner: symbol.to_s, href: href)
   end
 
