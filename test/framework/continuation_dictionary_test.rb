@@ -12,41 +12,19 @@ class ContinuationDictionaryTest < Minitest::Test
     second_component = component_for_test
     subject = ContinuationDictionary.new
 
-    first_key = nil
-    subject.register(first_component) do
-      first_key = subject.add(Continuation.new(first_component, 'form_submission'))
-    end
-    subject.register(second_component) do
-      subject.add(Continuation.new(first_component, 'form_submission'))
-    end
+    first_key = subject.add(Continuation.new(first_component, 'form_submission'))
+    subject.add(Continuation.new(first_component, 'form_submission'))
     subject[first_key].call(attr: 'first component attr')
 
     assert_nil second_component.attr
     assert_equal 'first component attr', first_component.attr
   end
 
-  def test_register_resetting_component_after_yielding
-    first_component = component_for_test
-    second_component = component_for_test
-    subject = ContinuationDictionary.new
-
-    subject.register(first_component) do
-      assert_equal first_component, subject.registered_component
-      subject.register(second_component) do
-        assert_equal second_component, subject.registered_component
-      end
-      assert_equal first_component, subject.registered_component
-    end
-  end
-
   def test_observability
     first_component = component_for_test
     subject = ContinuationDictionary.new
-    first_key = nil
     subject.add_observer(self)
-    subject.register(first_component) do
-      first_key = subject.add(Continuation.new(first_component, 'form_submission'))
-    end
+    first_key = subject.add(Continuation.new(first_component, 'form_submission'))
 
     subject[first_key].call({})
 
@@ -56,10 +34,7 @@ class ContinuationDictionaryTest < Minitest::Test
   def test_adding_block
     component = component_for_test
     subject = ContinuationDictionary.new
-    key = nil
-    subject.register(component) do
-      key = subject.add(Continuation.new(component, lambda { |c, arg| c.attr = arg } ))
-    end
+    key = subject.add(Continuation.new(component, lambda { |c, arg| c.attr = arg } ))
 
     subject[key].call('clicked')
 

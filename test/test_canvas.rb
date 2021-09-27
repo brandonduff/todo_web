@@ -91,7 +91,7 @@ class TestCanvas < Canvas
   private
 
   def component
-    @continuation_dictionary.registered_component
+    @registered_component
   end
 
   def params

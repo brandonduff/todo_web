@@ -14,17 +14,6 @@ class ContinuationDictionary
     continuation.object_id
   end
 
-  def register(component)
-    last_component = @registered_component
-    @registered_component = component
-    yield
-    @registered_component = last_component unless last_component.nil?
-  end
-
-  def registered_component
-    @registered_component
-  end
-
   def add_observer(observer)
     @observer = observer
   end

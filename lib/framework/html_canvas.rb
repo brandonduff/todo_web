@@ -11,7 +11,7 @@ class HtmlCanvas < Canvas
   define_tag :body
 
   def input(attribute, type)
-    value = @continuation_dictionary.registered_component.value_for(attribute)
+    value = @registered_component.value_for(attribute)
     open_tag('input', name: attribute.to_s, type: type, value: value)
   end
 

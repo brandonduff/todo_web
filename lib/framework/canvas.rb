@@ -18,7 +18,7 @@ class Canvas
   def render(renderable)
     last_component = @registered_component
     @registered_component = renderable
-    @continuation_dictionary.register(renderable) { renderable.render_content_on(self) }
+    renderable.render_content_on(self)
     @registered_component = last_component unless last_component.nil?
   end
 
