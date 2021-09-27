@@ -62,10 +62,6 @@ class ApplicationTest < Minitest::Test
     assert_equal 'http://example.org/', last_request.url
   end
 
-  def invoke_action(action)
-    @application.call(@continuations.href_for(action))
-  end
-
   def test_persistence
     result = Capybara.string(last_response.body)
     href = result.find('a')['href']

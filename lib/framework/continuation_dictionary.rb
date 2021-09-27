@@ -21,16 +21,8 @@ class ContinuationDictionary
     @registered_component = last_component unless last_component.nil?
   end
 
-  def action
-    registered_component.object_id
-  end
-
   def registered_component
     @registered_component
-  end
-
-  def href_for(symbol)
-    "#{action}+#{symbol}"
   end
 
   def add_observer(observer)
