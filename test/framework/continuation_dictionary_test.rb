@@ -43,10 +43,10 @@ class ContinuationDictionaryTest < Minitest::Test
     first_component = component_for_test
     subject = ContinuationDictionary.new
     first_key = nil
+    subject.add_observer(self)
     subject.register(first_component) do
       first_key = subject.add('form_submission')
     end
-    subject.add_observer(self)
 
     subject[first_key].call({})
 

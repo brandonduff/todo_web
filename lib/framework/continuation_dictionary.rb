@@ -8,17 +8,9 @@ class ContinuationDictionary
   end
 
   def add(symbol, &block)
-    # we need to bind to the registered component at this time, not when we end up invoking
-    # the proc. this is pretty weird and there must be a better way
-    current_component = @registered_component
-    @component_actions[href_for(symbol)] = proc do |*params|
-      if block_given?
-        block.call(current_component, *params)
-      else
-        current_component.send(symbol, *params)
-      end
-      notify_observers
-    end
+    continuation = Continuation.new(@registered_component, block || symbol)
+    continuation.add_observer(@observer)
+    @component_actions[href_for(symbol)] = continuation
 
     href_for(symbol)
   end
@@ -52,7 +44,33 @@ class ContinuationDictionary
 
   private
 
-  def notify_observers
-    @observer.update if @observer
+  class Continuation
+    def initialize(component, block_or_symbol)
+      @component = component
+      @block_or_symbol = block_or_symbol
+    end
+
+    def call(*args)
+      invoke(args)
+      notify_observers
+    end
+
+    def add_observer(observer)
+      @observer = observer
+    end
+
+    private
+
+    def invoke(args)
+      if @block_or_symbol.is_a?(Proc)
+        @block_or_symbol.call(@component, *args)
+      else
+        @component.send(@block_or_symbol, *args)
+      end
+    end
+
+    def notify_observers
+      @observer.update if @observer
+    end
   end
 end
