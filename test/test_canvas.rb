@@ -51,12 +51,17 @@ class TestCanvas < Canvas
     rendered[:anchor] << [symbol, href]
   end
 
+  def new_form(&block)
+    super
+    @form_rendered = true
+  end
+
   def inputs(name)
     rendered[:input].find(-> { raise 'no input with that name' }) { |k, v| k == name }[1]
   end
 
   def fill_in(input, value)
-    raise 'no form defined' unless @continuation_dictionary.has_form?
+    raise 'no form defined' unless @form_rendered
     inputs(input) and (params[input] = value)
   end
 

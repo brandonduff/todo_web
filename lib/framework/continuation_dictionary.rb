@@ -4,15 +4,15 @@ class ContinuationDictionary
   end
 
   def [](key)
-    @component_actions.fetch(key)
+    @component_actions.fetch(key.to_i)
   end
 
   def add(symbol, continuation = nil, &block)
     continuation = continuation || Continuation.new(@registered_component, block || symbol)
     continuation.add_observer(@observer)
-    @component_actions[href_for(symbol)] = continuation
+    @component_actions[continuation.object_id] = continuation
 
-    href_for(symbol)
+    continuation.object_id
   end
 
   def register(component)
@@ -32,10 +32,6 @@ class ContinuationDictionary
 
   def href_for(symbol)
     "#{action}+#{symbol}"
-  end
-
-  def has_form?
-    @component_actions[href_for('form_submission')]
   end
 
   def add_observer(observer)

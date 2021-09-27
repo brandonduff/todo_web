@@ -45,14 +45,18 @@ class ApplicationTest < Minitest::Test
 
   def test_web_integration
     assert_includes last_response.body, 'invoked: false'
-    get "/#{@continuations.href_for(:invoke)}"
+    result = Capybara.string(last_response.body)
+    href = result.find('a')['href']
+    get "/#{href}"
     follow_redirect!
     assert_includes last_response.body, 'invoked: true'
     assert_equal 'http://example.org/', last_request.url
   end
 
   def test_posting_forms
-    post "/#{@continuations.href_for("form_submission")}", { form_attr: 'my form input' }
+    result = Capybara.string(last_response.body)
+    action = result.find('form')['action']
+    post "/#{action}", { form_attr: 'my form input' }
     follow_redirect!
     assert_includes last_response.body, 'my form input'
     assert_equal 'http://example.org/', last_request.url
@@ -63,7 +67,9 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_persistence
-    get "/#{@continuations.href_for(:invoke)}"
+    result = Capybara.string(last_response.body)
+    href = result.find('a')['href']
+    get "/#{href}"
     assert @persistence.last_update.invoked?
   end
 end
