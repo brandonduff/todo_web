@@ -47,8 +47,8 @@ class TestCanvas < Canvas
   end
 
   def anchor(symbol)
-    super
-    rendered[:anchor] << symbol
+    href = super
+    rendered[:anchor] << [symbol, href]
   end
 
   def inputs(name)
@@ -60,8 +60,9 @@ class TestCanvas < Canvas
     inputs(input) and (params[input] = value)
   end
 
-  def open_tag(*_args)
+  def open_tag(*__args, href: nil, **_args)
     yield(self) if block_given?
+    href
   end
 
   def submit
@@ -81,7 +82,7 @@ class TestCanvas < Canvas
 
   def click(value)
     raise "no anchor tag with value #{value}" if rendered[:anchor].empty?
-    @continuation_dictionary[@continuation_dictionary.href_for(value)].call
+    @continuation_dictionary[rendered[:anchor].find { |v| v[0] == value }[1]].call
     @rendered = Hash.new { |hash, key| hash[key] = [] }
     render(component)
   end

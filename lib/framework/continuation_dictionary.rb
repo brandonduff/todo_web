@@ -4,11 +4,11 @@ class ContinuationDictionary
   end
 
   def [](key)
-    @component_actions.fetch(key.to_s)
+    @component_actions.fetch(key)
   end
 
-  def add(symbol, &block)
-    continuation = Continuation.new(@registered_component, block || symbol)
+  def add(symbol, continuation = nil, &block)
+    continuation = continuation || Continuation.new(@registered_component, block || symbol)
     continuation.add_observer(@observer)
     @component_actions[href_for(symbol)] = continuation
 
@@ -41,36 +41,34 @@ class ContinuationDictionary
   def add_observer(observer)
     @observer = observer
   end
+end
+
+class Continuation
+  def initialize(component, block_or_symbol)
+    @component = component
+    @block_or_symbol = block_or_symbol
+  end
+
+  def call(*args)
+    invoke(args)
+    notify_observers
+  end
+
+  def add_observer(observer)
+    @observer = observer
+  end
 
   private
 
-  class Continuation
-    def initialize(component, block_or_symbol)
-      @component = component
-      @block_or_symbol = block_or_symbol
+  def invoke(args)
+    if @block_or_symbol.is_a?(Proc)
+      @block_or_symbol.call(@component, *args)
+    else
+      @component.send(@block_or_symbol, *args)
     end
+  end
 
-    def call(*args)
-      invoke(args)
-      notify_observers
-    end
-
-    def add_observer(observer)
-      @observer = observer
-    end
-
-    private
-
-    def invoke(args)
-      if @block_or_symbol.is_a?(Proc)
-        @block_or_symbol.call(@component, *args)
-      else
-        @component.send(@block_or_symbol, *args)
-      end
-    end
-
-    def notify_observers
-      @observer.update if @observer
-    end
+  def notify_observers
+    @observer.update if @observer
   end
 end
