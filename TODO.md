@@ -9,6 +9,8 @@ Todo File
 
 
 test list
+- continuation class
+    - This is implying a lot about how ContinuationDictionary can work. May clean up lots
 - clean url so symbols can be in method/button names
 - 'form_submission' duplication
 - make this an application, not a gem
