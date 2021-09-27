@@ -14,10 +14,10 @@ class ContinuationDictionaryTest < Minitest::Test
 
     first_key = nil
     subject.register(first_component) do
-      first_key = subject.add('form_submission', Continuation.new(first_component, 'form_submission'))
+      first_key = subject.add(Continuation.new(first_component, 'form_submission'))
     end
     subject.register(second_component) do
-      subject.add('form_submission', Continuation.new(first_component, 'form_submission'))
+      subject.add(Continuation.new(first_component, 'form_submission'))
     end
     subject[first_key].call(attr: 'first component attr')
 
@@ -45,7 +45,7 @@ class ContinuationDictionaryTest < Minitest::Test
     first_key = nil
     subject.add_observer(self)
     subject.register(first_component) do
-      first_key = subject.add('form_submission')
+      first_key = subject.add(Continuation.new(first_component, 'form_submission'))
     end
 
     subject[first_key].call({})
@@ -58,7 +58,7 @@ class ContinuationDictionaryTest < Minitest::Test
     subject = ContinuationDictionary.new
     key = nil
     subject.register(component) do
-      key = subject.add(nil, Continuation.new(component, lambda { |c, arg| c.attr = arg } ))
+      key = subject.add(Continuation.new(component, lambda { |c, arg| c.attr = arg } ))
     end
 
     subject[key].call('clicked')

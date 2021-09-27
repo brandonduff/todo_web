@@ -23,12 +23,12 @@ class Canvas
   end
 
   def new_form(&block)
-    action = @continuation_dictionary.add('form_submission', Continuation.new(@registered_component, 'form_submission'))
+    action = @continuation_dictionary.add(Continuation.new(@registered_component, 'form_submission'))
     open_tag('form', action: action, method: 'post', &block)
   end
 
   def anchor(symbol, &block)
-    href = @continuation_dictionary.add(symbol, Continuation.new(@registered_component, block || symbol))
+    href = @continuation_dictionary.add(Continuation.new(@registered_component, block || symbol))
     open_tag('a', inner: symbol.to_s, href: href)
   end
 

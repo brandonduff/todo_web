@@ -7,8 +7,7 @@ class ContinuationDictionary
     @component_actions.fetch(key.to_i)
   end
 
-  def add(symbol, continuation = nil, &block)
-    continuation = continuation || Continuation.new(@registered_component, block || symbol)
+  def add(continuation)
     continuation.add_observer(@observer)
     @component_actions[continuation.object_id] = continuation
 
