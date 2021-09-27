@@ -22,7 +22,7 @@ class TaskViewTest < ViewTest
     list = TaskList.from_array([Task.new('wash the car'), task])
     canvas.render(TaskView.new(task))
 
-    canvas.click(:move_up)
+    canvas.click('^')
 
     assert_equal task, list.first
 
