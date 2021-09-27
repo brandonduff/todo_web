@@ -40,4 +40,16 @@ class TaskViewTest < ViewTest
 
     refute task.done?
   end
+
+  def test_finish_undo_toggle
+    task = Task.new('wash the car')
+    canvas.render(TaskView.new(task))
+    assert canvas.rendered?(:finish)
+    refute canvas.rendered?(:undo)
+
+    canvas.click(:finish)
+
+    assert canvas.rendered?(:undo)
+    refute canvas.rendered?(:finish)
+  end
 end

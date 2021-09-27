@@ -20,18 +20,23 @@ class TaskView < HtmlComponent
   end
 
   def render_content_on(html)
-    if @task.done?
-      html.del(@task.description)
-    else
-      html.text(@task.description)
-    end
+    description(html)
     html.text(' | ')
-    html.anchor(:finish)
+    state_toggle(html)
     html.text(' | ')
     html.anchor('^', &:move_up)
     html.text(' | ')
     html.anchor('v', &:move_down)
     html.text(' | ')
-    html.anchor(:undo)
+  end
+
+  private
+
+  def state_toggle(html)
+    @task.done? ? html.anchor(:undo) : html.anchor(:finish)
+  end
+
+  def description(html)
+    @task.done? ? html.del(@task.description) : html.text(@task.description)
   end
 end

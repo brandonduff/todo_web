@@ -1,7 +1,6 @@
 Todo File
 ---
 
-- [ ] Allow undoing particular todos
 - [ ] Multi tenancy
     - [ ] Associate notes with session state
     - [ ] Store notes associated with separate notepads for different users, based on session
