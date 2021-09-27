@@ -30,4 +30,14 @@ class TaskViewTest < ViewTest
 
     refute_equal task, list.first
   end
+
+  def test_undo
+    task = Task.new('wash the car')
+    task.done
+    canvas.render(TaskView.new(task))
+
+    canvas.click(:undo)
+
+    refute task.done?
+  end
 end

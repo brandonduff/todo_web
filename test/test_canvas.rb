@@ -82,8 +82,10 @@ class TestCanvas < Canvas
   end
 
   def click(value)
-    raise "no anchor tag with value #{value}" if rendered[:anchor].empty?
-    @continuation_dictionary[rendered[:anchor].find { |v| v[0] == value }[1]].call
+    entry = rendered[:anchor].find { |v| v[0] == value }
+    raise "no anchor tag with value #{value}" unless entry
+
+    @continuation_dictionary[entry[1]].call
     @rendered = Hash.new { |hash, key| hash[key] = [] }
     render(component)
   end

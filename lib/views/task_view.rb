@@ -15,6 +15,10 @@ class TaskView < HtmlComponent
     @task.move_down
   end
 
+  def undo
+    @task.undo
+  end
+
   def render_content_on(html)
     if @task.done?
       html.del(@task.description)
@@ -27,5 +31,7 @@ class TaskView < HtmlComponent
     html.anchor('^', &:move_up)
     html.text(' | ')
     html.anchor('v', &:move_down)
+    html.text(' | ')
+    html.anchor(:undo)
   end
 end
