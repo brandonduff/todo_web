@@ -76,10 +76,6 @@ class TestCanvas < Canvas
     @rendered ||= Hash.new { |hash, key| hash[key] = [] }
   end
 
-  def anchors(value)
-    rendered[:anchor].find(-> { raise 'no anchor with that value' }) { |k, v| k == value }[1]
-  end
-
   def click(value)
     raise "no anchor tag with value #{value}" if rendered[:anchor].empty?
     @continuation_dictionary[rendered[:anchor].find { |v| v[0] == value }[1]].call
