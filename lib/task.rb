@@ -31,7 +31,7 @@ class Task
   end
 
   def done?
-    !!@done
+    @done
   end
 
   def ==(other)

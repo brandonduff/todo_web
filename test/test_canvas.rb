@@ -57,7 +57,7 @@ class TestCanvas < Canvas
   end
 
   def inputs(name)
-    rendered[:input].find(-> { raise 'no input with that name' }) { |k, v| k == name }[1]
+    rendered[:input].find(-> { raise 'no input with that name' }) { |k, _v| k == name }[1]
   end
 
   def fill_in(input, value)
