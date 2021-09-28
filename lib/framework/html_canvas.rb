@@ -12,43 +12,32 @@ class HtmlCanvas < Canvas
 
   def input(attribute, type)
     value = @registered_component.value_for(attribute)
-    open_tag('input', name: attribute.to_s, type: type, value: value)
+    HtmlNode.new('input', name: attribute.to_s, type: type, value: value).to_s(self)
   end
 
   def text(value)
-    append(value)
+    TextNode.new(value).to_s(self)
   end
 
   def to_s
     buffer
   end
 
-  private
-
-  def open_tag(tag_name, inner: "", **attributes)
-    append("<#{tag_name}")
-
-    attributes.each do |key, val|
-      attribute_value = val.respond_to?(:call) ? instance_exec(&val) : val
-      append(%( #{key}="#{attribute_value}"))
-    end
-
-    append(">")
-
-    if block_given?
-      yield(self)
-    else
-      append(inner)
-    end
-
-    append("</#{tag_name}>")
-  end
-
-  def append(value)
-    buffer << value.render
-  end
-
   def buffer
     @buffer ||= ''
+  end
+
+  private
+
+  class TextNode
+    attr_reader :value
+
+    def initialize(value)
+      @value = value
+    end
+
+    def to_s(canvas)
+      canvas.buffer << value.render
+    end
   end
 end

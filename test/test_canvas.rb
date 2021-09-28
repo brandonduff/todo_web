@@ -65,11 +65,6 @@ class TestCanvas < Canvas
     inputs(input) and (params[input] = value)
   end
 
-  def open_tag(*__args, href: nil, **_args)
-    yield(self) if block_given?
-    href
-  end
-
   def submit
     raise 'no submit button' if rendered[:submit_button].empty?
     component.form_submission(params)
@@ -88,6 +83,10 @@ class TestCanvas < Canvas
     @continuation_dictionary[entry[1]].call
     clear
     render(component)
+  end
+
+  def buffer
+    @buffer ||= ''
   end
 
   private
