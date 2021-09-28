@@ -9,5 +9,7 @@ Todo File
 
 test list
 - see about replacing TestCanvas with an intermediate representation with an HtmlRenderer and TestRenderer (or TestDriver)
+  - a potential path forward: make HTMLCanvas two-pass instead of single-pass. see if we can use the intermediate representation
+    instead of subclass for TestCanvas
   
 
