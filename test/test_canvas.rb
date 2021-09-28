@@ -73,12 +73,12 @@ class TestCanvas < Canvas
   def submit
     raise 'no submit button' if rendered[:submit_button].empty?
     component.form_submission(params)
-    @rendered = Hash.new { |hash, key| hash[key] = [] }
+    clear
     render(component)
   end
 
   def rendered
-    @rendered ||= Hash.new { |hash, key| hash[key] = [] }
+    @rendered ||= blank_rendering
   end
 
   def click(value)
@@ -86,11 +86,19 @@ class TestCanvas < Canvas
     raise "no anchor tag with value #{value}" unless entry
 
     @continuation_dictionary[entry[1]].call
-    @rendered = Hash.new { |hash, key| hash[key] = [] }
+    clear
     render(component)
   end
 
   private
+
+  def clear
+    @rendered = blank_rendering
+  end
+
+  def blank_rendering
+    Hash.new { |hash, key| hash[key] = [] }
+  end
 
   def component
     @registered_component
