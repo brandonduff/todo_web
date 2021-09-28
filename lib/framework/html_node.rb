@@ -39,7 +39,7 @@ class HtmlNode
     if @inner.respond_to?(:call)
       @inner.call(@canvas)
     else
-      append(inner)
+      TextNode.new(inner).to_s(@canvas)
     end
   end
 

@@ -26,18 +26,4 @@ class HtmlCanvas < Canvas
   def buffer
     @buffer ||= ''
   end
-
-  private
-
-  class TextNode
-    attr_reader :value
-
-    def initialize(value)
-      @value = value
-    end
-
-    def to_s(canvas)
-      canvas.buffer << value.render
-    end
-  end
 end
