@@ -5,6 +5,7 @@ class HtmlNode
     @tag_name = tag_name
     @attributes = attributes
     @inner = inner
+    @block = inner if inner.is_a?(Proc)
   end
 
   def to_s(canvas)
@@ -18,8 +19,8 @@ class HtmlNode
 
     append(">")
 
-    if block_given?
-      yield(@canvas)
+    if @block
+      @block.call(@canvas)
     else
       append(inner)
     end

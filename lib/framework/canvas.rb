@@ -1,7 +1,7 @@
 class Canvas
   def self.define_tag(method_name, tag = method_name, **default_attributes, &definition_block)
     define_method method_name do |inner_value="", **provided_attributes, &block|
-      HtmlNode.new(tag, inner: inner_value, **default_attributes, **provided_attributes).to_s(self, &block)
+      HtmlNode.new(tag, inner: block || inner_value, **default_attributes, **provided_attributes).to_s(self)
       instance_exec(**provided_attributes, &definition_block) if block_given?
     end
   end
@@ -24,7 +24,7 @@ class Canvas
 
   def new_form(&block)
     action = @continuation_dictionary.add(Continuation.new(@registered_component, 'form_submission'))
-    HtmlNode.new('form', action: action, method: 'post').to_s(self, &block)
+    HtmlNode.new('form', action: action, method: 'post', inner: block).to_s(self)
   end
 
   def anchor(symbol, &block)
