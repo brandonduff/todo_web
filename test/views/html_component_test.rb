@@ -204,6 +204,44 @@ class HTMLCanvasTest < Minitest::Test
     assert_equal 'attr set', result.find('input')['value']
   end
 
+  class LinkComponent < HtmlComponent
+    def initialize(state, name)
+      @state = state
+      @name = name
+    end
+
+    def render_content_on(html)
+      html.anchor(@name) { @state.send(@name) }
+    end
+  end
+
+  def test_resetting_registered_component
+    test_component = Class.new(HtmlComponent) do
+      attr_reader :called
+
+      def first
+        @called = 'first'
+      end
+
+      def second
+        @called = 'second'
+      end
+
+      def render_content_on(html)
+        # demonstrates we can register continuations in a sub-component
+        # and also pass control back up to the main component to register
+        # more continuations correctly
+        html.render(LinkComponent.new(self, 'second'))
+        html.anchor(:first)
+      end
+    end.new
+
+    canvas = TestCanvas.build
+    canvas.render(test_component)
+    canvas.click(:first)
+    assert_equal 'first', test_component.called
+  end
+
   def form_submission
     @form_submitted = true
   end
