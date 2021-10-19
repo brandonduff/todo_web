@@ -37,12 +37,11 @@ class Application
   end
 
   def register_root(component)
-    @root = component
-    @persistence.register_component(@root)
+    @persistence.register_component(component)
   end
 
   def render
-    @root.render(continuation_dictionary: @continuations)
+    @persistence.component.render(continuation_dictionary: @continuations)
   end
 
   def invoke_action(action, *params)
