@@ -1,7 +1,7 @@
 require 'yaml/store'
 
 class Persistence
-  attr_reader :component, :last_update
+  attr_reader :object, :last_update
 
   def self.create_null
     new(StoreStub.new)
@@ -13,18 +13,18 @@ class Persistence
 
   def initialize(store)
     @store = store
-    @component = @store.transaction(true) { @store[:root] }
+    @object = @store.transaction(true) { @store[:root] }
   end
 
-  def register_component(component)
-    @component = component
+  def register_object(component)
+    @object = component
   end
 
   def update
     @store.transaction do
-      @store[:root] = @component
+      @store[:root] = @object
     end
-    @last_update = @component
+    @last_update = @object
   end
 
   class StoreStub

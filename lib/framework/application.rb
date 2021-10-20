@@ -10,7 +10,7 @@ class Application
   def self.build(component_class)
     persistence = Persistence.create
     instance = new(ContinuationDictionary.new, persistence)
-    instance.register_root(persistence.component || component_class.new)
+    instance.register_root(persistence.object || component_class.new)
     instance
   end
 
@@ -38,11 +38,11 @@ class Application
   end
 
   def register_root(component)
-    @persistence.register_component(component)
+    @persistence.register_object(component)
   end
 
   def render
-    @persistence.component.render(continuation_dictionary: @continuations)
+    @persistence.object.render(continuation_dictionary: @continuations)
   end
 
   def invoke_action(action, *params)
