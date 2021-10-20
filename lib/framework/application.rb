@@ -16,6 +16,7 @@ class Application
 
   def self.set_application(application)
     SinatraServer.set(:application, application)
+    SinatraServer.set(:sessions, SessionStore.new)
   end
 
   def self.stop
@@ -49,12 +50,15 @@ class Application
   end
 
   class SinatraServer < Sinatra::Base
+    enable :sessions
+
     get('/:action') do
       settings.application.invoke_action(params[:action])
       redirect('/')
     end
 
     get('/') do
+      session[:session_id] ||= settings.sessions.new_session.id
       settings.application.render
     end
 

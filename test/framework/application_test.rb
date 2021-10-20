@@ -68,4 +68,16 @@ class ApplicationTest < Minitest::Test
     get "/#{href}"
     assert @persistence.last_update.invoked?
   end
+
+  def test_session_id_session
+    get "/"
+    original_session_id_cookie = last_request.session['session_id']
+    refute_nil original_session_id_cookie
+    get "/"
+    assert_equal original_session_id_cookie, last_request.session['session_id']
+    with_session('new_session') do
+      get "/"
+      refute_equal original_session_id_cookie, last_request.session['session_id']
+    end
+  end
 end
