@@ -58,6 +58,7 @@ class Application
     end
 
     get('/') do
+      # todo: make this a new component, not new blank object for new session
       session[:session_id] ||= settings.sessions.new_session(Object.new).id
       settings.application.render
     end
