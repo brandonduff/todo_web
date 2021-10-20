@@ -6,8 +6,8 @@ class SessionStore
     @id = 1
   end
 
-  def new_session
-    OpenStruct.new(id: next_id).tap do |session|
+  def new_session(component)
+    OpenStruct.new(id: next_id, component: component).tap do |session|
       @sessions[session.id] = session
     end
   end

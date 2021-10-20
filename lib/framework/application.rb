@@ -58,7 +58,7 @@ class Application
     end
 
     get('/') do
-      session[:session_id] ||= settings.sessions.new_session.id
+      session[:session_id] ||= settings.sessions.new_session(Object.new).id
       settings.application.render
     end
 
