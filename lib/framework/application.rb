@@ -9,14 +9,13 @@ class Application
 
   def self.build(component_class)
     persistence = Persistence.create
-    instance = new(ContinuationDictionary.new, persistence)
+    instance = new(ContinuationDictionary.new, persistence, SessionStore.new)
     instance.register_root(persistence.object || component_class.new)
     instance
   end
 
   def self.set_application(application)
     SinatraServer.set(:application, application)
-    SinatraServer.set(:sessions, SessionStore.new)
   end
 
   def self.stop
@@ -31,11 +30,14 @@ class Application
     SinatraServer.call(*params, &block)
   end
 
-  def initialize(continuations, persistence)
+  def initialize(continuations, persistence, session_store)
     @continuations = continuations
     @persistence = persistence
     @continuations.add_observer(@persistence)
+    @session_store = session_store
   end
+
+  attr_reader :session_store
 
   def register_root(component)
     @persistence.register_object(component)
@@ -59,7 +61,7 @@ class Application
 
     get('/') do
       # todo: make this a new component, not new blank object for new session
-      session[:session_id] ||= settings.sessions.new_session(Object.new).id
+      session[:session_id] ||= settings.application.session_store.new_session(Object.new).id
       settings.application.render
     end
 

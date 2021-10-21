@@ -36,7 +36,7 @@ class ApplicationTest < Minitest::Test
   def setup
     @continuations = ContinuationDictionary.new
     @persistence = Persistence.create_null
-    @application = Application.new(@continuations, @persistence)
+    @application = Application.new(@continuations, @persistence, SessionStore.new)
     @test_component = TestComponent.new
     @application.register_root(@test_component)
     Application.set_application(@application)
