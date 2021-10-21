@@ -11,9 +11,7 @@ class Application
     persistence.register_object(component_class.new)
     continuations = ContinuationDictionary.new
     continuations.add_observer(persistence)
-    session_store = SessionStore.new(component_class)
-    session_store.persistence = persistence
-    session_store.continuations = continuations
+    session_store = SessionStore.new(component_class, persistence, continuations)
     instance = new(session_store)
     instance
   end
