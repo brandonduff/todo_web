@@ -3,14 +3,18 @@ require 'active_support/core_ext/hash/indifferent_access'
 
 class Application
   def self.run(component_class)
-    set_application(build(component_class))
+    set_application(build_application(component_class, Persistence.create))
     start_server
   end
 
-  def self.build(component_class)
-    persistence = Persistence.create
-    instance = new(ContinuationDictionary.new, persistence, SessionStore.new)
-    instance.register_root(persistence.object || component_class.new)
+  def self.build_application(component_class, persistence)
+    persistence.register_object(component_class.new)
+    continuations = ContinuationDictionary.new
+    continuations.add_observer(persistence)
+    session_store = SessionStore.new(component_class)
+    session_store.persistence = persistence
+    session_store.continuations = continuations
+    instance = new(session_store)
     instance
   end
 
@@ -30,25 +34,26 @@ class Application
     SinatraServer.call(*params, &block)
   end
 
-  def initialize(continuations, persistence, session_store)
-    @continuations = continuations
-    @persistence = persistence
-    @continuations.add_observer(@persistence)
+  def initialize(session_store)
     @session_store = session_store
   end
 
   attr_reader :session_store
 
-  def register_root(component)
-    @persistence.register_object(component)
+  def persistence
+    @session_store.persistence
+  end
+
+  def continuations
+    @session_store.continuations
   end
 
   def render
-    @persistence.object.render(continuation_dictionary: @continuations)
+    persistence.object.render(continuation_dictionary: continuations)
   end
 
   def invoke_action(action, *params)
-    @continuations[action].call(*params) if action
+    continuations[action].call(*params) if action
   end
 
   class SinatraServer < Sinatra::Base
@@ -60,8 +65,7 @@ class Application
     end
 
     get('/') do
-      # todo: make this a new component, not new blank object for new session
-      session[:session_id] ||= settings.application.session_store.new_session(Object.new).id
+      session[:session_id] ||= settings.application.session_store.new_session.id
       settings.application.render
     end
 

@@ -16,8 +16,8 @@ class Persistence
     @object = @store.transaction(true) { @store[:root] }
   end
 
-  def register_object(component)
-    @object = component
+  def register_object(object)
+    @object ||= object
   end
 
   def update

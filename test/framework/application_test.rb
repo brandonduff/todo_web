@@ -34,11 +34,8 @@ class ApplicationTest < Minitest::Test
   end
 
   def setup
-    @continuations = ContinuationDictionary.new
     @persistence = Persistence.create_null
-    @application = Application.new(@continuations, @persistence, SessionStore.new)
-    @test_component = TestComponent.new
-    @application.register_root(@test_component)
+    @application = Application.build_application(TestComponent, @persistence)
     Application.set_application(@application)
     get '/' # initial render to register continuations
   end
