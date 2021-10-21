@@ -60,19 +60,25 @@ class Application
     enable :sessions
 
     get('/:action') do
-      settings.application.invoke_action(params[:action])
+      application.invoke_action(params[:action])
       redirect('/')
     end
 
     get('/') do
-      session[:session_id] ||= settings.application.session_store.new_session.id
-      settings.application.render
+      session[:session_id] ||= application.session_store.new_session.id
+      application.render
     end
 
     post('/:action') do
       transformed_params = ActiveSupport::HashWithIndifferentAccess.new(params)
-      settings.application.invoke_action(transformed_params[:action], transformed_params.except(:action))
+      application.invoke_action(transformed_params[:action], transformed_params.except(:action))
       redirect('/')
+    end
+
+    helpers do
+      def application
+        settings.application
+      end
     end
   end
 end
