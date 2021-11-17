@@ -3,7 +3,8 @@
 
   "plan": {
     "boot": {
-      "test": []
+        "test": [],
+        "console": ["c"]
     }
   }
 }

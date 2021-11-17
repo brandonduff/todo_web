@@ -15,6 +15,10 @@ class CustomPlan < Zeus::Plan
   def test(argv=$ARGV)
     Zeus::M.run(argv)
   end
+
+  def console
+    Pry.start
+  end
 end
 
 Zeus.plan = CustomPlan.new
