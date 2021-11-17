@@ -8,11 +8,11 @@ class Application
   end
 
   def self.build_application(component_class, persistence)
-    persistence.register_object(component_class.new)
     continuations = ContinuationDictionary.new
     continuations.add_observer(persistence)
     session_store = SessionStore.new(component_class, persistence, continuations)
     instance = new(session_store)
+    persistence.register_object(component_class.new)
     instance
   end
 
@@ -38,16 +38,12 @@ class Application
 
   attr_reader :session_store
 
-  def persistence
-    @session_store.persistence
-  end
-
   def continuations
     @session_store.continuations
   end
 
-  def render
-    persistence.object.render(continuation_dictionary: continuations)
+  def render(session)
+    session.persistence.object.render(continuation_dictionary: continuations)
   end
 
   def invoke_action(action, *params)
@@ -63,8 +59,8 @@ class Application
     end
 
     get('/') do
-      session[:session_id] ||= application.session_store.new_session.id
-      application.render
+      session[:app_session_id] ||= application.session_store.new_session.id
+      application.render(application.session_store.find(session[:app_session_id]))
     end
 
     post('/:action') do
