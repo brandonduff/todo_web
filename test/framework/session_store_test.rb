@@ -9,10 +9,6 @@ class SessionStoreTest < Minitest::Test
     end
   end
 
-  def persistence
-    @persistence ||= Persistence.create_null
-  end
-
   def continuations
     @continuations ||= ContinuationDictionary.new
   end

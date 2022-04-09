@@ -35,7 +35,6 @@ class ApplicationTest < Minitest::Test
   end
 
   def setup
-    @persistence = Persistence.create_null
     @application = Application.build_application(TestComponent)
     Application.set_application(@application)
     get '/' # initial render to register continuations

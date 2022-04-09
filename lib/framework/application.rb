@@ -51,6 +51,10 @@ class Application
   class SinatraServer < Sinatra::Base
     enable :sessions
 
+    get('/favicon.ico') do
+
+    end
+
     get('/:action') do
       application.invoke_action(params[:action])
       redirect('/')
