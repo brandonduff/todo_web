@@ -72,7 +72,6 @@ class ApplicationTest < Minitest::Test
   end
 
   def test_sessions_have_independent_components
-    skip
     get "/"
     object_id = rendered_object_id
     with_session('new_session') do
