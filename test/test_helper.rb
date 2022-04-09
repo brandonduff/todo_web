@@ -4,6 +4,5 @@ require 'minitest/autorun'
 
 require 'capybara'
 require 'todo'
-require 'framework/html_component'
 require 'test_canvas'
 require 'views/view_test'

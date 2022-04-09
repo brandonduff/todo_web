@@ -13,4 +13,5 @@ group :development do
   gem "pry-doc"
   gem "irb"
   gem "rack-test"
+  gem "hackr", github: 'brandonduff/hackr'
 end

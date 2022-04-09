@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'framework/html_component'
 
 class CurrentDayViewTest < ViewTest
   def test_rendering_day
