@@ -51,21 +51,21 @@ class Application
   class SinatraServer < Sinatra::Base
     enable :sessions
 
-    get('/favicon.ico') do
+    get '/favicon.ico' do
 
     end
 
-    get('/:action') do
+    get '/:action' do
       application.invoke_action(params[:action])
       redirect('/')
     end
 
-    get('/') do
+    get '/' do
       session[:app_session_id] ||= application.session_store.new_session.id
       application.render(application.session_store.find(session[:app_session_id]))
     end
 
-    post('/:action') do
+    post '/:action' do
       transformed_params = ActiveSupport::HashWithIndifferentAccess.new(params)
       application.invoke_action(transformed_params[:action], transformed_params.except(:action))
       redirect('/')
