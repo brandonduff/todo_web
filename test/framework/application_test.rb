@@ -36,7 +36,7 @@ class ApplicationTest < Minitest::Test
 
   def setup
     @persistence = Persistence.create_null
-    @application = Application.build_application(TestComponent, @persistence)
+    @application = Application.build_application(TestComponent)
     Application.set_application(@application)
     get '/' # initial render to register continuations
   end
@@ -58,13 +58,6 @@ class ApplicationTest < Minitest::Test
     follow_redirect!
     assert_includes last_response.body, 'my form input'
     assert_equal 'http://example.org/', last_request.url
-  end
-
-  def test_persistence
-    result = Capybara.string(last_response.body)
-    href = result.find('a')['href']
-    get "/#{href}"
-    assert @persistence.last_update.invoked?
   end
 
   def test_session_id_session

@@ -1,18 +1,17 @@
 require 'ostruct'
 
 class SessionStore
-  attr_accessor :persistence, :continuations
+  attr_accessor :continuations
 
-  def initialize(component_factory, persistence, continuations)
+  def initialize(component_factory, continuations)
     @sessions = {}
     @id = 1
     @component_factory = component_factory
-    @persistence = persistence
     @continuations = continuations
   end
 
   def new_session
-    OpenStruct.new(id: next_id, component: @component_factory.new, continuations: continuations, persistence: persistence).tap do |session|
+    OpenStruct.new(id: next_id, component: @component_factory.new, continuations: continuations).tap do |session|
       @sessions[session.id] = session
     end
   end

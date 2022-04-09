@@ -3,16 +3,14 @@ require 'active_support/core_ext/hash/indifferent_access'
 
 class Application
   def self.run(component_class)
-    set_application(build_application(component_class, Persistence.create))
+    set_application(build_application(component_class))
     start_server
   end
 
-  def self.build_application(component_class, persistence)
+  def self.build_application(component_class)
     continuations = ContinuationDictionary.new
-    continuations.add_observer(persistence)
-    session_store = SessionStore.new(component_class, persistence, continuations)
+    session_store = SessionStore.new(component_class, continuations)
     instance = new(session_store)
-    persistence.register_object(component_class.new)
     instance
   end
 
@@ -43,7 +41,7 @@ class Application
   end
 
   def render(session)
-    session.persistence.object.render(continuation_dictionary: continuations)
+    session.component.render(continuation_dictionary: continuations)
   end
 
   def invoke_action(action, *params)
