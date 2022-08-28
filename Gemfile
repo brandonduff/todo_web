@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem "activesupport"
 gem "sinatra"
 gem "zeitwerk"
+gem "hackr", github: 'brandonduff/hackr'
 
 group :development do
   gem "bundler"
@@ -13,5 +14,6 @@ group :development do
   gem "pry-doc"
   gem "irb"
   gem "rack-test"
-  gem "hackr", github: 'brandonduff/hackr'
+  gem "guard"
+  gem "guard-minitest"
 end

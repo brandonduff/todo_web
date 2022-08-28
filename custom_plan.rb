@@ -13,7 +13,8 @@ class CustomPlan < Zeus::Plan
   end
 
   def test(argv=$ARGV)
-    Zeus::M.run(argv)
+    Dir.glob("test/**/*test*.rb").each { |f| load f }
+    # Minitest.run(argv)
   end
 
   def console
@@ -22,4 +23,3 @@ class CustomPlan < Zeus::Plan
 end
 
 Zeus.plan = CustomPlan.new
-
