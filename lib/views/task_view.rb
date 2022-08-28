@@ -21,13 +21,13 @@ class TaskView < HtmlComponent
 
   def render_content_on(html)
     description(html)
-    html.text(' | ')
+    html.text(" | ")
     state_toggle(html)
-    html.text(' | ')
-    html.anchor('^', &:move_up)
-    html.text(' | ')
-    html.anchor('v', &:move_down)
-    html.text(' | ')
+    html.text(" | ")
+    html.anchor("^", &:move_up)
+    html.text(" | ")
+    html.anchor("v", &:move_down)
+    html.text(" | ")
   end
 
   private

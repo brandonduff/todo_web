@@ -7,7 +7,7 @@ class Task
   end
 
   def formatted_description
-    done? ? '✓ ' + @description : @description
+    done? ? "✓ " + @description : @description
   end
 
   def done

@@ -28,7 +28,7 @@ class TaskListView < HtmlComponent
   def render_new_task_form(html)
     html.new_form do |f|
       f.text_input(:new_task)
-      f.submit_button('create new task')
+      f.submit_button("create new task")
     end
   end
 

@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 class CurrentDayViewTest < ViewTest
   def test_rendering_day

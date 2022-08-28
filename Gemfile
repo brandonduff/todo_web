@@ -1,9 +1,9 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
 gem "activesupport"
 gem "sinatra"
 gem "zeitwerk"
-gem "hackr", github: 'brandonduff/hackr'
+gem "hackr", github: "brandonduff/hackr"
 
 group :development do
   gem "bundler"
@@ -16,4 +16,5 @@ group :development do
   gem "rack-test"
   gem "guard"
   gem "guard-minitest"
+  gem "standard"
 end

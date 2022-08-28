@@ -1,9 +1,9 @@
-require 'test_helper'
+require "test_helper"
 
 class AgendaTest < Minitest::Test
   def test_holds_separate_lists_for_each_day
-    todays_list = TaskList.from_array([Task.new('do the dishes')])
-    yesterdays_list = TaskList.from_array([Task.new('wash the car')])
+    todays_list = TaskList.from_array([Task.new("do the dishes")])
+    yesterdays_list = TaskList.from_array([Task.new("wash the car")])
     subject = Agenda.new(Date.today, todays_list)
     yesterday = Date.today - 1
 
@@ -18,7 +18,7 @@ class AgendaTest < Minitest::Test
 
     subject.current_day = Date.today - 1
     assert_equal TaskList.new, subject.task_list
-    subject.task_list << Task.new('do the dishes')
+    subject.task_list << Task.new("do the dishes")
     assert_equal 1, subject.task_list.entries.length
   end
 end

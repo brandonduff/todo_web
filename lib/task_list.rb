@@ -51,9 +51,9 @@ class TaskList
     @tasks.map(&:formatted_description).join("\n")
   end
 
-  def ==(other_list)
+  def ==(other)
     @tasks.each_with_index do |task, index|
-      return false unless task == other_list.tasks[index]
+      return false unless task == other.tasks[index]
     end
     true
   end

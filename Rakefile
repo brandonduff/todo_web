@@ -1,4 +1,4 @@
-require 'rake/testtask'
+require "rake/testtask"
 
 desc "Run tests"
 Rake::TestTask.new do |t|
@@ -6,4 +6,4 @@ Rake::TestTask.new do |t|
   t.pattern = "test/**/*_test.rb"
 end
 
-task :default => [:test]
+task default: [:test]

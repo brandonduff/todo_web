@@ -1,18 +1,18 @@
 ROOT_PATH = File.expand_path(Dir.pwd)
-require 'zeus'
-require 'zeus/plan'
-require 'zeus/m'
-require 'bundler'
+require "zeus"
+require "zeus/plan"
+require "zeus/m"
+require "bundler"
 
 class CustomPlan < Zeus::Plan
   def boot
-    $LOAD_PATH.push(File.expand_path('test'))
-    $LOAD_PATH.push(File.expand_path('lib'))
+    $LOAD_PATH.push(File.expand_path("test"))
+    $LOAD_PATH.push(File.expand_path("lib"))
     Bundler.require
-    require 'test_helper'
+    require "test_helper"
   end
 
-  def test(argv=$ARGV)
+  def test(argv = $ARGV)
     Dir.glob("test/**/*test*.rb").each { |f| load f }
     # Minitest.run(argv)
   end

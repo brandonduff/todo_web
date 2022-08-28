@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 class AgendaViewTest < ViewTest
   def setup
@@ -12,9 +12,9 @@ class AgendaViewTest < ViewTest
   end
 
   def test_todo_list_render
-    task = Task.new('do the dishes')
+    task = Task.new("do the dishes")
     @canvas.render(subject(task_list: TaskList.from_array([task])))
-    assert @canvas.rendered?('do the dishes')
+    assert @canvas.rendered?("do the dishes")
   end
 
   def subject(task_list: TaskList.new, current_day: Date.today)

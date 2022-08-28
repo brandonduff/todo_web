@@ -1,6 +1,5 @@
 class Agenda
   attr_accessor :current_day
-  attr_reader :task_list
 
   def initialize(current_day, task_list)
     @current_day = current_day
