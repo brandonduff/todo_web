@@ -6,7 +6,9 @@ Todo File
     - [ ] Store notes associated with separate notepads for different users, based on session
     - [ ] Allow creation of users. Passwords w/ BCrypt could be fun to figure out (or just start with something insecure)
 - [ ] Call/Response (editing todos)
-
+- [ ] persistence
+  - Ripped this out of the framework because it was buggy and maybe not even a concern for it.
+    - Rather, the framework should expose hooks that allow us to implement persistence ourselves
 
 test list
 - see about replacing TestCanvas with an intermediate representation with an HtmlRenderer and TestRenderer (or TestDriver)
@@ -15,5 +17,3 @@ test list
 - Persist SessionStore instead of root component. Sessions will have components
   - This will mean any write saves all other sessions. But we can change this later since it's simpler for now
   - Need a refresh on server reload without this (Continuation Object-IDs will change)
-  
-
