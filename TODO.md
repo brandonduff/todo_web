@@ -8,12 +8,9 @@ Todo File
 - [ ] Call/Response (editing todos)
 - [ ] persistence
   - Ripped this out of the framework because it was buggy and maybe not even a concern for it.
-    - Rather, the framework should expose hooks that allow us to implement persistence ourselves
-
-test list
-- see about replacing TestCanvas with an intermediate representation with an HtmlRenderer and TestRenderer (or TestDriver)
-  - a potential path forward: make HTMLCanvas two-pass instead of single-pass. see if we can use the intermediate representation
-    instead of subclass for TestCanvas
-- Persist SessionStore instead of root component. Sessions will have components
-  - This will mean any write saves all other sessions. But we can change this later since it's simpler for now
-  - Need a refresh on server reload without this (Continuation Object-IDs will change)
+  - Try to implement this outside the web framework as a first pass
+    - Observe changes to the agenda's current day and task list
+    - Write out task list for current day when the task list is modified
+      - I suppose we'll also have to observe individual tasks since their done-ness can change
+        without going through the list
+    - Load the Agenda from disc instead of a new one each time
