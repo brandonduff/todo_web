@@ -2,5 +2,3 @@
 require_relative '../lib/todo'
 
 Application.run(MainView)
-
-
