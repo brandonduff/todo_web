@@ -8,10 +8,6 @@ class Agenda
     @lists[@current_day] = @task_list
   end
 
-  def add_list_on_day(list, day)
-    @lists[day] = list
-  end
-
   def task_list
     @lists[@current_day]
   end
