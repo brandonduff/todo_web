@@ -1,5 +1,8 @@
+require "observer"
+
 class TaskList
   include Enumerable
+  include Observable
   extend Forwardable
 
   def_delegators :@tasks, :each, :empty?
@@ -20,6 +23,7 @@ class TaskList
     return if include?(task)
     @tasks << task
     task.list = self
+    notify
   end
 
   alias_method :<<, :add_task
@@ -88,5 +92,9 @@ class TaskList
 
   def from_array(array)
     self.class.from_array(array)
+  end
+
+  def notify
+    changed && notify_observers(self)
   end
 end
