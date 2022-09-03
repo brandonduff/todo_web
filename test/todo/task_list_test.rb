@@ -170,27 +170,4 @@ class TaskListTest < Minitest::Test
 
     assert_equal second_task, @task_list.first
   end
-
-  # observability
-
-  def update(task_list)
-    @last_task = task_list.entries.last
-  end
-
-  def test_notifies_observers_when_tasks_are_added
-    new_task = Task.new("just got added")
-    @task_list.add_observer(self)
-
-    @task_list << new_task
-
-    assert_equal new_task, @last_task
-  end
-
-  def test_notifies_observers_when_tasks_are_removed
-    # flunk 'implement me'
-  end
-
-  # notify on remove
-  # notify when tasks are moved (maybe on the task themselves?)
-  # notify when description is updated (on task)
 end
