@@ -1,6 +1,6 @@
 class MainView < HtmlComponent
-  def initialize
-    @view = AgendaView.new(Agenda.new(Date.today.iso8601, TaskList.new))
+  def initialize(agenda)
+    @view = AgendaView.new(agenda)
   end
 
   def render_content_on(html)
