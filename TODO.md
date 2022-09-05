@@ -7,7 +7,7 @@ Todo File
     - [ ] Store notes associated with separate notepads for different users, based on session
     - [ ] Allow creation of users. Passwords w/ BCrypt could be fun to figure out (or just start with something insecure)
 - [ ] Call/Response (editing todos)
-- [*] persistence
+- [-] persistence
 
 ### Programming Tasks
 - Start with a manual save button
