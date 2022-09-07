@@ -1,4 +1,5 @@
-# TodoWeb
+# TodoWeb [![Ruby](https://github.com/brandonduff/todo_web/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/brandonduff/todo_web/actions/workflows/main.yml)
+
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/todo_web`. To experiment with that code, run `bin/console` for an interactive prompt.
 
