@@ -7,7 +7,7 @@ gem "hackr", github: "brandonduff/hackr"
 
 group :development do
   gem "bundler"
-  gem "rake", "~> 10.0"
+  gem "rake"
   gem "minitest"
   gem "capybara"
   gem "pry"
