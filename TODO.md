@@ -11,6 +11,9 @@ Todo File
 
 ### Programming Tasks
 - Start with a manual save button
-      - First, extract Agenda creation out of view initialization. Pass it into the Application
-  - Then we can see if we want automatic saving
-  - And then we can look at multi-tenancy
+  - [x] Extract Agenda creation out of view initialization. Pass it into the Application
+  - [ ] Write Agendas state to file instead of class ivar
+  - [ ] Allow UI for saving (adding Agenda objects to Agendas)
+  - [ ] Make sure we can handle updating Agenda objects
+- Then we can see if we want automatic saving
+- And then we can look at multi-tenancy
