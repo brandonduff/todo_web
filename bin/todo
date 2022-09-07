@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 require_relative '../lib/todo'
 
-Application.run(MainView, Agenda.new(Date.today.iso8601, TaskList.new))
+Application.run(MainView, Agenda.fresh_for_today)
