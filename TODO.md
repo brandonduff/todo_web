@@ -12,6 +12,7 @@ Todo File
 ### Programming Tasks
 - Start with a manual save button
   - [x] Extract Agenda creation out of view initialization. Pass it into the Application
+  - [ ] Retrieve Agenda for the app from Agendas instead of creating it
   - [ ] Write Agendas state to file instead of class ivar
   - [ ] Allow UI for saving (adding Agenda objects to Agendas)
   - [ ] Make sure we can handle updating Agenda objects
