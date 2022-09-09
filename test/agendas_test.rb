@@ -5,24 +5,24 @@ class AgendasTest < Minitest::Test
 
   def setup
     @agenda = Agenda.fresh_for_today
-    @agendas = Agendas.new
+    @agendas = Agendas.new("test_data.store")
   end
 
   def teardown
-    Agendas.clear
+    File.delete("test_data.store")
   end
 
   def test_adding_agenda
     agendas << agenda
 
     assert_equal agenda, agendas.entries.first
-  end  
+  end
 
   def test_agendas_shared_between_instances
-    other_subject = Agendas.new
+    other_subject = Agendas.new("test_data.store")
 
-    agendas << agenda    
+    agendas << agenda
 
-    assert_equal agenda, other_subject.entries.first
+    assert_equal agenda.task_list, other_subject.entries.first.task_list
   end
 end

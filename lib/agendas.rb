@@ -1,12 +1,10 @@
+require "yaml/store"
+
 class Agendas
   include Enumerable
 
-  def self.entries
-    @entries ||= []
-  end
-
-  def self.clear
-    @entries = []
+  def initialize(filename = "data.store")
+    @store = YAML::Store.new(filename)
   end
 
   def each(&block)
@@ -15,9 +13,20 @@ class Agendas
 
   def <<(agenda)
     entries << agenda
+    @store.transaction do
+      @store["entries"] = entries
+    end
   end
 
   def entries
-    self.class.entries
+    @entries ||= @store.transaction do
+      @store["entries"] || []
+    end
+  end
+
+  def clear
+    @store.transaction do
+      @store["entries"] = []
+    end
   end
 end

@@ -2,7 +2,7 @@ class Agenda
   attr_accessor :current_day
 
   def self.fresh_for_today
-     new(Date.today.iso8601, TaskList.new)
+    new(Date.today.iso8601, TaskList.new)
   end
 
   def initialize(current_day, task_list)
