@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 require_relative '../lib/todo'
 
-Application.run(MainView, Agendas.new.current)
+Application.run(MainView, Agendas.new)

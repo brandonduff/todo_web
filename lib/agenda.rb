@@ -8,11 +8,12 @@ class Agenda
   def initialize(current_day, task_list)
     @current_day = current_day
     @task_list = task_list
-    @lists = Hash.new { |hash, key| hash[key] = TaskList.new }
+    @lists = {}
     @lists[@current_day] = @task_list
   end
 
   def task_list
-    @lists[@current_day]
+    return @lists[@current_day] if @lists[@current_day]
+    @lists[@current_day] = TaskList.new
   end
 end
