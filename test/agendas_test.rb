@@ -9,7 +9,7 @@ class AgendasTest < Minitest::Test
   end
 
   def teardown
-    File.delete("test_data.store")
+    File.delete("test_data.store") if File.exist?("test_data.store")
   end
 
   def test_adding_agenda
@@ -24,5 +24,16 @@ class AgendasTest < Minitest::Test
     agendas << agenda
 
     assert_equal agenda.task_list, other_subject.entries.first.task_list
+  end
+
+  def test_getting_current_returns_an_empty_list_when_nothing_has_been_saved
+    assert agendas.current.task_list.empty?
+  end
+
+  def test_getting_current_list_returns_an_agenda
+    task = Task.new('do the dishes')
+    agenda.task_list << task
+    agendas << agenda
+    assert_equal task, agendas.current.task_list.first
   end
 end

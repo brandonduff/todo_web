@@ -7,6 +7,10 @@ class Agendas
     @store = YAML::Store.new(filename)
   end
 
+  def current
+    entries.first || Agenda.fresh_for_today
+  end
+
   def each(&block)
     entries.each(&block)
   end
