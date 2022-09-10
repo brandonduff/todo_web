@@ -2,7 +2,7 @@ class MainViewTest < ViewTest
   def test_render
     tasks = TaskList.from_array([Task.new("do the dishes")])
     agenda = Agenda.new(Date.today, tasks)
-    agendas = Agendas.new("test_data.store")
+    agendas = Agendas.create("test_data.store")
     agendas << agenda
     subject = MainView.new(agendas)
 

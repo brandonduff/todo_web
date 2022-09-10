@@ -10,7 +10,7 @@ class SaveButtonViewTest < ViewTest
     canvas.render(SaveButtonView.new(agenda, filename))
     canvas.click(:save)
 
-    assert_equal task, Agendas.new(filename).current.task_list.first
+    assert_equal task, Agendas.create(filename).current.task_list.first
 
     File.delete("test_data.store") if File.exist?("test_data.store")
   end

@@ -9,6 +9,6 @@ class SaveButtonView < HtmlComponent
   end
 
   def save
-    Agendas.new(@filename) << @agenda
+    Agendas.create(@filename) << @agenda
   end
 end

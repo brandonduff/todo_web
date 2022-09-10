@@ -6,7 +6,7 @@ class AgendasTest < Minitest::Test
   def setup
     @agenda = Agenda.fresh_for_today
     @agenda.task_list << Task.new("do the dishes")
-    @agendas = Agendas.new("test_data.store")
+    @agendas = Agendas.create("test_data.store")
   end
 
   def teardown
@@ -20,7 +20,7 @@ class AgendasTest < Minitest::Test
   end
 
   def test_agendas_shared_between_instances
-    other_subject = Agendas.new("test_data.store")
+    other_subject = Agendas.create("test_data.store")
 
     agendas << agenda
 

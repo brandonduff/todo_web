@@ -7,6 +7,10 @@ class Agendas
     new("test_data.store", null: true)
   end
 
+  def self.create(filename)
+    new(filename)
+  end
+
   def initialize(filename = "data.store", null: false)
     @store_wrapper = null ? StoreWrapperStub.new : StoreWrapper.new(filename)
     @null = null
