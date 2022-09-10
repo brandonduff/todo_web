@@ -4,16 +4,15 @@ class Agendas
   include Enumerable
 
   def self.create_null
-    new("test_data.store", null: true)
+    new(StoreWrapperStub.new)
   end
 
   def self.create(filename)
-    new(filename)
+    new(StoreWrapper.new(filename))
   end
 
-  def initialize(filename = "data.store", null: false)
-    @store_wrapper = null ? StoreWrapperStub.new : StoreWrapper.new(filename)
-    @null = null
+  def initialize(store_wrapper)
+    @store_wrapper = store_wrapper
   end
 
   def current
