@@ -5,6 +5,7 @@ class AgendasTest < Minitest::Test
 
   def setup
     @agenda = Agenda.fresh_for_today
+    @agenda.task_list << Task.new("do the dishes")
     @agendas = Agendas.new("test_data.store")
   end
 
@@ -35,5 +36,11 @@ class AgendasTest < Minitest::Test
     agenda.task_list << task
     agendas << agenda
     assert_equal task, agendas.current.task_list.first
+  end
+
+  def test_nullability
+    null_agendas = Agendas.create_null
+    null_agendas << agenda
+    assert_nil agendas.entries.first
   end
 end
