@@ -1,7 +1,7 @@
 class MainView < HtmlComponent
   def initialize(agendas)
     agenda = agendas.current
-    @save_button = SaveButtonView.new(agenda, 'data.store')
+    @save_button = SaveButtonView.new(agenda, "data.store")
     @view = AgendaView.new(agenda)
   end
 

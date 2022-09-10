@@ -31,7 +31,7 @@ class AgendasTest < Minitest::Test
   end
 
   def test_getting_current_list_returns_an_agenda
-    task = Task.new('do the dishes')
+    task = Task.new("do the dishes")
     agenda.task_list << task
     agendas << agenda
     assert_equal task, agendas.current.task_list.first
