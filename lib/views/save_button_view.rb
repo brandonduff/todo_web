@@ -1,7 +1,7 @@
 class SaveButtonView < HtmlComponent
-  def initialize(agenda, filename)
+  def initialize(agenda, agendas)
+    @agendas = agendas
     @agenda = agenda
-    @filename = filename
   end
 
   def render_content_on(html)
@@ -9,6 +9,6 @@ class SaveButtonView < HtmlComponent
   end
 
   def save
-    Agendas.create(@filename) << @agenda
+    @agendas << @agenda
   end
 end
