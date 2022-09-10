@@ -24,7 +24,7 @@ class Agendas
   end
 
   def <<(agenda)
-    entries << agenda
+    entries << agenda unless entries.include?(agenda)
     @store_wrapper.write(entries)
   end
 

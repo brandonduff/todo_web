@@ -43,4 +43,16 @@ class AgendasTest < Minitest::Test
     null_agendas << agenda
     assert_nil agendas.entries.first
   end
+
+  def test_updating_agenda
+    null_agendas = Agendas.create_null
+    null_agendas << agenda
+
+    new_task = Task.new("wash the car")
+    agenda.task_list << new_task
+    null_agendas << agenda
+
+    assert_equal 1, null_agendas.entries.count
+    assert_equal new_task, null_agendas.current.task_list.last
+  end
 end

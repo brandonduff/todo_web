@@ -2,7 +2,7 @@ class TaskList
   include Enumerable
   extend Forwardable
 
-  def_delegators :@tasks, :each, :empty?
+  def_delegators :@tasks, :each, :empty?, :last
 
   def self.from_array(array)
     new.tap do |task_list|
