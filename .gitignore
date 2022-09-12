@@ -11,3 +11,4 @@
 /data.yml
 .DS_Store
 data.store
+*.sublime-workspace
