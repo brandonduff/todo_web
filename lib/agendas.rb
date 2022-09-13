@@ -52,12 +52,6 @@ class Agendas
         @store["entries"] = entries
       end
     end
-
-    def clear
-      @store.transaction do
-        @store["entries"] = []
-      end
-    end
   end
 
   class StoreWrapperStub

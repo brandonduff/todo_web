@@ -1,4 +1,8 @@
 #!/usr/bin/env ruby
 require_relative '../lib/todo'
 
-Application.run(MainView, Agendas.create('data.store'))
+agendas = Agendas.create('data.store')
+
+Application.run(MainView, agendas)
+
+at_exit { agendas << agendas.current }
