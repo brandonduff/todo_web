@@ -1,0 +1,20 @@
+{
+    "rubyLsp.enabledFeatures": {
+
+
+        "codeActions": true,
+        "diagnostics": false,
+        "documentHighlights": true,
+        "documentLink": true,
+        "documentSymbols": true,
+        "foldingRanges": true,
+        "formatting": false,
+        "hover": true,
+        "inlayHint": true,
+        "onTypeFormatting": false,
+        "selectionRanges": true,
+        "semanticHighlighting": true,
+        "completion": true
+    },
+    "ruby.format": false
+}

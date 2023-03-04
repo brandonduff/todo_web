@@ -17,4 +17,5 @@ group :development do
   gem "guard"
   gem "guard-minitest"
   gem "standard"
+  gem "ruby-lsp", require: false
 end
