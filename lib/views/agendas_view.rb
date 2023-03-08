@@ -7,9 +7,12 @@ class AgendasView < HtmlComponent
 
   def render_content_on(html)
     agendas.each do |agenda|
-      agenda.instance_variable_get(:@lists).each do |_date, task_list|
-        task_list.each do |task|
-          html.paragraph(task.description)
+      agenda.lists.each do |date, task_list|
+        html.paragraph(date)
+        html.unordered_list do
+          task_list.each do |task|
+            html.list_item(task.description)
+          end
         end
       end
     end

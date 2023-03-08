@@ -1,5 +1,5 @@
 class Agenda
-  attr_accessor :current_day
+  attr_accessor :current_day, :lists
 
   def self.fresh_for_today
     new(Date.today.iso8601, TaskList.new)
