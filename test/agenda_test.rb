@@ -24,4 +24,23 @@ class AgendaTest < Minitest::Test
     subject.task_list << Task.new("do the dishes")
     assert_equal 1, subject.task_list.entries.length
   end
+
+  def test_all_lists
+    today = Date.today
+    wash_the_car = Task.new("wash the car")
+    do_the_dishes = Task.new("do the dishes")
+    yesterdays_list = TaskList.from_array([do_the_dishes])
+    yesterday = Date.today - 1
+    subject = Agenda.new(yesterday, yesterdays_list)
+
+    subject.current_day = today
+    subject.task_list << wash_the_car
+
+    first, second = subject.all_lists
+
+    assert_equal today, first[0]
+    assert_equal subject.task_list, first[1]
+    assert_equal yesterday, second[0]
+    assert_equal yesterdays_list, second[1]
+  end
 end

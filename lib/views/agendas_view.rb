@@ -7,7 +7,7 @@ class AgendasView < HtmlComponent
 
   def render_content_on(html)
     agendas.each do |agenda|
-      agenda.lists.each do |date, task_list|
+      agenda.all_lists.each do |date, task_list|
         html.paragraph(date)
         html.unordered_list do
           task_list.each do |task|
